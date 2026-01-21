@@ -32,5 +32,37 @@
             </div>
             </div>
     </div>
+    <script src="data.js"></script>
+<script>
+    const aramaKutusu = document.querySelector('input');
+    const listeAlani = document.querySelector('.grid');
+
+    function eserleriGoster(liste) {
+        listeAlani.innerHTML = '';
+        liste.forEach(eser => {
+            listeAlani.innerHTML += `
+                <div class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-transform cursor-pointer">
+                    <h3 class="text-xl font-bold text-stone-800">${eser.ad}</h3>
+                    <p class="text-stone-600">Makam: ${eser.makam} | Usul: ${eser.usul}</p>
+                    <p class="text-stone-500 text-sm italic">Bestekâr: ${eser.bestekar}</p>
+                </div>
+            `;
+        });
+    }
+
+    // İlk açılışta hepsini göster
+    eserleriGoster(eserler);
+
+    // Arama yapınca filtrele
+    aramaKutusu.addEventListener('input', (e) => {
+        const terim = e.target.value.toLowerCase();
+        const suzulenler = eserler.filter(eser => 
+            eser.ad.toLowerCase().includes(terim) || 
+            eser.bestekar.toLowerCase().includes(terim) ||
+            eser.makam.toLowerCase().includes(terim)
+        );
+        eserleriGoster(suzulenler);
+    });
+</script>
 </body>
 </html>
