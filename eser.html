@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eser Detayı | Defter-i Mûsıkî</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#f4f1ea] p-6">
+    <div class="max-w-3xl mx-auto">
+        <a href="index.html" class="text-amber-800 font-bold mb-8 inline-block hover:underline">← Ana Sayfaya Dön</a>
+        
+        <div class="bg-white p-8 rounded-lg shadow-sm border-t-4 border-amber-800">
+            <h1 id="eserAd" class="text-4xl text-stone-800 mb-4 font-bold tracking-tight text-center">Yükleniyor...</h1>
+            <div class="grid grid-cols-2 gap-6 text-stone-700 text-lg border-y py-6 my-6">
+                <p><strong>Makam:</strong> <span id="eserMakam">-</span></p>
+                <p><strong>Usul:</strong> <span id="eserUsul">-</span></p>
+                <p><strong>Bestekâr:</strong> <span id="eserBestekar">-</span></p>
+                <p><strong>Tür:</strong> <span id="eserTur">-</span></p>
+            </div>
+            <div class="mt-8 text-center">
+                <h2 class="text-2xl mb-4 font-semibold text-stone-800">Nota Arşivi</h2>
+                <div class="bg-stone-50 min-h-[500px] flex items-center justify-center border-2 border-dashed border-stone-200 rounded-lg">
+                    <p class="text-stone-400 italic">Nota görseli veya PDF çok yakında buraya eklenecek...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        const eser = eserler.find(e => e.id == id);
+
+        if (eser) {
+            document.getElementById('eserAd').innerText = eser.ad;
+            document.getElementById('eserMakam').innerText = eser.makam;
+            document.getElementById('eserUsul').innerText = eser.usul;
+            document.getElementById('eserBestekar').innerText = eser.bestekar;
+            document.getElementById('eserTur').innerText = eser.tur;
+            document.title = eser.ad + " - Defter-i Mûsıkî";
+        } else {
+            document.body.innerHTML = "<div class='text-center mt-20 text-2xl'>Eser bulunamadı. <a href='index.html'>Geri dön</a></div>";
+        }
+    </script>
+</body>
+</html>
