@@ -9,8 +9,10 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
-        /* Tıklanabilir alan hissi için */
         .satir-link:hover { background-color: #f8fafc; }
+        /* Makamların sadece ilk harfini büyük yapan özel sınıf */
+        .makam-format { text-transform: lowercase; display: inline-block; }
+        .makam-format::first-letter { text-transform: uppercase; }
     </style>
 </head>
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900">
@@ -20,22 +22,21 @@
             <div class="p-6 border-b border-gray-100">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4 italic serif">Defter-i Mûsikî Arşivi</h2>
                 <input type="text" id="arama" placeholder="Eser, makam, güfte veya bestekâr ara..." 
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all text-base">
             </div>
             
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse text-sm">
                     <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
                         <tr>
-                            <th class="px-6 py-4">Eser Başlığı</th>
-                            <th class="px-6 py-4">Güftekâr</th>
-                            <th class="px-6 py-4">Bestekâr</th>
-                            <th class="px-6 py-4 hidden md:table-cell">Makam</th>
-                            <th class="px-6 py-4 hidden md:table-cell text-right">Form / Usûl</th>
+                            <th class="px-6 py-4 text-gray-400">Eser Başlığı</th>
+                            <th class="px-6 py-4 text-gray-400">Güftekâr</th>
+                            <th class="px-6 py-4 text-gray-400">Bestekâr</th>
+                            <th class="px-6 py-4 hidden md:table-cell text-gray-400">Makam</th>
+                            <th class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">Form / Usûl</th>
                         </tr>
                     </thead>
-                    <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white">
-                        </tbody>
+                    <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white"></tbody>
                 </table>
             </div>
         </div>
@@ -50,20 +51,18 @@
             <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Makam:</strong> <span id="detayMakam"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Makam:</strong> <span id="detayMakam" class="makam-format"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Usûl:</strong> <span id="detayUsul"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Güftekâr:</strong> <span id="detayGufte"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Bestekâr:</strong> <span id="detayBestekar"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2 md:col-span-2"><strong>Form:</strong> <span id="detayForm"></span></p>
             </div>
 
-            <div id="notaAlani" class="mt-8 text-center bg-stone-50 rounded-lg overflow-hidden border border-stone-100">
-                </div>
+            <div id="notaAlani" class="mt-8 text-center bg-stone-50 rounded-lg overflow-hidden border border-stone-100"></div>
         </div>
     </div>
 
     <script>
-        // TEK VERİ KAYNAĞI
         const eserler = [
             {"id": 1, "eser": "Beni bigâne-i hâb etti keder", "makam": "Sûzinâk", "güfte": "Recâizâde Mahmut Ekrem", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı", "resim": ""},
             {"id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Eviç", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı", "resim": ""},
@@ -87,22 +86,13 @@
             {"id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Ağır Aksak", "form": "Şarkı", "resim": ""}
         ];
 
-        // 1. Yeni sekme ve geri tuşu için URL kontrolü
         window.addEventListener('popstate', URLKontrolEt);
-        
-        window.onload = () => {
-            URLKontrolEt();
-            listele();
-        };
+        window.onload = () => { URLKontrolEt(); listele(); };
 
         function URLKontrolEt() {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            if (id) {
-                detayGoster(parseInt(id), false);
-            } else {
-                anaSayfayaDon(false);
-            }
+            if (id) { detayGoster(parseInt(id), false); } else { anaSayfayaDon(false); }
         }
 
         function listele(filtre = '') {
@@ -119,19 +109,17 @@
             sonuc.forEach(item => {
                 const satir = document.createElement('tr');
                 satir.className = "satir-link cursor-pointer transition-colors";
-                
-                // Burası hem tıklamayı hem de sağ tık linkini sağlar
                 satir.innerHTML = `
                     <td class="px-6 py-4 font-semibold text-blue-600">
                         <a href="?id=${item.id}" onclick="event.preventDefault(); detayGoster(${item.id})" class="hover:underline italic serif text-lg">${item.eser}</a>
                     </td>
                     <td class="px-6 py-4 text-gray-600">${item.güfte || "Belirsiz"}</td>
                     <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
-                    <td class="px-6 py-4 hidden md:table-cell">
-                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold capitalize">
-                            ${item.makam.toLowerCase()}
+                    <td class="px-6 py-4 hidden md:table-cell text-gray-600">
+                        <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold makam-format">
+                            ${item.makam}
                         </span>
-                    </td>    
+                    </td>
                     <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usul}</td>
                 `;
                 govde.appendChild(satir);
@@ -157,10 +145,7 @@
 
                 document.getElementById('listeSayfasi').classList.add('hidden');
                 document.getElementById('detaySayfasi').classList.remove('hidden');
-                
-                if (pushState) {
-                    window.history.pushState({id: id}, "", `?id=${id}`);
-                }
+                if (pushState) { window.history.pushState({id: id}, "", `?id=${id}`); }
                 window.scrollTo(0,0);
             }
         }
@@ -168,9 +153,7 @@
         function anaSayfayaDon(pushState = true) {
             document.getElementById('detaySayfasi').classList.add('hidden');
             document.getElementById('listeSayfasi').classList.remove('hidden');
-            if (pushState) {
-                window.history.pushState({}, "", window.location.pathname);
-            }
+            if (pushState) { window.history.pushState({}, "", window.location.pathname); }
         }
 
         document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
