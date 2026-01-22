@@ -58,6 +58,43 @@
             eserleriGoster(suzulenler);
         });
 <script src="data.js"></script>
-    <script src="script.js"></script>
+<script>
+        // Verilerin yüklendiğinden emin olmak için küçük bir kontrol
+        function listele() {
+            const liste = document.getElementById('eser-listesi');
+            const arama = document.getElementById('arama');
+            
+            if (typeof eserler === 'undefined') {
+                console.error("Hata: eserler değişkeni bulunamadı!");
+                return;
+            }
+
+            function goster(filtre = '') {
+                liste.innerHTML = '';
+                const sonuc = eserler.filter(e => 
+                    e.eser.toLowerCase().includes(filtre.toLowerCase()) ||
+                    e.makam.toLowerCase().includes(filtre.toLowerCase())
+                );
+
+                sonuc.forEach(item => {
+                    const kart = document.createElement('div');
+                    kart.className = 'eser-kartı';
+                    kart.innerHTML = `
+                        <h3>${item.eser}</h3>
+                        <p><strong>Makam:</strong> ${item.makam}</p>
+                        <p><strong>Bestekâr:</strong> ${item.bestekâr}</p>
+                        <a href="${item.resim || item.kaynak}" target="_blank" class="nota-link">Notayı Görüntüle →</a>
+                    `;
+                    liste.appendChild(kart);
+                });
+            }
+
+            arama.addEventListener('input', (e) => goster(e.target.value));
+            goster();
+        }
+
+        // Sayfa tamamen hazır olduğunda çalıştır
+        window.onload = listele;
+    </script>
 </body>
 </html>
