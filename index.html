@@ -4,46 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defter-i Mûsikî | Eser Arşivi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Genel Stil */
         body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #1c1e21; }
-        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); overflow: hidden; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); overflow: hidden; border: 1px solid #ddd; }
         
-        /* Arama Alanı */
-        .search-header { padding: 20px; background: #fff; border-bottom: 1px solid #ddd; }
-        #arama { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+        /* Başlık ve Arama */
+        .header-section { padding: 20px; background: #fff; border-bottom: 1px solid #dee2e6; }
+        .header-section h2 { margin: 0 0 15px 0; color: #4b4f56; font-size: 20px; }
+        #arama { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.2s; }
+        #arama:focus { border-color: #1877f2; box-shadow: 0 0 0 2px rgba(24,119,242,0.2); }
 
-        /* Liste Yapısı (Tablo) */
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        thead { background-color: #f5f6f7; border-bottom: 2px solid #dee2e6; }
-        th { padding: 12px 15px; font-size: 13px; text-transform: uppercase; color: #606770; font-weight: 600; }
-        td { padding: 12px 15px; border-bottom: 1px solid #ebedf0; font-size: 14px; }
+        /* Liste/Tablo Tasarımı */
+        table { width: 100%; border-collapse: collapse; background: white; }
+        thead { background-color: #f5f6f7; }
+        th { padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; color: #606770; font-weight: 600; border-bottom: 2px solid #dee2e6; }
+        td { padding: 12px 15px; border-bottom: 1px solid #ebedf0; font-size: 14px; vertical-align: middle; }
         
-        /* Satır Renklendirme */
-        tbody tr:hover { background-color: #f9fafb; cursor: pointer; }
+        /* Satır Efektleri */
+        tbody tr { transition: background 0.1s; cursor: pointer; }
+        tbody tr:hover { background-color: #f2f3f5; }
         
-        /* Eser Adı Linki */
-        .eser-link { color: #1a73e8; text-decoration: none; font-weight: 600; font-size: 15px; }
+        /* Eser Linki */
+        .eser-link { color: #1a73e8; text-decoration: none; font-weight: 600; display: block; }
         .eser-link:hover { text-decoration: underline; }
 
-        /* Etiketler (Makam, Form vb.) */
-        .badge { background: #e7f3ff; color: #1877f2; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-        .badge-bestekar { background: #f2f3f5; color: #4b4f56; }
+        /* Bilgi Rozetleri */
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; background: #e7f3ff; color: #1877f2; }
+        .badge-secondary { background: #f2f3f5; color: #4b4f56; }
+        .usul-text { font-size: 13px; color: #606770; }
 
+        /* Mobil Görünüm */
         @media (max-width: 768px) {
             .mobile-hide { display: none; }
+            td { padding: 10px; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="search-header">
-        <h2 style="margin: 0 0 15px 0; color: #4b4f56;">Eser (Nota) Arşivi</h2>
-        <input type="text" id="arama" placeholder="Eser adı, makam veya bestekâr ara...">
+    <div class="header-section">
+        <h2>Eser (Nota) Arşivi</h2>
+        <input type="text" id="arama" placeholder="Eser adı, makam, usul veya bestekâr ara...">
     </div>
 
-    <table id="eser-tablosu">
+    <table>
         <thead>
             <tr>
                 <th>Eser Başlığı</th>
@@ -59,45 +66,65 @@
 
 <script src="data.js"></script>
 <script>
-    function listele(filtre = '') {
+    // Liste oluşturma fonksiyonu
+    function listeyiYazdir(filtre = '') {
         const govde = document.getElementById('liste-govdesi');
         
-        // Arama filtresi
-        const sonuc = eserler.filter(item => 
-            item.eser.toLowerCase().includes(filtre.toLowerCase()) ||
-            item.makam.toLowerCase().includes(filtre.toLowerCase()) ||
-            item.bestekâr.toLowerCase().includes(filtre.toLowerCase())
-        );
+        // Veri var mı kontrolü
+        if (typeof eserler === 'undefined') {
+            govde.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:red;">Veriler yüklenemedi! (data.js dosyasını kontrol edin)</td></tr>';
+            return;
+        }
+
+        // Filtreleme işlemi
+        const filtrelenmis = eserler.filter(item => {
+            const ara = filtre.toLowerCase();
+            return (
+                (item.eser || "").toLowerCase().includes(ara) ||
+                (item.makam || "").toLowerCase().includes(ara) ||
+                (item.bestekâr || item.bestekar || "").toLowerCase().includes(ara) ||
+                (item.usul || "").toLowerCase().includes(ara)
+            );
+        });
 
         govde.innerHTML = '';
 
-        sonuc.forEach(item => {
+        if (filtrelenmis.length === 0) {
+            govde.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px;">Aradığınız eser bulunamadı.</td></tr>';
+            return;
+        }
+
+        // Satırları oluşturma
+        filtrelenmis.forEach(item => {
             const satir = document.createElement('tr');
             
-            satir.innerHTML = `
-                <td>
-                    <a href="detay.html?id=${item.id}" target="_blank" class="eser-link">${item.eser}</a>
-                </td>
-                <td><span class="badge badge-bestekar">${item.bestekâr}</span></td>
-                <td class="mobile-hide"><span class="badge">${item.makam}</span></td>
-                <td class="mobile-hide" style="color: #606770;">${item.form} / ${item.usul}</td>
-            `;
-            
-            // Satırın herhangi bir yerine tıklandığında da detay sayfasına gitsin
+            // Satıra tıklanınca detay sayfasına gönder (yeni sekme)
             satir.onclick = (e) => {
-                if(e.target.tagName !== 'A') {
-                    window.open(`detay.html?id=${item.id}`, '_blank');
-                }
+                window.open(`detay.html?id=${item.id}`, '_blank');
             };
 
+            satir.innerHTML = `
+                <td>
+                    <span class="eser-link">${item.eser || "Adsız Eser"}</span>
+                </td>
+                <td><span class="badge badge-secondary">${item.bestekâr || item.bestekar || "Bilinmiyor"}</span></td>
+                <td class="mobile-hide"><span class="badge">${item.makam || "-"}</span></td>
+                <td class="mobile-hide">
+                    <span class="usul-text">${item.form || "-"} / ${item.usul || "-"}</span>
+                </td>
+            `;
+            
             govde.appendChild(satir);
         });
     }
 
-    document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
-    
-    // Veriler yüklendiğinde listele
-    window.onload = listele;
+    // Arama yapıldığında listeyi güncelle
+    document.getElementById('arama').addEventListener('input', (e) => {
+        listeyiYazdir(e.target.value);
+    });
+
+    // Sayfa açıldığında çalıştır
+    window.onload = listeyiYazdir;
 </script>
 
 </body>
