@@ -164,7 +164,62 @@
             if (pushState) { window.history.pushState({}, "", window.location.pathname); }
         }
 
-        document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
-    </script>
+        document.getElementById('arama').addEventListener('input', (e) => {
+    const aramaTerimi = temizle(e.target.value); // Yazılanı temizle
+    
+    const filtrelenmisEserler = eserler.filter(item => {
+        // Eserin her bilgisini temizleyerek kontrol et
+        const ad = temizle(item.ad || item.eserAdı);
+        const bestekar = temizle(item.bestekâr || item.bestekar);
+        const makam = temizle(item.makam);
+        const gufte = temizle(item.güftekâr || item.güfte);
+
+        return ad.includes(aramaTerimi) || 
+               bestekar.includes(aramaTerimi) || 
+               makam.includes(aramaTerimi) ||
+               gufte.includes(aramaTerimi);
+    });
+
+    renderEserler(filtrelenmisEserler); 
+});
+    <script>
+    // --- 1. ADIM: TEMİZLİKÇİ (Senin yazdığın kısım) ---
+    function temizle(metin) {
+        if (!metin) return "";
+        return metin.toString()
+            .replace(/İ/g, "i").replace(/I/g, "i")
+            .toLowerCase()
+            .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
+            .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+            .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
+            .trim();
+    }
+
+    // --- 2. ADIM: LİSTELEME VE ARAMA (Sağlam versiyon) ---
+    function listele(kelime = "") {
+        const aramaTerimi = temizle(kelime); // Yazılanı temizlikçiye yolla
+        
+        const filtrelenmis = eserler.filter(item => {
+            // Eserin bilgilerini temizleyip arama terimiyle karşılaştır
+            const ad = temizle(item.ad || item.eserAdı || "");
+            const bestekar = temizle(item.bestekâr || item.bestekar || "");
+            const makam = temizle(item.makam || "");
+            const gufte = temizle(item.güftekâr || item.güfte || "");
+
+            return ad.includes(aramaTerimi) || 
+                   bestekar.includes(aramaTerimi) || 
+                   makam.includes(aramaTerimi) ||
+                   gufte.includes(aramaTerimi);
+        });
+
+        renderEserler(filtrelenmis); // Sonuçları ekrana bas
+    }
+
+    // --- 3. ADIM: ARAMA KUTUSUNU BAĞLA ---
+    document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
+
+    // Sayfa açıldığında her şeyi göster
+    listele(""); 
+</script>
 </body>
 </html>
