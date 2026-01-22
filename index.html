@@ -113,12 +113,12 @@
             const satir = document.createElement('tr');
             satir.className = "satir-link cursor-pointer hover:bg-gray-50";
             
-            // Buradaki onclick'i kaldırıyoruz çünkü sağ tık seçeneğini engeller.
-            // Bunun yerine içeriği komple <a> etiketiyle saracağız.
-
+            // Linki eser isminin olduğu yere değil, satıra göre kurguluyoruz
             satir.innerHTML = `
                 <td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">
-                    <a href="?id=${item.id}" onclick="event.preventDefault(); detayGoster(${item.id})" class="block w-full h-full">
+                    <a href="index.html?id=${item.id}" 
+                       onclick="if(!event.ctrlKey && !event.metaKey){ event.preventDefault(); detayGoster(${item.id}); }" 
+                       class="hover:underline">
                         ${item.eser}
                     </a>
                 </td>
