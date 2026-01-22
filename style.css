@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Crimson Pro', serif; /* İşte bu satır Google'dan gelen fontu kullanmanı sağlar */
     background-color: #f4f1ea;
     color: #333;
     margin: 0;
