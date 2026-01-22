@@ -75,7 +75,7 @@
         }
 
         const eserler = [
-            {"id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": ""},
+            {"id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": "notalar/beni_bigane.pdf"},
             {"id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": ""},
             {"id": 3, "eser": "Bir perî-sîmâ güzelsin hüsnüne yoktur bahâ", "makam": "Sultânî-yegâh", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Devr-i hindî", "form": "Şarkı", "resim": ""},
             {"id": 4, "eser": "Dağda tavşanlar uyur ninni", "makam": "Hicaz", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sofyan", "form": "Ninni", "resim": ""},
@@ -145,12 +145,28 @@
                 document.getElementById('detayBestekar').innerText = eser.bestekâr;
                 document.getElementById('detayForm').innerText = eser.form;
                 
-                const notaAlani = document.getElementById('notaAlani');
-                if(eser.resim) {
-                    notaAlani.innerHTML = `<img src="${eser.resim}" class="max-w-full mx-auto shadow-inner">`;
-                } else {
-                    notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic serif text-xl uppercase tracking-widest">Nota henüz eklenmedi</div>`;
-                }
+                // --- YENİ EKLENEN PDF VE RESİM KODU BURADAN BAŞLIYOR ---
+        const notaAlani = document.getElementById('notaAlani');
+        const dosyaYolu = eser.resim; // Eser listendeki resim kısmını kullanır
+
+        if (dosyaYolu) {
+            if (dosyaYolu.toLowerCase().endsWith('.pdf')) {
+                // PDF ise pencere (iframe) içinde göster
+                notaAlani.innerHTML = `
+                    <div class="mt-4">
+                        <iframe src="${dosyaYolu}" width="100%" height="600px" class="border shadow-lg rounded bg-white"></iframe>
+                        <div class="mt-2 text-center">
+                            <a href="${dosyaYolu}" target="_blank" class="text-blue-600 underline text-sm">PDF'i Yeni Sekmede Tam Ekran Aç / İndir</a>
+                        </div>
+                    </div>`;
+            } else {
+                // Resimse normal göster
+                notaAlani.innerHTML = `<img src="${dosyaYolu}" class="max-w-full h-auto mx-auto shadow-xl rounded border">`;
+            }
+        } else {
+            // Dosya yoksa uyarı ver
+            notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic text-center uppercase tracking-widest border-2 border-dashed">Nota henüz eklenmedi</div>`;
+        }
 
                 document.getElementById('listeSayfasi').classList.add('hidden');
                 document.getElementById('detaySayfasi').classList.remove('hidden');
