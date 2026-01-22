@@ -9,14 +9,16 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
+        /* Tıklanabilir alan hissi için */
+        .satir-link:hover { background-color: #f8fafc; }
     </style>
 </head>
-<body class="bg-[#f0f2f5] min-h-screen">
+<body class="bg-[#f0f2f5] min-h-screen text-gray-900">
 
     <div id="listeSayfasi" class="p-4 md:p-8 max-w-6xl mx-auto">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="p-6 border-b border-gray-100 bg-white">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Defter-i Mûsikî Arşivi</h2>
+            <div class="p-6 border-b border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 italic serif">Defter-i Mûsikî Arşivi</h2>
                 <input type="text" id="arama" placeholder="Eser, makam, güfte veya bestekâr ara..." 
                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
             </div>
@@ -41,21 +43,21 @@
 
     <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-4xl mx-auto">
         <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
-            <span class="mr-2">←</span> Ana Sayfaya Dön
+            <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
         </button>
         
         <div class="bg-white p-6 md:p-12 rounded-xl shadow-lg border-t-8 border-amber-800">
-            <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center"></h1>
+            <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
-                <p class="flex justify-between border-b pb-2"><strong>Makam:</strong> <span id="detayMakam"></span></p>
-                <p class="flex justify-between border-b pb-2"><strong>Usûl:</strong> <span id="detayUsul"></span></p>
-                <p class="flex justify-between border-b pb-2"><strong>Güftekâr:</strong> <span id="detayGufte"></span></p>
-                <p class="flex justify-between border-b pb-2"><strong>Bestekâr:</strong> <span id="detayBestekar"></span></p>
-                <p class="flex justify-between border-b pb-2 md:col-span-2"><strong>Form:</strong> <span id="detayForm"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Makam:</strong> <span id="detayMakam"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Usûl:</strong> <span id="detayUsul"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Güftekâr:</strong> <span id="detayGufte"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Bestekâr:</strong> <span id="detayBestekar"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2 md:col-span-2"><strong>Form:</strong> <span id="detayForm"></span></p>
             </div>
 
-            <div id="notaAlani" class="mt-8 text-center bg-gray-50 rounded-lg overflow-hidden border">
+            <div id="notaAlani" class="mt-8 text-center bg-stone-50 rounded-lg overflow-hidden border border-stone-100">
                 </div>
         </div>
     </div>
@@ -85,6 +87,24 @@
             {"id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Ağır Aksak", "form": "Şarkı", "resim": ""}
         ];
 
+        // 1. Yeni sekme ve geri tuşu için URL kontrolü
+        window.addEventListener('popstate', URLKontrolEt);
+        
+        window.onload = () => {
+            URLKontrolEt();
+            listele();
+        };
+
+        function URLKontrolEt() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                detayGoster(parseInt(id), false);
+            } else {
+                anaSayfayaDon(false);
+            }
+        }
+
         function listele(filtre = '') {
             const govde = document.getElementById('liste-govdesi');
             const aramaTerimi = filtre.toLowerCase();
@@ -98,10 +118,13 @@
             govde.innerHTML = '';
             sonuc.forEach(item => {
                 const satir = document.createElement('tr');
-                satir.className = "hover:bg-blue-50 cursor-pointer transition-colors";
-                satir.onclick = () => detayGoster(item.id);
+                satir.className = "satir-link cursor-pointer transition-colors";
+                
+                // Burası hem tıklamayı hem de sağ tık linkini sağlar
                 satir.innerHTML = `
-                    <td class="px-6 py-4 font-semibold text-blue-600">${item.eser}</td>
+                    <td class="px-6 py-4 font-semibold text-blue-600">
+                        <a href="?id=${item.id}" onclick="event.preventDefault(); detayGoster(${item.id})" class="hover:underline italic serif text-lg">${item.eser}</a>
+                    </td>
                     <td class="px-6 py-4 text-gray-600">${item.güfte || "Belirsiz"}</td>
                     <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
                     <td class="px-6 py-4 hidden md:table-cell"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold uppercase">${item.makam}</span></td>
@@ -111,7 +134,7 @@
             });
         }
 
-        function detayGoster(id) {
+        function detayGoster(id, pushState = true) {
             const eser = eserler.find(e => e.id === id);
             if (eser) {
                 document.getElementById('detayAd').innerText = eser.eser;
@@ -125,22 +148,28 @@
                 if(eser.resim) {
                     notaAlani.innerHTML = `<img src="${eser.resim}" class="max-w-full mx-auto shadow-inner">`;
                 } else {
-                    notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic serif text-2xl uppercase tracking-widest">Nota henüz eklenmedi</div>`;
+                    notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic serif text-xl uppercase tracking-widest">Nota henüz eklenmedi</div>`;
                 }
 
                 document.getElementById('listeSayfasi').classList.add('hidden');
                 document.getElementById('detaySayfasi').classList.remove('hidden');
+                
+                if (pushState) {
+                    window.history.pushState({id: id}, "", `?id=${id}`);
+                }
                 window.scrollTo(0,0);
             }
         }
 
-        function anaSayfayaDon() {
+        function anaSayfayaDon(pushState = true) {
             document.getElementById('detaySayfasi').classList.add('hidden');
             document.getElementById('listeSayfasi').classList.remove('hidden');
+            if (pushState) {
+                window.history.pushState({}, "", window.location.pathname);
+            }
         }
 
         document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
-        window.onload = () => listele();
     </script>
 </body>
 </html>
