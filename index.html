@@ -20,49 +20,49 @@
         </header>
 
         <div class="paper p-6 mb-8">
-            <input type="text" placeholder="Eser, Bestekâr veya Makam ara..." 
+            <input type="text" id="aramaKutusu" placeholder="Eser, Bestekâr veya Makam ara..." 
                    class="w-full p-4 border-2 border-stone-200 rounded-lg focus:outline-none focus:border-amber-700 text-lg">
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-            <div class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-transform cursor-pointer">
-                <h3 class="text-xl font-bold text-stone-800">Yine bir Gülnihal</h3>
-                <p class="text-stone-600">Makam: Rast | Usul: Semai</p>
-                <p class="text-stone-500 text-sm italic">Bestekâr: Hammâmîzâde İsmâil Dede Efendi</p>
-            </div>
+        <div id="listeAlani" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
             </div>
     </div>
+
     <script src="data.js"></script>
-<script>
-    const aramaKutusu = document.querySelector('input');
-    const listeAlani = document.querySelector('.grid');
 
-    function eserleriGoster(liste) {
-        listeAlani.innerHTML = '';
-        liste.forEach(eser => {
-            listeAlani.innerHTML += `
-                <div class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-transform cursor-pointer">
-                    <h3 class="text-xl font-bold text-stone-800">${eser.ad}</h3>
-                    <p class="text-stone-600">Makam: ${eser.makam} | Usul: ${eser.usul}</p>
-                    <p class="text-stone-500 text-sm italic">Bestekâr: ${eser.bestekar}</p>
-                </div>
-            `;
+    <script>
+        const aramaKutusu = document.getElementById('aramaKutusu');
+        const listeAlani = document.getElementById('listeAlani');
+
+        function eserleriGoster(liste) {
+            listeAlani.innerHTML = ''; // Önce temizle
+            liste.forEach(eser => {
+                // Her eser bir link olarak ekleniyor
+                listeAlani.innerHTML += `
+                    <a href="eser.html?id=${eser.id}" class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-all duration-300 cursor-pointer block no-underline">
+                        <h3 class="text-xl font-bold text-stone-800">${eser.ad}</h3>
+                        <p class="text-stone-600">Makam: ${eser.makam} | Usul: ${eser.usul}</p>
+                        <p class="text-stone-500 text-sm italic">Bestekâr: ${eser.bestekar}</p>
+                    </a>
+                `;
+            });
+        }
+
+        // Sayfa ilk açıldığında data.js içindeki tüm eserleri göster
+        if (typeof eserler !== 'undefined') {
+            eserleriGoster(eserler);
+        }
+
+        // Arama yapıldığında listeyi anlık güncelle
+        aramaKutusu.addEventListener('input', (e) => {
+            const terim = e.target.value.toLowerCase();
+            const suzulenler = eserler.filter(eser => 
+                eser.ad.toLowerCase().includes(terim) || 
+                eser.bestekar.toLowerCase().includes(terim) ||
+                eser.makam.toLowerCase().includes(terim)
+            );
+            eserleriGoster(suzulenler);
         });
-    }
-
-    // İlk açılışta hepsini göster
-    eserleriGoster(eserler);
-
-    // Arama yapınca filtrele
-    aramaKutusu.addEventListener('input', (e) => {
-        const terim = e.target.value.toLowerCase();
-        const suzulenler = eserler.filter(eser => 
-            eser.ad.toLowerCase().includes(terim) || 
-            eser.bestekar.toLowerCase().includes(terim) ||
-            eser.makam.toLowerCase().includes(terim)
-        );
-        eserleriGoster(suzulenler);
-    });
-</script>
+    </script>
 </body>
 </html>
