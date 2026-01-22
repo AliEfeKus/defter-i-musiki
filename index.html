@@ -183,7 +183,7 @@
     renderEserler(filtrelenmisEserler); 
 });
     <script>
-    // --- 1. ADIM: TEMİZLİKÇİ (Senin yazdığın kısım) ---
+    // --- 1. ADIM: TEMİZLİKÇİ ---
     function temizle(metin) {
         if (!metin) return "";
         return metin.toString()
@@ -195,12 +195,11 @@
             .trim();
     }
 
-    // --- 2. ADIM: LİSTELEME VE ARAMA (Sağlam versiyon) ---
+    // --- 2. ADIM: LİSTELEME VE ARAMA FONKSİYONU ---
     function listele(kelime = "") {
-        const aramaTerimi = temizle(kelime); // Yazılanı temizlikçiye yolla
+        const aramaTerimi = temizle(kelime);
         
         const filtrelenmis = eserler.filter(item => {
-            // Eserin bilgilerini temizleyip arama terimiyle karşılaştır
             const ad = temizle(item.ad || item.eserAdı || "");
             const bestekar = temizle(item.bestekâr || item.bestekar || "");
             const makam = temizle(item.makam || "");
@@ -212,14 +211,19 @@
                    gufte.includes(aramaTerimi);
         });
 
-        renderEserler(filtrelenmis); // Sonuçları ekrana bas
+        // Ekrana basan fonksiyonu çağırıyoruz
+        renderEserler(filtrelenmis);
     }
 
-    // --- 3. ADIM: ARAMA KUTUSUNU BAĞLA ---
-    document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
+    // --- 3. ADIM: ARAMA KUTUSUNU DİNLE ---
+    // Eğer HTML'deki input id'si 'arama' ise:
+    const aramaInput = document.getElementById('arama');
+    if (aramaInput) {
+        aramaInput.addEventListener('input', (e) => listele(e.target.value));
+    }
 
-    // Sayfa açıldığında her şeyi göster
-    listele(""); 
+    // Sayfa ilk açıldığında listeyi doldur
+    listele("");
 </script>
 </body>
 </html>
