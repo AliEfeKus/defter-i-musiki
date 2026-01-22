@@ -3,67 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defter-i Mûsikî</title>
+    <title>Defter-i Mûsikî | Tanburî Cemil Bey Arşivi</title>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Crimson Pro', serif; background-color: #f4f1ea; color: #333; padding: 20px; }
-        header { text-align: center; margin-bottom: 30px; }
-        h1 { color: #5d4037; font-size: 2.5rem; margin-bottom: 20px; }
-        
+        body { font-family: 'Crimson Pro', serif; background-color: #f4f1ea; color: #333; padding: 20px; line-height: 1.6; }
+        header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #bcaaa4; padding-bottom: 20px; }
+        h1 { color: #5d4037; font-size: 2.8rem; margin-bottom: 10px; }
+        p.subtitle { font-style: italic; color: #8d6e63; font-size: 1.2rem; }
+
         #arama { 
-            width: 100%; max-width: 500px; padding: 15px 25px; 
+            width: 100%; max-width: 600px; padding: 15px 25px; 
             border-radius: 30px; border: 1px solid #bcaaa4; 
-            display: block; margin: 0 auto; outline: none;
-            font-size: 1.1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: block; margin: 20px auto; outline: none;
+            font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: white;
         }
 
         #eser-listesi { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 25px; margin-top: 40px; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 25px; margin-top: 20px; 
         }
 
         .eser-kartı { 
-            background: white; padding: 20px; border-radius: 15px; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.06); 
-            border-top: 8px solid #8d6e63;
-            transition: transform 0.2s;
+            background: white; padding: 25px; border-radius: 15px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06); 
+            border-top: 10px solid #8d6e63;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .eser-kartı:hover { transform: translateY(-5px); }
-        .eser-kartı h3 { margin: 0 0 15px 0; color: #3e2723; font-size: 1.2rem; line-height: 1.4; }
-        .bilgi { font-size: 1rem; margin-bottom: 8px; color: #5d4037; }
-        .bilgi strong { color: #8d6e63; }
+        .eser-kartı:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .eser-kartı h3 { margin: 0 0 15px 0; color: #3e2723; font-size: 1.3rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .bilgi { font-size: 1rem; margin-bottom: 6px; }
+        .bilgi strong { color: #8d6e63; width: 80px; display: inline-block; }
+
+        .nota-link { 
+            color: white; background-color: #8d6e63; 
+            padding: 12px; border-radius: 8px; 
+            text-decoration: none; text-align: center; 
+            font-weight: 600; margin-top: 20px; 
+            transition: background 0.3s;
+        }
+        .nota-link:hover { background-color: #5d4037; }
+
+        #stats { text-align: center; margin-bottom: 20px; color: #795548; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Defter-i Mûsikî</h1>
-    <input type="text" id="arama" placeholder="Eser, makam veya bestekâr ara...">
+    <p class="subtitle">Tanburî Cemil Bey Külliyatı</p>
+    <input type="text" id="arama" placeholder="Eser adı, makam, usûl veya form ara...">
 </header>
 
+<div id="stats"></div>
 <div id="eser-listesi"></div>
 
 <script src="data.js"></script>
 <script>
     function eserleriGoster(filtre = '') {
         const liste = document.getElementById('eser-listesi');
-        if (typeof eserler === 'undefined') return;
+        const sayac = document.getElementById('stats');
+        
+        if (typeof eserler === 'undefined') {
+            liste.innerHTML = "<h2>Hata: Veri dosyası (data.js) yüklenemedi!</h2>";
+            return;
+        }
 
         const sonuc = eserler.filter(item => 
             item.eser.toLowerCase().includes(filtre.toLowerCase()) ||
             item.makam.toLowerCase().includes(filtre.toLowerCase()) ||
-            item.bestekâr.toLowerCase().includes(filtre.toLowerCase())
+            item.usul.toLowerCase().includes(filtre.toLowerCase()) ||
+            item.form.toLowerCase().includes(filtre.toLowerCase())
         );
 
+        sayac.innerText = `${sonuc.length} eser listeleniyor`;
         liste.innerHTML = '';
+
         sonuc.forEach(item => {
             const kart = document.createElement('div');
             kart.className = 'eser-kartı';
             kart.innerHTML = `
-                <h3>${item.eser}</h3>
-                <div class="bilgi"><strong>Makam:</strong> ${item.makam}</div>
-                <div class="bilgi"><strong>Bestekâr:</strong> ${item.bestekâr}</div>
+                <div>
+                    <h3>${item.eser}</h3>
+                    <div class="bilgi"><strong>Makam:</strong> ${item.makam}</div>
+                    <div class="bilgi"><strong>Bestekâr:</strong> ${item.bestekâr}</div>
+                    <div class="bilgi"><strong>Usûl:</strong> ${item.usul}</div>
+                    <div class="bilgi"><strong>Form:</strong> ${item.form}</div>
+                </div>
+                <a href="${item.kaynak}" target="_blank" class="nota-link">Eser Detayına Git →</a>
             `;
             liste.appendChild(kart);
         });
@@ -73,7 +103,10 @@
         eserleriGoster(e.target.value);
     });
 
-    window.onload = () => setTimeout(() => eserleriGoster(), 300);
+    // Sayfa yüklendiğinde verileri bas
+    window.onload = () => {
+        setTimeout(eserleriGoster, 300);
+    };
 </script>
 
 </body>
