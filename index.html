@@ -16,50 +16,44 @@
         <header class="mb-12">
             <h1 class="text-5xl md:text-7xl text-amber-900 mb-2">Defter-i Mûsıkî</h1>
             <div class="h-1 w-32 bg-amber-700 mx-auto mb-4"></div>
-            <p class="text-xl text-stone-600 italic">Klasik Türk Musikisi Nota Arşivi</p>
+            <p class="text-xl text-stone-600 italic">Klasik Türk Mûsıkîsi Nota Arşivi</p>
         </header>
 
         <div class="paper p-6 mb-8">
-            <input type="text" id="aramaKutusu" placeholder="Eser, Bestekâr veya Makam ara..." 
+            <input type="text" id="aramaKutusu" placeholder="Eser, Bestekâr, Makam veya Form ara..." 
                    class="w-full p-4 border-2 border-stone-200 rounded-lg focus:outline-none focus:border-amber-700 text-lg">
         </div>
 
-        <div id="listeAlani" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-            </div>
+        <div id="listeAlani" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left"></div>
     </div>
 
     <script src="data.js"></script>
-
     <script>
         const aramaKutusu = document.getElementById('aramaKutusu');
         const listeAlani = document.getElementById('listeAlani');
 
         function eserleriGoster(liste) {
-            listeAlani.innerHTML = ''; // Önce temizle
-            liste.forEach(eser => {
-                // Her eser bir link olarak ekleniyor
+            listeAlani.innerHTML = '';
+            liste.forEach(item => {
                 listeAlani.innerHTML += `
-                    <a href="eser.html?id=${eser.id}" class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-all duration-300 cursor-pointer block no-underline">
-                        <h3 class="text-xl font-bold text-stone-800">${eser.ad}</h3>
-                        <p class="text-stone-600">Makam: ${eser.makam} | Usul: ${eser.usul}</p>
-                        <p class="text-stone-500 text-sm italic">Bestekâr: ${eser.bestekar}</p>
+                    <a href="eser.html?id=${item.id}" class="paper p-5 border-l-4 border-amber-800 hover:scale-105 transition-all duration-300 block no-underline">
+                        <h3 class="text-xl font-bold text-stone-800">${item.eser}</h3>
+                        <p class="text-stone-600 italic">${item.makam} ${item.form} | ${item.usûl}</p>
+                        <p class="text-stone-500 text-sm mt-2">Bestekâr: ${item.bestekâr}</p>
                     </a>
                 `;
             });
         }
 
-        // Sayfa ilk açıldığında data.js içindeki tüm eserleri göster
-        if (typeof eserler !== 'undefined') {
-            eserleriGoster(eserler);
-        }
+        if (typeof eserler !== 'undefined') { eserleriGoster(eserler); }
 
-        // Arama yapıldığında listeyi anlık güncelle
         aramaKutusu.addEventListener('input', (e) => {
             const terim = e.target.value.toLowerCase();
-            const suzulenler = eserler.filter(eser => 
-                eser.ad.toLowerCase().includes(terim) || 
-                eser.bestekar.toLowerCase().includes(terim) ||
-                eser.makam.toLowerCase().includes(terim)
+            const suzulenler = eserler.filter(i => 
+                i.eser.toLowerCase().includes(terim) || 
+                i.bestekâr.toLowerCase().includes(terim) ||
+                i.makam.toLowerCase().includes(terim) ||
+                i.form.toLowerCase().includes(terim)
             );
             eserleriGoster(suzulenler);
         });
