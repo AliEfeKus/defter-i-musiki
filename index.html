@@ -8,26 +8,17 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
         .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); border: 1px solid #ddd; }
-        
         .header-section { padding: 20px; background: #fff; border-bottom: 1px solid #dee2e6; }
         .header-section h2 { margin: 0 0 15px 0; color: #4b4f56; font-size: 20px; }
-        #arama { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; outline: none; }
-        #arama:focus { border-color: #1877f2; }
-
+        #arama { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 15px; outline: none; box-sizing: border-box; }
         table { width: 100%; border-collapse: collapse; }
         th { padding: 12px 15px; text-align: left; font-size: 12px; text-transform: uppercase; color: #606770; background: #f5f6f7; border-bottom: 2px solid #dee2e6; }
         td { padding: 12px 15px; border-bottom: 1px solid #ebedf0; font-size: 14px; }
-        
-        /* Satıra tıklandığında seçildiğini belli etsin */
         tbody tr:hover { background-color: #f2f3f5; cursor: pointer; }
-        
         .eser-link { color: #1a73e8; text-decoration: none; font-weight: 600; }
-        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; background: #e7f3ff; color: #1877f2; margin-right: 5px; }
         .badge-kisi { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; background: #f2f3f5; color: #4b4f56; margin-right: 5px; }
-        
-        @media (max-width: 768px) {
-            .mobile-hide { display: none; }
-        }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; background: #e7f3ff; color: #1877f2; }
+        @media (max-width: 768px) { .mobile-hide { display: none; } }
     </style>
 </head>
 <body>
@@ -47,40 +38,48 @@
                 <th class="mobile-hide">Form / Usûl</th>
             </tr>
         </thead>
-        <tbody id="liste-govdesi">
-            </tbody>
+        <tbody id="liste-govdesi"></tbody>
     </table>
 </div>
 
-<script src="data.js"></script>
 <script>
+    // VERİLERİ DOĞRUDAN BURAYA KOYDUM Kİ GITHUB HATA VERMESİN
+    const eserler = [
+        {"id": 1, "eser": "Beni bigâne-i hâb etti keder", "makam": "Sûzinâk", "güfte": "Recâizâde Mahmut Ekrem", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Eviç", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 3, "eser": "Bir perî-sîmâ güzelsin hüsnüne yoktur bahâ", "makam": "Sultân-ı Yegâh", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Devr-i Hindî", "form": "Şarkı"},
+        {"id": 4, "eser": "Dağda tavşanlar uyur ninni", "makam": "Hicâz", "güfte": "Anonim", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Sofyan", "form": "Ninni"},
+        {"id": 5, "eser": "Def-i nâliş eylerim hep seyr-i ruhsârınla ben", "makam": "Kürdîli Hicâzkâr", "güfte": "Hasan Sâdi Bey", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 6, "eser": "Feryâd ki feryâdıma imdâd edecek yok", "makam": "Şehnâz", "güfte": "Nigâr Hanım", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Sengin Semâî", "form": "Şarkı"},
+        {"id": 7, "eser": "Gel ey sâki bana sun bir piyâle", "makam": "Segâh", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 8, "eser": "Görmek ister gözlerim her dem seni", "makam": "Hüseynî", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Devr-i Hindî", "form": "Şarkı"},
+        {"id": 9, "eser": "Gül-gonca-i ümmîd gibi gel açıl gül", "makam": "Gülizâr", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Sengin Semâî", "form": "Şarkı"},
+        {"id": 10, "eser": "Gülsitâne eyleyip tercih bir virâneyi", "makam": "Şevkefzâ", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Yürük Semâî", "form": "Şarkı"},
+        {"id": 11, "eser": "Hâtır-ı nâ-şâdı gel gör bir nefes şâdet beni", "makam": "Segâh", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Ağır Aksak", "form": "Şarkı"},
+        {"id": 12, "eser": "Hep sâye-i vaslında gönül şâd olacakken", "makam": "Hicâz", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Sengin Semâî", "form": "Şarkı"},
+        {"id": 13, "eser": "Hicrinle füzûn olmadan ahzân-ı mezâlım", "makam": "Kürdîli Hicâzkâr", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 14, "eser": "Mâtemzedeyim külbe-i ahzânımı gel gör", "makam": "Hicâz", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak", "form": "Şarkı"},
+        {"id": 15, "eser": "Nazîrin yok senin ey mâh yerde", "makam": "Eviç", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Aksak Semâî", "form": "Şarkı"},
+        {"id": 16, "eser": "Nihândır dîdeden gerçi cemâlin", "makam": "Müstear", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Yürük Semâî", "form": "Şarkı"},
+        {"id": 17, "eser": "Pür-lerze olur rûyini gördükçe cenânım", "makam": "Muhayyer", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Sengin Semâî", "form": "Şarkı"},
+        {"id": 18, "eser": "Sen gül eğlen şâd-mân ol", "makam": "Mâhur", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Ağır Aksak", "form": "Şarkı"},
+        {"id": 19, "eser": "Sevdim seni ey işve-bâz", "makam": "Nihâvend", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Semâî", "form": "Şarkı"},
+        {"id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güfte": "Belirsiz", "bestekâr": "Tanbûrî Cemil Bey", "usul": "Ağır Aksak", "form": "Şarkı"}
+    ];
+
     function listele(filtre = '') {
         const govde = document.getElementById('liste-govdesi');
         const aramaTerimi = filtre.toLowerCase();
-        
-        // Verilerin yüklendiğinden emin olalım
-        if (typeof eserler === 'undefined') {
-            govde.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Veri dosyası (data.js) yüklenemedi.</td></tr>';
-            return;
-        }
-
         const sonuc = eserler.filter(item => 
             (item.eser || "").toLowerCase().includes(aramaTerimi) ||
             (item.makam || "").toLowerCase().includes(aramaTerimi) ||
             (item.bestekâr || "").toLowerCase().includes(aramaTerimi) ||
             (item.güfte || "").toLowerCase().includes(aramaTerimi)
         );
-
         govde.innerHTML = '';
-        
         sonuc.forEach(item => {
             const satir = document.createElement('tr');
-            
-            // Satıra tıklanınca detay.html'i yeni sekmede açar
-            satir.onclick = () => {
-                window.open(`detay.html?id=${item.id}`, '_blank');
-            };
-            
+            satir.onclick = () => window.open(`detay.html?id=${item.id}`, '_blank');
             satir.innerHTML = `
                 <td><span class="eser-link">${item.eser}</span></td>
                 <td><span class="badge-kisi">${item.güfte || "Belirsiz"}</span></td>
@@ -92,12 +91,8 @@
         });
     }
 
-    // Arama kutusuna her harf girildiğinde listeyi yenile
     document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
-    
-    // Sayfa ilk açıldığında listeyi dök
     window.onload = () => listele();
 </script>
-
 </body>
 </html>
