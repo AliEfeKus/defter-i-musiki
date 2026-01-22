@@ -4,21 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defter-i Mûsikî | Tanbûrî Cemil Bey Eserleri Arşivi</title>
-<meta name="description" content="Tanbûrî Cemil Bey'in tüm eserlerini içeren dijital nota arşivi. Makam, usûl, güfte ve form bilgilerine anında ulaşın.">
-<meta name="keywords" content="Tanbûrî Cemil Bey, mûsikî arşivi, Türk sanat müziği notaları, makamlar, usûller, nota defteri">
-<meta name="author" content="Defter-i Mûsikî">
-
-<meta property="og:title" content="Defter-i Mûsikî | Tanbûrî Cemil Bey Arşivi">
-<meta property="og:description" content="Klasik Türk Mûsikîsi'nin dâhisi Tanbûrî Cemil Bey'in eserleri burada.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://defter-i-musiki.vercel.app/">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
         .satir-link:hover { background-color: #f8fafc; }
-        /* Makamların sadece ilk harfini büyük yapan özel sınıf */
         .makam-format { text-transform: lowercase; display: inline-block; }
         .makam-format::first-letter { text-transform: uppercase; }
     </style>
@@ -37,11 +28,11 @@
                 <table class="w-full text-left border-collapse text-sm">
                     <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
                         <tr>
-                            <th class="px-6 py-4 text-gray-400">Eser Başlığı</th>
-                            <th class="px-6 py-4 text-gray-400">Güftekâr</th>
-                            <th class="px-6 py-4 text-gray-400">Bestekâr</th>
-                            <th class="px-6 py-4 hidden md:table-cell text-gray-400">Makam</th>
-                            <th class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">Form / Usûl</th>
+                            <th class="px-6 py-4">Eser Başlığı</th>
+                            <th class="px-6 py-4">Güftekâr</th>
+                            <th class="px-6 py-4">Bestekâr</th>
+                            <th class="px-6 py-4 hidden md:table-cell">Makam</th>
+                            <th class="px-6 py-4 hidden md:table-cell text-right font-mono">Form / Usûl</th>
                         </tr>
                     </thead>
                     <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white"></tbody>
@@ -71,6 +62,7 @@
     </div>
 
     <script>
+        // Senin Kopyaladığın Eser Bilgileri
         const eserler = [
             {"id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": ""},
             {"id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": ""},
@@ -94,23 +86,28 @@
             {"id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "resim": ""}
         ];
 
-        window.addEventListener('popstate', URLKontrolEt);
-        window.onload = () => { URLKontrolEt(); listele(); };
-
-        function URLKontrolEt() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
-            if (id) { detayGoster(parseInt(id), false); } else { anaSayfayaDon(false); }
+        // Temizlikçi Fonksiyon
+        function temizle(metin) {
+            if (!metin) return "";
+            return metin.toString()
+                .replace(/İ/g, "i").replace(/I/g, "i")
+                .toLowerCase()
+                .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
+                .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+                .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
+                .trim();
         }
 
+        // Listeleme Fonksiyonu
         function listele(filtre = '') {
             const govde = document.getElementById('liste-govdesi');
-            const aramaTerimi = filtre.toLowerCase();
+            const aramaTerimi = temizle(filtre);
+            
             const sonuc = eserler.filter(item => 
-                (item.eser || "").toLowerCase().includes(aramaTerimi) ||
-                (item.makam || "").toLowerCase().includes(aramaTerimi) ||
-                (item.bestekâr || "").toLowerCase().includes(aramaTerimi) ||
-                (item.güfte || "").toLowerCase().includes(aramaTerimi)
+                temizle(item.eser).includes(aramaTerimi) ||
+                temizle(item.makam).includes(aramaTerimi) ||
+                temizle(item.bestekâr).includes(aramaTerimi) ||
+                temizle(item.güftekâr || "").includes(aramaTerimi)
             );
 
             govde.innerHTML = '';
@@ -121,12 +118,10 @@
                     <td class="px-6 py-4 font-semibold text-blue-600">
                         <a href="?id=${item.id}" onclick="event.preventDefault(); detayGoster(${item.id})" class="hover:underline italic serif text-lg">${item.eser}</a>
                     </td>
-                    <td class="px-6 py-4 text-gray-600">${item.güftekâr || item.güfte || "Mechul"}</td>
+                    <td class="px-6 py-4 text-gray-600">${item.güftekâr || "Mechul"}</td>
                     <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
                     <td class="px-6 py-4 hidden md:table-cell text-gray-600">
-                        <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold makam-format">
-                            ${item.makam}
-                        </span>
+                        <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold makam-format">${item.makam}</span>
                     </td>
                     <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usûl}</td>
                 `;
@@ -139,8 +134,8 @@
             if (eser) {
                 document.getElementById('detayAd').innerText = eser.eser;
                 document.getElementById('detayMakam').innerText = eser.makam;
-                document.getElementById('detayGufte').innerText = eser.güftekâr || eser.güfte || "Mechul";
-                document.getElementById('detayUsul').innerText = eser.usûl || eser.usul || "-";
+                document.getElementById('detayGufte').innerText = eser.güftekâr || "Mechul";
+                document.getElementById('detayUsul').innerText = eser.usûl || "-";
                 document.getElementById('detayBestekar').innerText = eser.bestekâr;
                 document.getElementById('detayForm').innerText = eser.form;
                 
@@ -164,66 +159,15 @@
             if (pushState) { window.history.pushState({}, "", window.location.pathname); }
         }
 
-        document.getElementById('arama').addEventListener('input', (e) => {
-    const aramaTerimi = temizle(e.target.value); // Yazılanı temizle
-    
-    const filtrelenmisEserler = eserler.filter(item => {
-        // Eserin her bilgisini temizleyerek kontrol et
-        const ad = temizle(item.ad || item.eserAdı);
-        const bestekar = temizle(item.bestekâr || item.bestekar);
-        const makam = temizle(item.makam);
-        const gufte = temizle(item.güftekâr || item.güfte);
+        function URLKontrolEt() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) { detayGoster(parseInt(id), false); } else { anaSayfayaDon(false); }
+        }
 
-        return ad.includes(aramaTerimi) || 
-               bestekar.includes(aramaTerimi) || 
-               makam.includes(aramaTerimi) ||
-               gufte.includes(aramaTerimi);
-    });
-
-    renderEserler(filtrelenmisEserler); 
-});
-    <script>
-    // --- 1. ADIM: TEMİZLİKÇİ ---
-    function temizle(metin) {
-        if (!metin) return "";
-        return metin.toString()
-            .replace(/İ/g, "i").replace(/I/g, "i")
-            .toLowerCase()
-            .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
-            .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
-            .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
-            .trim();
-    }
-
-    // --- 2. ADIM: LİSTELEME VE ARAMA FONKSİYONU ---
-    function listele(kelime = "") {
-        const aramaTerimi = temizle(kelime);
-        
-        const filtrelenmis = eserler.filter(item => {
-            const ad = temizle(item.ad || item.eserAdı || "");
-            const bestekar = temizle(item.bestekâr || item.bestekar || "");
-            const makam = temizle(item.makam || "");
-            const gufte = temizle(item.güftekâr || item.güfte || "");
-
-            return ad.includes(aramaTerimi) || 
-                   bestekar.includes(aramaTerimi) || 
-                   makam.includes(aramaTerimi) ||
-                   gufte.includes(aramaTerimi);
-        });
-
-        // Ekrana basan fonksiyonu çağırıyoruz
-        renderEserler(filtrelenmis);
-    }
-
-    // --- 3. ADIM: ARAMA KUTUSUNU DİNLE ---
-    // Eğer HTML'deki input id'si 'arama' ise:
-    const aramaInput = document.getElementById('arama');
-    if (aramaInput) {
-        aramaInput.addEventListener('input', (e) => listele(e.target.value));
-    }
-
-    // Sayfa ilk açıldığında listeyi doldur
-    listele("");
-</script>
+        window.addEventListener('popstate', URLKontrolEt);
+        window.onload = () => { URLKontrolEt(); listele(); };
+        document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
+    </script>
 </body>
 </html>
