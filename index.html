@@ -19,9 +19,9 @@
     <div id="listeSayfasi" class="p-4 md:p-8 max-w-6xl mx-auto">
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div class="p-6 border-b border-gray-100">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 italic serif">Defter-i Mûsikî Arşivi</h2>
-                <input type="text" id="arama" placeholder="Eser, bestekâr veya makam arayın" 
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all text-base">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 italic serif text-center">Defter-i Mûsikî Arşivi</h2>
+                <input type="text" id="arama" placeholder="Eser, makam veya bestekâr ara..." 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
             </div>
             
             <div class="overflow-x-auto">
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-4xl mx-auto">
+    <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-5xl mx-auto">
         <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
             <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
         </button>
@@ -50,32 +50,28 @@
             <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Makam:</strong> <span id="detayMakam" class="makam-format"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Makam:</strong> <span id="detayMakam"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Usûl:</strong> <span id="detayUsul"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Güftekâr:</strong> <span id="detayGufte"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>Bestekâr:</strong> <span id="detayBestekar"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2 md:col-span-2"><strong>Form:</strong> <span id="detayForm"></span></p>
             </div>
 
-            <div id="notaAlani" class="mt-8 text-center bg-stone-50 rounded-lg overflow-hidden border border-stone-100"></div>
+            <div id="notaAlani" class="mt-8"></div>
         </div>
     </div>
 
     <script>
-        // Şapkaları temizleyen akıllı fonksiyon
         function temizle(metin) {
             if (!metin) return "";
-            return metin.toString()
-                .replace(/İ/g, "i").replace(/I/g, "i")
-                .toLowerCase()
+            return metin.toString().replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
                 .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
                 .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
-                .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c")
-                .trim();
+                .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").trim();
         }
 
         const eserler = [
-            {"id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": "notalar/beni_bigane.pdf"},
+            {"id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": "Beni bîgâne-i hâb etti keder.pdf"},
             {"id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "resim": ""},
             {"id": 3, "eser": "Bir perî-sîmâ güzelsin hüsnüne yoktur bahâ", "makam": "Sultânî-yegâh", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Devr-i hindî", "form": "Şarkı", "resim": ""},
             {"id": 4, "eser": "Dağda tavşanlar uyur ninni", "makam": "Hicaz", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sofyan", "form": "Ninni", "resim": ""},
@@ -100,39 +96,27 @@
         function listele(filtre = '') {
             const govde = document.getElementById('liste-govdesi');
             const aramaTerimi = temizle(filtre);
+            const sonuc = eserler.filter(item => temizle(item.eser).includes(aramaTerimi) || temizle(item.makam).includes(aramaTerimi));
             
-            const sonuc = eserler.filter(item => 
-                temizle(item.eser).includes(aramaTerimi) ||
-                temizle(item.makam).includes(aramaTerimi) ||
-                temizle(item.bestekâr).includes(aramaTerimi) ||
-                temizle(item.güftekâr || "").includes(aramaTerimi)
-            );
-
             govde.innerHTML = '';
             sonuc.forEach(item => {
-            const satir = document.createElement('tr');
-            satir.className = "satir-link cursor-pointer hover:bg-gray-50";
-            
-            // Linki eser isminin olduğu yere değil, satıra göre kurguluyoruz
-            satir.innerHTML = `
-                <td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">
-                    <a href="index.html?id=${item.id}" 
-                       onclick="if(!event.ctrlKey && !event.metaKey){ event.preventDefault(); detayGoster(${item.id}); }" 
-                       class="hover:underline">
-                        ${item.eser}
-                    </a>
-                </td>
-                <td class="px-6 py-4 text-gray-600">${item.güftekâr || "Mechul"}</td>
-                <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
-                <td class="px-6 py-4 hidden md:table-cell text-gray-600">
-                    <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">
-                        ${item.makam}
-                    </span>
-                </td>
-                <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usûl}</td>
-            `;
-            govde.appendChild(satir);
-        });
+                const satir = document.createElement('tr');
+                satir.className = "satir-link cursor-pointer transition-colors hover:bg-gray-50";
+                satir.innerHTML = `
+                    <td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">
+                        <a href="?id=${item.id}" onclick="if(!event.ctrlKey && !event.metaKey){ event.preventDefault(); detayGoster(${item.id}); }">
+                            ${item.eser}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 text-gray-600">${item.güftekâr || "Mechul"}</td>
+                    <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
+                    <td class="px-6 py-4 hidden md:table-cell text-gray-600">
+                        <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">${item.makam}</span>
+                    </td>
+                    <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usûl}</td>
+                `;
+                govde.appendChild(satir);
+            });
         }
 
         function detayGoster(id, pushState = true) {
@@ -144,29 +128,19 @@
                 document.getElementById('detayUsul').innerText = eser.usûl || "-";
                 document.getElementById('detayBestekar').innerText = eser.bestekâr;
                 document.getElementById('detayForm').innerText = eser.form;
-                
-                // --- YENİ EKLENEN PDF VE RESİM KODU BURADAN BAŞLIYOR ---
-        const notaAlani = document.getElementById('notaAlani');
-        const dosyaYolu = eser.resim; // Eser listendeki resim kısmını kullanır
 
-        if (dosyaYolu) {
-            if (dosyaYolu.toLowerCase().endsWith('.pdf')) {
-                // PDF ise pencere (iframe) içinde göster
-                notaAlani.innerHTML = `
-                    <div class="mt-4">
-                        <iframe src="${dosyaYolu}" width="100%" height="600px" class="border shadow-lg rounded bg-white"></iframe>
-                        <div class="mt-2 text-center">
-                            <a href="${dosyaYolu}" target="_blank" class="text-blue-600 underline text-sm">PDF'i Yeni Sekmede Tam Ekran Aç / İndir</a>
-                        </div>
-                    </div>`;
-            } else {
-                // Resimse normal göster
-                notaAlani.innerHTML = `<img src="${dosyaYolu}" class="max-w-full h-auto mx-auto shadow-xl rounded border">`;
-            }
-        } else {
-            // Dosya yoksa uyarı ver
-            notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic text-center uppercase tracking-widest border-2 border-dashed">Nota henüz eklenmedi</div>`;
-        }
+                const notaAlani = document.getElementById('notaAlani');
+                const dosya = eser.resim;
+
+                if (dosya && dosya.trim() !== "") {
+                    if (dosya.toLowerCase().endsWith('.pdf')) {
+                        notaAlani.innerHTML = `<iframe src="${dosya}" width="100%" height="700px" class="border shadow-lg rounded bg-white"></iframe>`;
+                    } else {
+                        notaAlani.innerHTML = `<img src="${dosya}" class="max-w-full h-auto mx-auto shadow-xl rounded border">`;
+                    }
+                } else {
+                    notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic text-center border-2 border-dashed">Nota henüz eklenmedi</div>`;
+                }
 
                 document.getElementById('listeSayfasi').classList.add('hidden');
                 document.getElementById('detaySayfasi').classList.remove('hidden');
@@ -181,14 +155,16 @@
             if (pushState) { window.history.pushState({}, "", window.location.pathname); }
         }
 
-        function URLKontrolEt() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
-            if (id) { detayGoster(parseInt(id), false); } else { anaSayfayaDon(false); }
-        }
+        window.addEventListener('popstate', () => {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (id) detayGoster(parseInt(id), false); else anaSayfayaDon(false);
+        });
 
-        window.addEventListener('popstate', URLKontrolEt);
-        window.onload = () => { URLKontrolEt(); listele(); };
+        window.onload = () => {
+            const id = new URLSearchParams(window.location.search).get('id');
+            if (id) detayGoster(parseInt(id), false); else listele();
+        };
+
         document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
     </script>
 </body>
