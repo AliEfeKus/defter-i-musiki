@@ -110,20 +110,29 @@
 
             govde.innerHTML = '';
             sonuc.forEach(item => {
-                const satir = document.createElement('tr');
-                satir.className = "satir-link cursor-pointer transition-colors";
-                satir.onclick = () => detayGoster(item.id);
-                satir.innerHTML = `
-                    <td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">${item.eser}</td>
-                    <td class="px-6 py-4 text-gray-600">${item.güftekâr || "Mechul"}</td>
-                    <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
-                    <td class="px-6 py-4 hidden md:table-cell text-gray-600">
-                        <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold makam-format">${item.makam}</span>
-                    </td>
-                    <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usûl}</td>
-                `;
-                govde.appendChild(satir);
-            });
+            const satir = document.createElement('tr');
+            satir.className = "satir-link cursor-pointer hover:bg-gray-50";
+            
+            // Buradaki onclick'i kaldırıyoruz çünkü sağ tık seçeneğini engeller.
+            // Bunun yerine içeriği komple <a> etiketiyle saracağız.
+
+            satir.innerHTML = `
+                <td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">
+                    <a href="?id=${item.id}" onclick="event.preventDefault(); detayGoster(${item.id})" class="block w-full h-full">
+                        ${item.eser}
+                    </a>
+                </td>
+                <td class="px-6 py-4 text-gray-600">${item.güftekâr || "Mechul"}</td>
+                <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
+                <td class="px-6 py-4 hidden md:table-cell text-gray-600">
+                    <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">
+                        ${item.makam}
+                    </span>
+                </td>
+                <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usûl}</td>
+            `;
+            govde.appendChild(satir);
+        });
         }
 
         function detayGoster(id, pushState = true) {
