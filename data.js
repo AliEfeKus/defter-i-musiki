@@ -4,9 +4,9 @@ const eserler = [
         eser: "Yine bir gülnihâl aldı bu gönlümü",
         makam: "Rast",
         usûl: "Semâî",
-        bestekâr: "Hamâmizâde İsmâil Dede Efendi",
+        bestekâr: "Hamâmîzâde İsmâil Dede Efendi",
         form: "Şarkı",
-        resim: "https://r.resimlink.com/7p4L_M.jpg" // Örnek resim
+        resim: "https://r.resimlink.com/7p4L_M.jpg"
     },
     {
         id: 2,
@@ -15,15 +15,15 @@ const eserler = [
         usûl: "Semâî",
         bestekâr: "İsmâil Hakkı Bey",
         form: "Şarkı",
-        resim: "" // Burası şimdilik boş kalabilir
+        resim: ""
     },
     {
         id: 3,
         eser: "Rindlerin Akşamı",
         makam: "Segâh",
-        usul: "Düyek",
+        usûl: "Düyek",
         bestekâr: "Münir Nurettin Selçuk",
         form: "Şarkı",
-        resim: "" // Burası şimdilik boş kalabilir
+        resim: ""
     }
 ];
