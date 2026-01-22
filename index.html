@@ -127,7 +127,11 @@
                     </td>
                     <td class="px-6 py-4 text-gray-600">${item.güfte || "Belirsiz"}</td>
                     <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
-                    <td class="px-6 py-4 hidden md:table-cell"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold uppercase">${item.makam}</span></td>
+                    <td class="px-6 py-4 hidden md:table-cell">
+                        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold capitalize">
+                            ${item.makam.toLowerCase()}
+                        </span>
+                    </td>    
                     <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form} / ${item.usul}</td>
                 `;
                 govde.appendChild(satir);
