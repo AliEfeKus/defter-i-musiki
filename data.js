@@ -1,29 +1,29 @@
 const eserler = [
     {
         id: 1,
-        ad: "Yine bir Gülnihal",
+        eser: "Yine bir gülnihâl aldı bu gönlümü",
         makam: "Rast",
-        usul: "Semai",
-        bestekar: "Hammamizade İsmail Dede Efendi",
-        tur: "Şarkı",
-        notaLink: "#"
+        usûl: "Semâî",
+        bestekâr: "Hamâmizâde İsmâil Dede Efendi",
+        form: "Şarkı",
+        resim: "https://r.resimlink.com/7p4L_M.jpg" // Örnek resim
     },
     {
         id: 2,
-        ad: "Fikrimin İnce Gülü",
-        makam: "Acemkürdi",
-        usul: "Semai",
-        bestekar: "İsmail Hakkı Bey",
-        tur: "Şarkı",
-        notaLink: "#"
+        eser: "Fikrimin ince gülü",
+        makam: "Acem-kürdî",
+        usûl: "Semâî",
+        bestekâr: "İsmâil Hakkı Bey",
+        form: "Şarkı",
+        resim: "" // Burası şimdilik boş kalabilir
     },
     {
         id: 3,
-        ad: "Dönülmez Akşamın Ufkundayız",
-        makam: "Segah",
-        usul: "Ağır Aksak",
-        bestekar: "Münir Nurettin Selçuk",
-        tur: "Şarkı",
-        notaLink: "#"
+        eser: "Rindlerin Akşamı",
+        makam: "Segâh",
+        usul: "Düyek",
+        bestekâr: "Münir Nurettin Selçuk",
+        form: "Şarkı",
+        resim: "" // Burası şimdilik boş kalabilir
     }
 ];
