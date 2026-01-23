@@ -46,8 +46,10 @@
 
         #detayGufteMetin {
             white-space: pre-line !important;
-            line-height: 2.2rem; /* Satır aralığını 3.2'den 2.2'ye çektik */
+            font-family: 'Georgia', serif; /* Eğer özel bir font tanımladıysak buraya onu yazmalısın */
+            line-height: 2.4rem; /* Küçük boyuta göre optimize edilmiş ama ferah aralık */
             color: #2d2d2d;
+            font-weight: 500; /* Biraz daha belirgin olması için */
         }
      </style>
 </head> 
@@ -102,7 +104,7 @@
                 <h3 class="serif text-center text-stone-700 uppercase text-xl mb-4 tracking-[0.3em] font-bold border-b border-stone-300 pb-2 w-max mx-auto">
                     Güfte
                 </h3>
-                <div id="detayGufteMetin" class="text-center serif text-xl italic"></div>
+                <div id="detayGufteMetin" class="text-center serif text-xl italic leading-relaxed"></div>
             </div>
 
             <div id="notaAlani"></div>
