@@ -130,17 +130,22 @@
                 document.getElementById('detayForm').innerText = eser.form;
 
                 const notaAlani = document.getElementById('notaAlani');
-                const dosya = eser.resim;
+        const dosya = eser.resim;
 
-                if (dosya && dosya.trim() !== "") {
-                    if (dosya.toLowerCase().endsWith('.pdf')) {
-                        notaAlani.innerHTML = `<iframe src="${dosya}" width="100%" height="700px" class="border shadow-lg rounded bg-white"></iframe>`;
-                    } else {
-                        notaAlani.innerHTML = `<img src="${dosya}" class="max-w-full h-auto mx-auto shadow-xl rounded border">`;
-                    }
-                } else {
-                    notaAlani.innerHTML = `<div class="p-20 text-stone-300 italic text-center border-2 border-dashed">Nota henüz eklenmedi</div>`;
-                }
+        if (dosya && dosya.trim() !== "") {
+            notaAlani.innerHTML = `
+                <div class="mt-8 p-6 bg-stone-50 rounded-lg border border-stone-200 text-center">
+                    <div class="mb-4 text-red-600">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <a href="${dosya}" target="_blank" 
+                       class="inline-flex items-center px-6 py-3 bg-red-700 text-white rounded shadow-md hover:bg-red-800 transition-all font-bold">
+                       📄 NOTAYI YENİ SEKMEDE AÇ
+                    </a>
+                </div>`;
+        } else {
+            notaAlani.innerHTML = `<div class="mt-8 p-10 border-2 border-dashed text-stone-400 text-center">Nota Henüz Eklenmedi</div>`;
+        }
 
                 document.getElementById('listeSayfasi').classList.add('hidden');
                 document.getElementById('detaySayfasi').classList.remove('hidden');
