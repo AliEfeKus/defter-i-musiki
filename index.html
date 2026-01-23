@@ -13,7 +13,7 @@
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
         .satir-link:hover { background-color: #f8fafc; }
-        .gufte-metin { white-space: pre-line; line-height: 2; }
+        ..gufte-metin { white-space: pre-line; }
     </style>
 </head> 
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
@@ -73,26 +73,38 @@
 
     <script>
         const eserler = [
-            { "id": 1, "eser": "Beni bîgâne-i hâb etti keder", "makam": "Sûznâk", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "notalar/beni_bigane.pdf", "icra": "h8e5R6--XjU", "sozler": "Beni bîgâne-i hâb etti keder\nÂh ü feryâdım eder dâha beter\nKalmadı lutf-u tesellîden eser" },
-            { "id": 2, "eser": "Bir nigâhın gönlümü etti esîr-i aşkın âh", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icra": "GE1Am4-OIlE", "sozler": "Bir nigâhın gönlümü etti esîr-i aşkın âh\nDerd-i hicrinle şeb-i târım olur gûyâ sabah" },
-            { "id": 3, "eser": "Bir perî-sîmâ güzelsin hüsnüne yoktur bahâ", "makam": "Sultânî-yegâh", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Devr-i hindî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Bir perî-sîmâ güzelsin hüsnüne yoktur bahâ" },
-            { "id": 4, "eser": "Dağda tavşanlar uyur ninni", "makam": "Hicaz", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sofyan", "form": "Ninni", "nota": "", "icra": "", "sozler": "Dağda tavşanlar uyur ninni" },
-            { "id": 5, "eser": "Def-i nâliş eylerim hep seyr-i ruhsârınla ben", "makam": "Kürdîli-hicâzkâr", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Def-i nâliş eylerim..." },
-            { "id": 6, "eser": "Feryâd ki feryâdıma imdâd edecek yok", "makam": "Şehnaz", "güftekâr": "Nigâr Hanım", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Feryâd ki feryâdıma..." },
-            { "id": 7, "eser": "Gel ey sâki bana sun bir piyâle", "makam": "Segâh", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Gel ey sâki..." },
-            { "id": 8, "eser": "Görmek ister gözlerim her dem seni", "makam": "Hüseynî", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Devr-i hindî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Görmek ister gözlerim..." },
-            { "id": 9, "eser": "Gül gonce-i ümîd gibi gel açıl ey gül", "makam": "Gülizâr", "güftekâr": "Mahmut Şevket Özdönmez", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Gül gonce-i ümîd..." },
-            { "id": 10, "eser": "Gülsitâne eyleyip tercîh bir vîrâneyi", "makam": "Şevkefzâ", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Yürük semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Gülsitâne eyleyip..." },
-            { "id": 11, "eser": "Hâtır-ı nâşâdı gel gör bir nefes şâd et beni", "makam": "Segâh", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Hâtır-ı nâşâdı gel gör..." },
-            { "id": 12, "eser": "Hep sâye-i vaslında gönül şâd olacakken", "makam": "Hicaz", "güftekâr": "Tanbûrî Cemil Bey", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Hep sâye-i vaslında..." },
-            { "id": 13, "eser": "Hicrinle füzûn olmadan ahzân-ı mezâlim", "makam": "Kürdîli-hicâzkâr", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Hicrinle füzûn..." },
-            { "id": 14, "eser": "Mâtemzedeyim külbe-i ahzânımı gel gör", "makam": "Hicaz", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Mâtemzedeyim..." },
-            { "id": 15, "eser": "Nazîrin yok senin ey mâh yerde", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Nazîrin yok senin..." },
-            { "id": 16, "eser": "Nihândır dîdeden gerçi cemâlin", "makam": "Müstear", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Yürük semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Nihândır dîdeden..." },
-            { "id": 17, "eser": "Pür-lerze olur rûyini gördükçe cenânım", "makam": "Muhayyer", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Pür-lerze olur..." },
-            { "id": 18, "eser": "Sen gül eğlen şâd-mân ol", "makam": "Mâhur", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Sen gül eğlen..." },
-            { "id": 19, "eser": "Sevdim seni ey işve-bâz", "makam": "Nihâvend", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Semâî", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Sevdim seni..." },
-            { "id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "nota": "", "icra": "", "sozler": "Var iken zâtında..." }
+            {
+                "id": 1,
+                "eser": "Beni bîgâne-i hâb etti keder",
+                "makam": "Sûznâk",
+                "güftekâr": "Mechul",
+                "bestekâr": "Tanbûrî Cemil Bey",
+                "usûl": "Aksak",
+                "form": "Şarkı",
+                "nota": "notalar/beni_bigane.pdf",
+                "icrâ": "https://youtu.be/h8e5R6--XjU?si=Kb_6-KZ21uKwsHBh",
+                "güfte": "Beni bîgâne-i hâb etti keder\nDüşünür âh ederim tâ-be-seher\nArtırır derdimi muzlim geceler\nDüşünür âh ederim tâ-be-seher\n\nFirkat-i yâr ile kaldım nâçâr\nOldu bin dert ile gönül bîmâr\nEtti gam hâtırımı pek âzâr\nDüşünür âh ederim tâ-be-seher"
+            },
+            { 
+                "id": 11, 
+                "eser": "Hâtır-ı nâşâdı gel gör bir nefes şâd et beni", 
+                "makam": "Segâh", 
+                "güftekâr": "Mechul", 
+                "bestekâr": "Tanbûrî Cemil Bey", 
+                "usûl": "Ağır aksak", 
+                "form": "Şarkı", "nota": "", 
+                "icrâ": "https://youtu.be/iyaAJ7eYIR8?si=JbEKaFS2ugBSlALT", 
+                "güfte": "Hâtır-ı nâşâdı gel gör bir nefes şâd et beni\nKayd-ı hicrândan a zâlim artık âzâd et beni\nHasretinle pek harâbım bârî âbâd et beni\nKayd-ı hicrândan a zâlim artık âzâd et beni\nEy cefâ-cû eyle insâf âşık-ı bîçârene\nMerhem-i lutfunla imdât eyle gel âvârene\nKayd-ı hicrândan a zâlim artık âzâd et beni" 
+            },
+            { "id": 12, "eser": "Hep sâye-i vaslında gönül şâd olacakken", "makam": "Hicaz", "güftekâr": "Tanbûrî Cemil Bey", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Hep sâye-i vaslında..." },
+            { "id": 13, "eser": "Hicrinle füzûn olmadan ahzân-ı mezâlim", "makam": "Kürdîli-hicâzkâr", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Hicrinle füzûn..." },
+            { "id": 14, "eser": "Mâtemzedeyim külbe-i ahzânımı gel gör", "makam": "Hicaz", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Mâtemzedeyim..." },
+            { "id": 15, "eser": "Nazîrin yok senin ey mâh yerde", "makam": "Evc", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Aksak semâî", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Nazîrin yok senin..." },
+            { "id": 16, "eser": "Nihândır dîdeden gerçi cemâlin", "makam": "Müstear", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Yürük semâî", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Nihândır dîdeden..." },
+            { "id": 17, "eser": "Pür-lerze olur rûyini gördükçe cenânım", "makam": "Muhayyer", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Sengin semâî", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Pür-lerze olur..." },
+            { "id": 18, "eser": "Sen gül eğlen şâd-mân ol", "makam": "Mâhur", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Sen gül eğlen..." },
+            { "id": 19, "eser": "Sevdim seni ey işve-bâz", "makam": "Nihâvend", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Semâî", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Sevdim seni..." },
+            { "id": 20, "eser": "Var iken zâtında böyle hüsn ü ân olma nihân", "makam": "Mâhur", "güftekâr": "Mechul", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Ağır aksak", "form": "Şarkı", "nota": "", "icrâ": "", "sozler": "Var iken zâtında..." }
         ];
 
         function temizle(metin) {
@@ -136,7 +148,7 @@
             document.getElementById('detayForm').innerText = eser.form;
             
             const notaAlani = document.getElementById('notaAlani');
-            let vId = eser.icra;
+            let vId = eser.icrâ;
             
             notaAlani.innerHTML = `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t pt-10">
