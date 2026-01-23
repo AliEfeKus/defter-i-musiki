@@ -16,13 +16,22 @@
 </head> 
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900">
 
-    <div id="listeSayfasi" class="p-4 md:p-8 max-w-6xl mx-auto">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="p-6 border-b border-gray-100">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4 italic serif text-center">Defter-i Mûsikî Arşivi</h2>
-                <input type="text" id="arama" placeholder="Eser, makam veya bestekâr ara..." 
-                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-            </div>
+    <div id="listeSayfasi" class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden min-h-[600px]">
+    
+    <div class="pt-10 pb-6 px-6 text-center border-b border-stone-100 bg-stone-50">
+        <h1 class="text-5xl font-bold text-stone-900 serif tracking-tighter mb-2">
+            Defter-i Mûsikî
+        </h1>
+        
+        <p class="text-xl text-stone-600 serif italic tracking-wide">
+            Klasik Türk Müziği Arşivi
+        </p>
+    </div>
+
+    <div class="p-6 border-b border-gray-100">
+        <input type="text" id="arama" onkeyup="ara()" placeholder="Eser, makam veya bestekâr ara..." 
+               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 outline-none transition-all">
+    </div>
             
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse text-sm">
