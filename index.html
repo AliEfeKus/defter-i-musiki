@@ -21,7 +21,7 @@
         </div>
 
         <div class="p-6 border-b border-gray-100">
-            <input type="text" id="arama" placeholder="Eser, makam veya bestekâr ara..." 
+            <input type="text" id="arama" onkeyup="listele(this.value)" placeholder="Eser, makam veya bestekâr ara..." 
                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 outline-none transition-all">
         </div>
             
@@ -36,7 +36,8 @@
                         <th class="px-6 py-4 hidden md:table-cell text-right font-mono">Form / Usûl</th>
                     </tr>
                 </thead>
-                <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white"></tbody>
+                <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white">
+                    </tbody>
             </table>
         </div>
     </div>
@@ -95,84 +96,8 @@
                 "form": "Şarkı",
                 "nota": "",
                 "icra": ""
-            },
-            {
-                "id": 4,
-                "eser": "Dağda tavşanlar uyur ninni",
-                "makam": "Hicaz",
-                "güftekâr": "Mechul",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Sofyan",
-                "form": "Ninni",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 5,
-                "eser": "Def-i nâliş eylerim hep seyr-i ruhsârınla ben",
-                "makam": "Kürdîli-hicâzkâr",
-                "güftekâr": "Mechul",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Aksak",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 6,
-                "eser": "Feryâd ki feryâdıma imdâd edecek yok",
-                "makam": "Şehnaz",
-                "güftekâr": "Nigâr Hanım",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Sengin semâî",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 7,
-                "eser": "Gel ey sâki bana sun bir piyâle",
-                "makam": "Segâh",
-                "güftekâr": "Mechul",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Aksak",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 8,
-                "eser": "Görmek ister gözlerim her dem seni",
-                "makam": "Hüseynî",
-                "güftekâr": "Mechul",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Devr-i hindî",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 9,
-                "eser": "Gül gonce-i ümîd gibi gel açıl ey gül",
-                "makam": "Gülizâr",
-                "güftekâr": "Mahmut Şevket Özdönmez",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Sengin semâî",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
-            },
-            {
-                "id": 10,
-                "eser": "Gülsitâne eyleyip tercîh bir vîrâneyi",
-                "makam": "Şevkefzâ",
-                "güftekâr": "Mechul",
-                "bestekâr": "Tanbûrî Cemil Bey",
-                "usûl": "Yürük semâî",
-                "form": "Şarkı",
-                "nota": "",
-                "icra": ""
             }
+            // Diğer eserleri bu formatta virgül ile ayırarak buraya ekleyebilirsin.
         ];
 
         function temizle(metin) {
@@ -185,6 +110,7 @@
 
         function listele(filtre = '') {
             const govde = document.getElementById('liste-govdesi');
+            if (!govde) return;
             const aramaTerimi = temizle(filtre);
             const sonuc = eserler.filter(item => 
                 temizle(item.eser).includes(aramaTerimi) || 
@@ -218,30 +144,23 @@
                 document.getElementById('detayForm').innerText = eser.form;
 
                 const notaAlani = document.getElementById('notaAlani');
-                let videoId = "";
-                
-                if(eser.icra) {
-                    if(eser.icra.includes("v=")) videoId = eser.icra.split("v=")[1].split("&")[0];
-                    else if(eser.icra.includes("youtu.be/")) videoId = eser.icra.split("youtu.be/")[1].split("?")[0];
-                }
+                let vId = "";
+                if(eser.icra && eser.icra.includes("v=")) vId = eser.icra.split("v=")[1].split("&")[0];
+                else if(eser.icra && eser.icra.includes("youtu.be/")) vId = eser.icra.split("youtu.be/")[1].split("?")[0];
 
                 notaAlani.innerHTML = `
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 mt-10 border-t border-stone-200">
                         <div class="flex flex-col items-center justify-center p-8 border-b lg:border-b-0 lg:border-r border-stone-200 bg-stone-50/50">
                             ${eser.nota ? `
-                                <a href="${eser.nota}" target="_blank" class="group text-center transition-transform hover:scale-105">
-                                    <div class="mb-4 text-red-700/80 group-hover:text-red-700">
-                                        <svg class="w-20 h-20 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-6-6H7zm7 1.5L18.5 9H14V3.5zM8 11h8v2H8v-2zm0 4h8v2H8v-2z"/></svg>
-                                    </div>
+                                <a href="${eser.nota}" target="_blank" class="group text-center">
+                                    <div class="mb-4 text-red-700/80"><svg class="w-20 h-20 mx-auto" fill="currentColor" viewBox="0 0 24 24"><path d="M7 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-6-6H7zm7 1.5L18.5 9H14V3.5zM8 11h8v2H8v-2zm0 4h8v2H8v-2z"/></svg></div>
                                     <span class="serif italic text-lg text-stone-700 border-b border-stone-300 pb-1">Notayı Görüntüle</span>
-                                </a>` : `<span class="text-stone-400 italic">Nota henüz yüklenmedi</span>`}
+                                </a>` : `<span class="text-stone-400 italic">Nota mevcut değil</span>`}
                         </div>
                         <div class="flex items-center justify-center p-8 bg-white">
-                            ${videoId ? `
-                                <div class="w-full max-w-sm shadow-xl rounded-lg overflow-hidden border border-stone-200">
-                                    <div class="aspect-video">
-                                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
-                                    </div>
+                            ${vId ? `
+                                <div class="w-full max-w-sm shadow-xl rounded-lg overflow-hidden border border-stone-200 aspect-video">
+                                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>
                                 </div>` : `<span class="text-stone-400 serif italic">İcra kaydı bulunamadı</span>`}
                         </div>
                     </div>`;
@@ -257,8 +176,10 @@
             document.getElementById('listeSayfasi').classList.remove('hidden');
         }
 
-        document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
-        window.onload = listele;
+        // Sayfa yüklendiğinde listeyi çalıştır
+        window.onload = function() {
+            listele();
+        };
     </script>
 </body>
 </html>
