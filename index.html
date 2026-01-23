@@ -18,6 +18,22 @@
             white-space: pre-line !important;
             display: block !important;
             min-height: 50px; /* İçerik boş olsa bile alanı görmen için geçici */
+        .kagit-efekti {
+                background-color: #fdf6e3; /* Eski kağıt rengi */
+                background-image: radial-gradient(#d1b280 0.5px, transparent 0.5px); /* Hafif doku noktaları */
+                background-size: 20px 20px;
+                box-shadow: inset 0 0 50px rgba(0,0,0,0.05), 5px 5px 15px rgba(0,0,0,0.1);
+                border: 1px solid #e2d1b0;
+                position: relative;
+        }
+
+/* Kağıdın kenarına ince bir hat ekleyelim */
+        .kagit-efekti::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                border: 1px solid rgba(255,255,255,0.5);
+                pointer-events: none;
         }
     </style>
 </head> 
@@ -67,9 +83,9 @@
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>FORM:</strong> <span id="detayForm"></span></p>
             </div>
 
-            <div id="gufteAlani" class="mt-10 p-8 bg-stone-50 rounded-xl border border-stone-100">
-                <h3 class="serif text-center text-stone-400 uppercase text-xs mb-6 tracking-widest font-bold">Güfte</h3>
-                <div id="detayGufteMetin" class="text-center serif text-2xl text-stone-800 italic leading-relaxed"></div>
+            <div id="gufteAlani" class="mt-10 p-10 kagit-efekti rounded-sm mx-auto max-w-2xl">
+                <h3 class="serif text-center text-stone-500 uppercase text-xs mb-8 tracking-[0.2em] font-bold opacity-70">Güfte</h3>
+                <div id="detayGufteMetin" class="text-center serif text-2xl text-stone-900 italic leading-[2.5rem]"></div>
             </div>
 
             <div id="notaAlani"></div>
