@@ -15,6 +15,25 @@
         .serif { font-family: 'Crimson Pro', serif; }
         .satir-link:hover { background-color: #f8fafc; }
 
+        .nota-arkaplan-konteynir {
+            background-image: url('senin-dosya-adin.jpg'); /* Buraya fotoğrafın yolunu yazacaksın */
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0; /* Butonun etrafındaki boşluk */
+            margin-top: 30px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.2); /* Fotoğrafı biraz karartıp derinlik verir */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+         /* Butonu fotoğrafın üzerinde daha okunaklı yapmak için */
+        #notaLink {
+            backdrop-filter: blur(2px); /* Arkadaki kağıdı çok hafif flulaştırır, şık durur */
+            background-color: rgba(28, 25, 23, 0.9); /* Stone-900 renginin hafif şeffaf hali */
+         }
         /* Güfte Alanı - Karizmatik Kağıt Efekti */
         .kagit-efekti {
             background-color: #fdf6e3; 
@@ -181,14 +200,27 @@
             }
             
             notaAlani.innerHTML = `
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t pt-10 mt-10">
-                <div class="flex flex-col items-center justify-center p-8 bg-white border rounded-lg shadow-sm">
-                    ${eser.nota ? `<a href="${eser.nota}" target="_blank" class="underline text-red-700 font-bold serif text-xl">Notayı Görüntüle</a>` : "<span class='text-gray-400'>Nota Yok</span>"}
-                </div>
-                <div class="flex items-center justify-center p-4 bg-white border rounded-lg shadow-sm">
-                    ${vId ? `<div class="w-full aspect-video"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe></div>` : "<span class='text-gray-400'>Video Kaydı Yok</span>"}
-                </div>
-            </div>`;
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-stone-200 pt-10 mt-10">
+                    <div class="nota-arkaplan-konteynir">
+                        ${eser.nota ? `
+                            <a id="notaLink" href="${eser.nota}" target="_blank" 
+                               class="px-10 py-4 text-stone-100 serif text-xl tracking-widest uppercase rounded-sm shadow-2xl hover:scale-105 transition-all border border-stone-500">
+                               Notayı Görüntüle
+                            </a>
+                        ` : "<span class='text-stone-400 serif italic'>Nota Arşivi Hazırlanıyor</span>"}
+                    </div>
+
+                    <div class="flex items-center justify-center p-2 bg-stone-900 rounded-sm shadow-xl border-4 border-stone-800">
+                        ${vId ? `
+                            <div class="w-full aspect-video">
+                                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}" 
+                                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+                        ` : "<span class='text-stone-500 serif'>Video Kaydı Bulunamadı</span>"}
+                    </div>
+                </div>`;
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
