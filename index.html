@@ -151,30 +151,36 @@
             document.getElementById('detayGufte').innerText = eser.güftekâr;
             document.getElementById('detayBestekar').innerText = eser.bestekâr;
             document.getElementById('detayForm').innerText = eser.form;
+            document.getElementById('detayGufteMetin').innerText = eser.güfte || eser.sozler || "Güfte henüz eklenmemiş.";
             
             const notaAlani = document.getElementById('notaAlani');
-            let vId = eser.icrâ;
+            let vId = "";
+            if (eser.icrâ) {
+                if (eser.icrâ.includes('v=')) {
+                    vId = eser.icrâ.split('v=')[1].split('&')[0];
+                } else if (eser.icrâ.includes('youtu.be/')) {
+                    vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                } else {
+                    vId = eser.icrâ; // Eğer sadece kod yazdıysan direkt onu kullanır
+                }
+            }
             
             notaAlani.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t pt-10">
-                    <div class="flex flex-col items-center justify-center p-8 bg-white border rounded-lg">
-                    ${eser.nota ? `<a href="${eser.nota}" target="_blank" class="underline text-red-700 font-bold">Notayı Görüntüle</a>` : "Nota Yok"}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t pt-10 mt-10">
+                <div class="flex flex-col items-center justify-center p-8 bg-white border rounded-lg shadow-sm">
+                    ${eser.nota ? `<a href="${eser.nota}" target="_blank" class="underline text-red-700 font-bold serif text-xl">Notayı Görüntüle</a>` : "<span class='text-gray-400'>Nota Yok</span>"}
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 border-t pt-10">
-                    <div class="flex flex-col items-center justify-center p-8 bg-white border rounded-lg">
-                        ${eser.nota ? `<a href="${eser.nota}" target="_blank" class="underline text-red-700 font-bold">Notayı Görüntüle</a>` : "Nota Yok"}
-                    </div>
-                    <div class="flex items-center justify-center p-4 bg-white border rounded-lg">
-                        ${vId ? `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>` : "Video Yok"}
-                    </div>
-                </div>`;
+                <div class="flex items-center justify-center p-4 bg-white border rounded-lg shadow-sm">
+                    ${vId ? `<div class="w-full aspect-video"><iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe></div>` : "<span class='text-gray-400'>Video Kaydı Yok</span>"}
+                </div>
+            </div>`;
 
-            document.getElementById('listeSayfasi').classList.add('hidden');
-            document.getElementById('detaySayfasi').classList.remove('hidden');
-            if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
-            window.scrollTo(0, 0);
-        }
+        document.getElementById('listeSayfasi').classList.add('hidden');
+        document.getElementById('detaySayfasi').classList.remove('hidden');
+        if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
+        window.scrollTo(0, 0);
     }
+}
 
     function anaSayfayaDon(pushState = true) {
         document.getElementById('detaySayfasi').classList.add('hidden');
