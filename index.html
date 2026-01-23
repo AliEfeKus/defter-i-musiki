@@ -13,7 +13,12 @@
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
         .satir-link:hover { background-color: #f8fafc; }
-        ..gufte-metin { white-space: pre-line; }
+        /* Güfte metninin satır aralıklarını ve boşluklarını tanıması için */
+        #detayGufteMetin {
+            white-space: pre-line !important;
+            display: block !important;
+            min-height: 50px; /* İçerik boş olsa bile alanı görmen için geçici */
+        }
     </style>
 </head> 
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
