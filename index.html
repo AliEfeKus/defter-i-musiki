@@ -10,42 +10,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
      <style>
+        /* Genel Fontlar */
         body { font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Crimson Pro', serif; }
         .satir-link:hover { background-color: #f8fafc; }
 
         .nota-arkaplan-konteynir {
-            background-image: url('mecmua-i-saz-u-soz-2.jpg');
+            background-image: url('mecmua-i-saz-u-soz-2.jpg'); /* Buraya fotoğrafın yolunu yazacaksın */
             background-size: cover;
             background-position: center;
+            padding: 80px 0; /* Butonun etrafındaki boşluk */
+            margin-top: 30px;
             border-radius: 8px;
             position: relative;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.2); /* Fotoğrafı biraz karartıp derinlik verir */
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #e2d1b0;
-        }
-
-        #notaLink {
-            backdrop-filter: blur(2px);
-            background-color: rgba(28, 25, 23, 0.9);
          }
+
+         /* Butonu fotoğrafın üzerinde daha okunaklı yapmak için */
+        #notaLink {
+            backdrop-filter: blur(2px); /* Arkadaki kağıdı çok hafif flulaştırır, şık durur */
+            background-color: rgba(28, 25, 23, 0.9); /* Stone-900 renginin hafif şeffaf hali */
+         }
+        /* Güfte Alanı - Karizmatik Kağıt  */
         .kagit-efekti {
             background-color: #fdf6e3; 
             border: 1px solid #e2d1b0;
             position: relative;
-            padding: 30px 20px;
+            padding: 30px 20px; /* Padding'i azalttık (üst-alt 50'den 30'a düştü) */
             border-radius: 2px 5px 2px 10px / 5px 2px 10px 2px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         #detayGufteMetin {
             white-space: pre-line !important;
-            font-family: 'Georgia', serif;
-            line-height: 2.4rem;
+            font-family: 'Georgia', serif; /* Eğer özel bir font tanımladıysak buraya onu yazmalısın */
+            line-height: 2.4rem; /* Küçük boyuta göre optimize edilmiş ama ferah aralık */
             color: #2d2d2d;
-            font-weight: 500;
+            font-weight: 500; /* Biraz daha belirgin olması için */
         }
      </style>
 </head> 
@@ -192,7 +196,7 @@
                 } else if (eser.icrâ.includes('youtu.be/')) {
                     vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
                 } else {
-                    vId = eser.icrâ;
+                    vId = eser.icrâ; // Eğer sadece kod yazdıysan direkt onu kullanır
                 }
             }
             
@@ -221,17 +225,18 @@
                 </div>
             </div>`;
 
-        document.getElementById('listeAlani').classList.remove('hidden');
-        document.getElementById('detayAlani').classList.add('hidden');
+        document.getElementById('listeSayfasi').classList.add('hidden');
+        document.getElementById('detaySayfasi').classList.remove('hidden');
         if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
         window.scrollTo(0, 0);
     }
 }
 
-    function anaSayfayaDon() {
-        if (document.getElementById('searchInput')) {
-            document.getElementById('searchInput').value = '';
-        }
+    function anaSayfayaDon(pushState = true) {
+        document.getElementById('detaySayfasi').classList.add('hidden');
+        document.getElementById('listeSayfasi').classList.remove('hidden');
+        if (pushState) window.history.pushState({}, "", window.location.pathname);
+    }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
     window.onload = () => { 
