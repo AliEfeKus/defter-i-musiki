@@ -201,29 +201,25 @@
             }
             
             notaAlani.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-stone-200 pt-10 mt-10">
-                    <div class="nota-arkaplan-konteynir">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-stone-200 pt-10 mt-10 items-start">
+                    <div class="nota-arkaplan-konteynir flex items-center justify-center overflow-hidden" style="aspect-ratio: 16 / 9;">
                         ${eser.nota ? `
-                            <a id="notaLink" href="${eser.nota}" target="_blank" 
-                               class="px-10 py-4 text-stone-100 serif text-xl tracking-widest uppercase rounded-sm shadow-2xl hover:scale-105 transition-all border border-stone-500">
+                            <a id="notaLink" href="${eser.nota}" target="_blank"
+                               class="px-8 py-3 text-stone-100 serif text-lg tracking-widest uppercase rounded-sm shadow-2xl hover:scale-105 transition-all border border-stone-500 z-10 text-center">
                                Notayı Görüntüle
                             </a>
                         ` : "<span class='text-stone-400 serif italic'>Nota Arşivi Hazırlanıyor</span>"}
                     </div>
 
-                    <div class="flex items-center justify-center bg-black rounded-sm shadow-lg overflow-hidden border border-stone-200">
+                    <div class="bg-black rounded-sm shadow-lg overflow-hidden border border-stone-200" style="aspect-ratio: 16 / 9;">
                         ${vId ? `
-                            <div class="w-full relative" style="padding-top: 56.25%;"> <iframe
-                                class="absolute top-0 left-0 w-full h-full" 
+                            <iframe class="w-full h-full"
                                 src="https://www.youtube.com/embed/${vId}?rel=0&modestbranding=1" 
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
+                                frameborder="0" allowfullscreen> 
                             </iframe>
-                        </div>
-                    ` : "<div class='p-10 text-stone-400 serif italic'>Henüz İcrâ Eklenmedi</div>"}
-                </div>
-            </div>`;
+                        ` : "<div class='flex items-center justify-center h-full text-stone-500 italic'>Henüz İcrâ Eklenmedi</div>"}
+                    </div>
+                </div>`;
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
