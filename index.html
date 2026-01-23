@@ -225,18 +225,17 @@
                 </div>
             </div>`;
 
-        document.getElementById('listeSayfasi').classList.add('hidden');
-        document.getElementById('detaySayfasi').classList.remove('hidden');
+        document.getElementById('listeAlani').classList.remove('hidden');
+        document.getElementById('detayAlani').classList.add('hidden');
         if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
         window.scrollTo(0, 0);
     }
 }
 
-    function anaSayfayaDon(pushState = true) {
-        document.getElementById('detaySayfasi').classList.add('hidden');
-        document.getElementById('listeSayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({}, "", window.location.pathname);
-    }
+    function anaSayfayaDon() {
+        if (document.getElementById('searchInput')) {
+            document.getElementById('searchInput').value = '';
+        }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
     window.onload = () => { 
