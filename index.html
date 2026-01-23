@@ -297,12 +297,29 @@
             const sonuc = eserler.filter(item => temizle(item.eser).includes(aramaTerimi) || temizle(item.makam).includes(aramaTerimi));
             govde.innerHTML = '';
             sonuc.forEach(item => {
-                const satir = document.createElement('tr');
-                satir.className = "satir-link cursor-pointer transition-colors";
-                satir.onclick = () => detayGoster(item.id);
-                satir.innerHTML = `<td class="px-6 py-4 font-semibold text-blue-600 italic serif text-lg">${item.eser}</td><td class="px-6 py-4 text-gray-600">${item.güftekâr}</td><td class="px-6 py-4 text-gray-600">${item.bestekâr}</td><td class="px-6 py-4 hidden md:table-cell"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">${item.makam}</span></td><td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">${item.form}</td>`;
-                govde.appendChild(satir);
-            });
+    const satir = document.createElement('tr');
+    satir.className = "satir-link border-b border-gray-100";
+    
+    // Satırın içine tıklandığında detay sayfasına gitmesini sağlayan link
+    satir.innerHTML = `
+        <td class="px-6 py-4">
+            <a href="?id=${item.id}" 
+               onclick="event.preventDefault(); detayGoster(${item.id});" 
+               class="block font-semibold text-blue-600 serif text-lg hover:underline">
+               ${item.eser}
+            </a>
+        </td>
+        <td class="px-6 py-4 text-gray-600">${item.güftekâr}</td>
+        <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
+        <td class="px-6 py-4 hidden md:table-cell">
+            <span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">${item.makam}</span>
+        </td>
+        <td class="px-6 py-4 hidden md:table-cell text-right text-gray-400 font-mono">
+            ${item.form}
+        </td>
+    `;
+    govde.appendChild(satir);
+});
         }
 
         function detayGoster(id, pushState = true) {
