@@ -77,32 +77,44 @@
         </div>
     </div>
 
-    <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-5xl mx-auto mt-10">
-        <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
-            <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
-        </button>
+    <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-6xl mx-auto mt-10">
+    <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+        <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+    </button>
+    
+    <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
         
-        <div class="bg-white p-6 md:p-12 rounded-xl shadow-lg border-t-8 border-amber-800">
-            <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
+        <h1 id="detayAd" class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight"></h1>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             
-            <div class="flex flex-col space-y-4 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>MAKAM:</strong> <span id="detayMakam"></span></p>
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>GÜFTEKÂR:</strong> <span id="detayGufte"></span></p>
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>BESTEKÂR:</strong> <span id="detayBestekar"></span></p>
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>USÛL:</strong> <span id="detayUsul"></span></p>
-                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>FORM:</strong> <span id="detayForm"></span></p>
+            <div class="space-y-6">
+                <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
+                    <p class="flex justify-between border-b border-stone-50 pb-1"><strong>MAKAM:</strong> <span id="detayMakam"></span></p>
+                    <p class="flex justify-between border-b border-stone-50 pb-1"><strong>BESTEKÂR:</strong> <span id="detayBestekar"></span></p>
+                    <p class="flex justify-between border-b border-stone-50 pb-1"><strong>USÛL:</strong> <span id="detayUsul"></span></p>
+                    <p class="flex justify-between border-b border-stone-50 pb-1"><strong>FORM:</strong> <span id="detayForm"></span></p>
+                </div>
+
+                <div id="gufteAlani" class="kagit-efekti p-6 rounded-sm bg-stone-50 border border-stone-100">
+                    <h3 class="serif text-center text-stone-700 uppercase text-xl mb-4 tracking-[0.2em] font-bold border-b border-stone-300 pb-2 w-max mx-auto">GÜFTE</h3>
+                    <div id="detayGufteMetin" class="text-center serif text-lg italic leading-relaxed"></div>
+                </div>
             </div>
 
-            <div id="gufteAlani" class="mt-8 kagit-efekti max-w-xl mx-auto rounded-sm">
-                <h3 class="serif text-center text-stone-700 uppercase text-2xl mb-4 tracking-[0.3em] font-bold border-b border-stone-300 pb-2 w-max mx-auto">
-                    Güfte
-                </h3>
-                <div id="detayGufteMetin" class="text-center serif text-xl italic leading-relaxed"></div>
+            <div class="flex flex-col gap-8">
+                <div id="notaAlani" class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm min-h-[200px] flex flex-col items-center justify-center">
+                    </div>
+
+                <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm">
+                    <h4 class="text-sm font-bold text-stone-400 mb-4 uppercase tracking-widest text-center">İcra</h4>
+                    <div class="aspect-video">
+                        <iframe id="detayIcra" class="w-full h-full rounded" src="" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
 
-            <div id="notaAlani"></div>
-        </div>
-    </div>
+        </div> </div> </div>
 
     <script>
         const eserler = [
