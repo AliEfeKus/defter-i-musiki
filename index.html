@@ -111,11 +111,8 @@
                 <div class="aspect-video bg-stone-100 rounded overflow-hidden">
                     <iframe id="detayIcra" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
-            </div>
-        </div>
-
-    </div> </div>
-</div>
+            </div> 
+        </div> </div> </div> </div>
 
     <script>
         const eserler = [
@@ -194,7 +191,7 @@
             document.getElementById('detayForm').innerText = eser.form;
             document.getElementById('detayGufteMetin').innerText = eser.güfte || eser.sozler || "Güfte henüz eklenmemiş.";
             
-            const notaAlani = document.getElementById('notaAlani');
+            const notaContainer = document.getElementById('notaYeniKonteyner');
             let vId = "";
             if (eser.icrâ) {
                 if (eser.icrâ.includes('v=')) {
