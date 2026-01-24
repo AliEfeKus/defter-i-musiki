@@ -29,7 +29,7 @@
             background-color: rgba(28, 25, 23, 0.9);
          }
         .kagit-efekti {
-            background-color: #fdf6e3; /* İşte o eski sarı/krem rengi */
+            background-color: #fdf6e3 !important; /* !important ekleyerek sarıyı garantiye alıyoruz */
             background-image: radial-gradient(#d4a373 0.5px, transparent 0.5px);
             background-size: 20px 20px;
             background-position: 0 0;
@@ -193,7 +193,7 @@
                             <p class="flex justify-between border-b border-stone-50 pb-1"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
                             <p class="flex justify-between border-b border-stone-50 pb-1"><strong>FORM:</strong> <span>${eser.form}</span></p>
                         </div>
-                        <div class="kagit-efekti p-6 rounded-sm bg-stone-50 border border-stone-100 shadow-inner">
+                        <div class="kagit-efekti p-6 rounded-sm border border-stone-100 shadow-inner">
                             <h3 class="serif text-center text-stone-700 uppercase text-xl mb-4 tracking-widest font-bold border-b border-stone-300 pb-2 w-max mx-auto">GÜFTE</h3>
                             <div class="text-center serif text-lg italic leading-relaxed whitespace-pre-line text-stone-800">${eser.güfte || "Güfte henüz eklenmemiş."}</div>
                         </div>
