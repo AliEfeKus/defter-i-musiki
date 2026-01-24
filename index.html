@@ -174,7 +174,6 @@
     function detayGoster(id, pushState = true) {
     const eser = eserler.find(e => e.id === id);
     if (eser) {
-        // DETAY SAYFASINI TEK PARÇADA, ÜÇLÜ PANEL (YAN YANA AMA SAĞDAKİLER ALT ALTA) OLARAK KURUYORUZ
         document.getElementById('detaySayfasi').innerHTML = `
             <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
                 <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
@@ -231,7 +230,11 @@
     function anaSayfayaDon(pushState = true) {
         document.getElementById('detaySayfasi').classList.add('hidden');
         document.getElementById('listeSayfasi').classList.remove('hidden');
+        
+        listele();
+        
         if (pushState) window.history.pushState({}, "", window.location.pathname);
+        window.scrollTo(0, 0);
     }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
