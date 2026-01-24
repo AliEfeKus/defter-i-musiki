@@ -27,25 +27,25 @@
         }
          /* Butonu fotoğrafın üzerinde daha okunaklı yapmak için */
         #notaLink {
-            backdrop-filter: blur(2px); /* Arkadaki kağıdı çok hafif flulaştırır, şık durur */
-            background-color: rgba(28, 25, 23, 0.9); /* Stone-900 renginin hafif şeffaf hali */
+            backdrop-filter: blur(2px);
+            background-color: rgba(28, 25, 23, 0.9);
          }
         /* Güfte Alanı - Karizmatik Kağıt  */
         .kagit-efekti {
             background-color: #fdf6e3; 
             border: 1px solid #e2d1b0;
             position: relative;
-            padding: 30px 20px; /* Padding'i azalttık (üst-alt 50'den 30'a düştü) */
+            padding: 30px 20px;
             border-radius: 2px 5px 2px 10px / 5px 2px 10px 2px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         #detayGufteMetin {
             white-space: pre-line !important;
-            font-family: 'Georgia', serif; /* Eğer özel bir font tanımladıysak buraya onu yazmalısın */
-            line-height: 2.4rem; /* Küçük boyuta göre optimize edilmiş ama ferah aralık */
+            font-family: 'Georgia', serif;
+            line-height: 2.4rem;
             color: #2d2d2d;
-            font-weight: 500; /* Biraz daha belirgin olması için */
+            font-weight: 500;
         }
      </style>
 </head> 
@@ -66,10 +66,10 @@
             <table class="w-full text-left border-collapse text-sm">
                 <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
                     <tr>
-                        <th class="px-6 py-4">Eser</th>
-                        <th class="px-6 py-4">Makam</th>
+                        <th class="px-6 py-4">Eser Başlığı</th>
                         <th class="px-6 py-4">Güftekâr</th>
                         <th class="px-6 py-4">Bestekâr</th>
+                        <th class="px-6 py-4">Makam</th>
                         <th class="px-6 py-4">Usûl</th>
                         <th class="px-6 py-4">Form</th>
                     </tr>
@@ -92,7 +92,6 @@
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>GÜFTEKÂR:</strong> <span id="detayGufte"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>BESTEKÂR:</strong> <span id="detayBestekar"></span></p>
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>USÛL:</strong> <span id="detayUsul"></span></p>
-
                 <p class="flex justify-between border-b border-stone-50 pb-2"><strong>FORM:</strong> <span id="detayForm"></span></p>
             </div>
 
