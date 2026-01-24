@@ -172,50 +172,54 @@
     }
 
     function detayGoster(id, pushState = true) {
-        const eser = eserler.find(e => e.id === id);
-        if (eser) {
-            document.getElementById('detayAd').innerText = eser.eser;
-            document.getElementById('detayMakam').innerText = eser.makam;
-            document.getElementById('detayUsul').innerText = eser.usûl || "Belirtilmemiş";
-            document.getElementById('detayGufte').innerText = eser.güftekâr;
-            document.getElementById('detayBestekar').innerText = eser.bestekâr;
-            document.getElementById('detayForm').innerText = eser.form;
-            document.getElementById('detayGufteMetin').innerText = eser.güfte || eser.sozler || "Güfte henüz eklenmemiş.";
+    const eser = eserler.find(e => e.id === id);
+    if (eser) {
+        // DETAY SAYFASINI TEK PARÇADA, ÜÇLÜ PANEL (YAN YANA AMA SAĞDAKİLER ALT ALTA) OLARAK KURUYORUZ
+        document.getElementById('detaySayfasi').innerHTML = `
+            <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+                <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+            </button>
             
-            const notaAlani = document.getElementById('notaAlani');
-            let vId = "";
-            if (eser.icrâ) {
-                if (eser.icrâ.includes('v=')) {
-                    vId = eser.icrâ.split('v=')[1].split('&')[0];
-                } else if (eser.icrâ.includes('youtu.be/')) {
-                    vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
-                } else {
-                    vId = eser.icrâ;
-                }
-            }
-            
-            notaAlani.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-stone-200 pt-10 mt-10 items-stretch">
-                    <div class="nota-arkaplan-konteynir flex items-center justify-center overflow-hidden border border-stone-200" style="aspect-ratio: 16 / 9; height: auto;">
-                        ${eser.nota ? `
-                            <a id="notaLink" href="${eser.nota}" target="_blank" 
-                               class="px-8 py-3 text-stone-100 serif text-lg tracking-widest uppercase rounded-sm shadow-2xl hover:scale-105 transition-all border border-stone-500 z-10 text-center">
-                               Notayı Görüntüle
-                            </a>
-                        ` : "<span class='text-stone-400 serif italic'>Nota Arşivi Hazırlanıyor</span>"}
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
+                <h1 class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight">${eser.eser}</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
+                            <p class="flex justify-between border-b border-stone-50 pb-1"><strong>MAKAM:</strong> <span>${eser.makam}</span></p>
+                            <p class="flex justify-between border-b border-stone-50 pb-1"><strong>BESTEKÂR:</strong> <span>${eser.bestekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-50 pb-1"><strong>GÜFTEKÂR:</strong> <span>${eser.güftekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-50 pb-1"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
+                            <p class="flex justify-between border-b border-stone-50 pb-1"><strong>FORM:</strong> <span>${eser.form}</span></p>
+                        </div>
+                        <div class="kagit-efekti p-6 rounded-sm bg-stone-50 border border-stone-100 shadow-inner">
+                            <h3 class="serif text-center text-stone-700 uppercase text-xl mb-4 tracking-widest font-bold border-b border-stone-300 pb-2 w-max mx-auto">GÜFTE</h3>
+                            <div class="text-center serif text-lg italic leading-relaxed whitespace-pre-line text-stone-800">${eser.güfte || "Güfte henüz eklenmemiş."}</div>
+                        </div>
                     </div>
 
-                    <div class="bg-black rounded-sm shadow-lg overflow-hidden border border-stone-200 flex" style="aspect-ratio: 16 / 9; height: auto;">
-                        ${vId ? `
-                            <iframe class="w-full h-full block" 
-                                src="https://www.youtube.com/embed/${vId}?rel=0&modestbranding=1&showinfo=0" 
-                                frameborder="0" 
-                                style="border:none; display:block;"
-                                allowfullscreen>
-                            </iframe>
-                        ` : "<div class='flex items-center justify-center w-full h-full text-stone-500 italic'>Henüz İcrâ Eklenmedi</div>"}
+                    <div class="lg:col-span-7 flex flex-col gap-8">
+                        <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md">
+                            ${eser.nota ? 
+                                `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
+                                : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Nota Arşivi Hazırlanıyor</span>`}
+                        </div>
+
+                        <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm">
+                            <h4 class="text-sm font-bold text-stone-400 mb-4 uppercase tracking-widest text-center">İcrâ</h4>
+                            <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
+                                ${eser.icrâ ? (() => {
+                                    let vId = "";
+                                    if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
+                                    else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>`;
+                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ videosu bulunamadı.</div>"}
+                            </div>
+                        </div>
                     </div>
-                </div>`;
+                </div>
+            </div>`;
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
