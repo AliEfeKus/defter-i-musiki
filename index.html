@@ -45,6 +45,22 @@
             color: #2d2d2d;
             font-weight: 500;
         }
+
+        .eser-detay-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .eser-detay-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .medya-konteyner {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
      </style>
 </head> 
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
