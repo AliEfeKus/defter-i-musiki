@@ -270,7 +270,7 @@
     window.onload = () => { 
         const id = new URLSearchParams(window.location.search).get('id'); 
         if (id) detayGoster(parseInt(id), false); else listele(); 
-    };
+    }
     document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
 </body>
