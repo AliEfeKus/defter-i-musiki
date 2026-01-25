@@ -230,12 +230,6 @@
                     </div>
 
                     <div class="lg:col-span-7 flex flex-col gap-8">
-                        <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md">
-                            ${eser.nota ? 
-                                `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
-                                : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
-                        </div>
-
                         <div class="bg-stone-50 p-4 rounded-lg border border-stone-200 shadow-sm">
                             <h4 class="text-sm font-bold text-stone-400 mb-4 uppercase tracking-widest text-center">İcrâ</h4>
                             <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
@@ -247,6 +241,13 @@
                                 })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
                             </div>
                         </div>
+
+                        <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md">
+                            ${eser.nota ? 
+                                `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
+                                : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>`;
