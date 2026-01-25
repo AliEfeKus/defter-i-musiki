@@ -198,7 +198,7 @@
                         </div>
                         <div class="kagit-efekti p-6 rounded-sm border border-stone-100 shadow-inner">
                             <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
-                            <div class="text-center serif text-xl italic leading-relaxed whitespace-pre-line text-stone-850">${eser.güfte || "Güfte henüz eklenmemiş."}</div>
+                            <div class="text-center serif text-xl italic leading-relaxed whitespace-pre-line text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
                         </div>
                     </div>
 
@@ -217,7 +217,7 @@
                                     if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
                                     else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
                                     return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>`;
-                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ videosu bulunamadı.</div>"}
+                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
                             </div>
                         </div>
                     </div>
