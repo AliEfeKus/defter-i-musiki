@@ -244,7 +244,7 @@
                                     `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
                                     : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
                             </div>
-                        </div>;
+                        </div>
                     </div>
                 </div>
             </div>`;
@@ -270,7 +270,7 @@
     window.onload = () => { 
         const id = new URLSearchParams(window.location.search).get('id'); 
         if (id) detayGoster(parseInt(id), false); else listele(); 
-    }
+    };
     document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
 </body>
