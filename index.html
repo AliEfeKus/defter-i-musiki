@@ -184,10 +184,20 @@
                             <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
                             <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>FORM:</strong> <span>${eser.form}</span></p>
                         </div>
+                    ${eser.güfte ? `
                         <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
                             <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
-                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
+                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte}</div>
                         </div>
+                        ` : `
+                            <div class="w-full">
+                                <div class="border border-stone-300 bg-white p-1 shadow-sm">
+                                    <img src="bestekarlar/${temizle(eser.bestekâr)}.jpg"
+                                         alt="${eser.bestekâr}"
+                                         class="w-full h-auto block grayscale-[20%]"
+                                         onerror="this.parentElement.parentElement.style.display='none'">
+                                </div>
+                                <p class="serif text-stone-600 text-lg italic mt-2 text-center">${eser.bestekâr}</p>
                     </div>
 
                     <div class="lg:col-span-6 flex flex-col gap-6">
