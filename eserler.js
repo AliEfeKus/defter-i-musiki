@@ -21,7 +21,7 @@ const eserler = [
             { "id": 20, "eser": "Peşrev", "makam": "Ferahfezâ", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Muhammes", "form": "Peşrev", "nota": "notalar/Peşrev.pdf", "icrâ": "https://youtu.be/RECWm_nbzzU", "güfte": "Yok" },
             { "id": 21, "eser": "Peşrev", "makam": "Hicâzkâr", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Muhammes", "form": "Peşrev", "nota": "notalar/Peşrev2.pdf", "icrâ": "https://youtu.be/2DQ5_qRc5ZY?si=RJqAJUMwR4k8cOEy", "baslangic": 31, "bitis": 203, "güfte": "Yok" },
             { "id": 22, "eser": "Peşrev", "makam": "Isfahan", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Devr-i kebir", "form": "Peşrev", "nota": "notalar/Peşrev3.pdf", "icrâ": "https://youtu.be/dKn6svV9z84?si=erO1Y0OY2OEMkLYG", "bitis": 92, "güfte": "Yok" },
-            { "id": 23, "eser": "Peşrev", "makam": "Kürdîli-hicâzkâr", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Muhammes", "form": "Peşrev", "nota": "notalar/Peşrev4.pdf", "icrâ": "https://youtu.be/dKn6svV9z84?si=erO1Y0OY2OEMkLYG", "bitis": 92, "güfte": "Yok" },
+            { "id": 23, "eser": "Peşrev", "makam": "Kürdîli-hicâzkâr", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Muhammes", "form": "Peşrev", "nota": "notalar/Peşrev4.pdf", "icrâ": "https://youtu.be/oS09Xis8drI?si=4bVYAcAFeDDlYo_9", "bitis": 89, "güfte": "Yok" },
 
 
             { "id": 13, "eser": "Taksim", "makam": "Hicaz", "güftekâr": "Yok", "bestekâr": "Tanbûrî Cemil Bey", "usûl": "Serbest", "form": "Taksim", "nota": "notalar/Taksim.pdf", "icrâ": "https://youtu.be/qJYdxRSjCQY?si=9L-lo9hOt3qmD4qH", "güfte": "Yok" },
