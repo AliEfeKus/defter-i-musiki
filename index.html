@@ -196,6 +196,9 @@
                                     let vId = "";
                                     if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
                                     else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                                    let params = "";
+                                    if(eser.baslangic) params += `?start=${eser.baslangic}`;
+                                    if(eser.bitis) params += (params ? `&` : `?`) + `end=${eser.bitis}`;
                                     return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>`;
                                 })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
                             </div>
