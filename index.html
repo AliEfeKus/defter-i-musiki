@@ -199,7 +199,7 @@
                                     let params = "";
                                     if(eser.baslangic) params += `?start=${eser.baslangic}`;
                                     if(eser.bitis) params += (params ? `&` : `?`) + `end=${eser.bitis}`;
-                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}" frameborder="0" allowfullscreen></iframe>`;
+                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}${params}" frameborder="0" allowfullscreen></iframe>`;
                                 })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
                             </div>
 
