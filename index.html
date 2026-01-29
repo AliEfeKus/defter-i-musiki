@@ -165,9 +165,7 @@
 
     function detayGoster(id, pushState = true) {
     const eser = eserler.find(e => e.id === id);
-    if (eser) {
-        document.title = eser.eser + " - Defter-i Mûsikî";
-        
+    if (eser) {        
         document.getElementById('detaySayfasi').innerHTML = `
             <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
                 <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
