@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defter-i Mûsikî</title>
+    <meta name="description" content="Klasik Türk mûsıkîsinin eşsiz eserlerini bulabileceğiniz dijital nota ve icrâ arşivi.">
     
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="icon" href="logo.png?v=1" type="image/png">
@@ -223,6 +224,7 @@
     function anaSayfayaDon(pushState = true) {
         document.getElementById('detaySayfasi').classList.add('hidden');
         document.getElementById('listeSayfasi').classList.remove('hidden');
+        document.title = "Defter-i Mûsikî - Klasik Türk Müziği Arşivi";
         
         listele();
         
