@@ -229,7 +229,9 @@
         
         listele();
         
-        if (pushState) window.history.pushState({}, "", window.location.pathname);
+       if (pushState) { 
+           const eserLink = temizle(eser.eser).replace(/\s+/g, '-');
+           window.history.pushState({id: id}, "", "?eser=" + eserLink);
         window.scrollTo(0, 0);
     }
 
