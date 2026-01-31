@@ -1,4 +1,6 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
+
+# .html uzantısını gizle
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.html [L]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
