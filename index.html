@@ -249,14 +249,19 @@
     }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
-    window.onload = () => { 
-        const slug = window.location.pathname.replace("/", "");
-        if (slug) {
-   const eser = eserler.find(e => e.slug === slug);
-   if (eser) detayGoster(eser.id, false);
-   else listele();
-} else {
-   listele();
+    wwindow.onload = () => { 
+    const hash = window.location.hash.replace("#/", "");
+
+    if(hash){
+        const eser = eserler.find(e => slugYap(e.eser) === hash);
+        if(eser){
+            detayGoster(eser.id, false);
+        }else{
+            listele();
+        }
+    }else{
+        listele();
+    }
 }
     
     };
