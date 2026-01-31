@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -202,25 +204,9 @@
                         </div>
                         <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
                             <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
-
-                            <div id="gufte"></div>
-                            <div id="gufte-foto"></div>
+                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
                         </div>
                     </div>
-
-                    const gufteAlan = document.getElementById("gufte");
-const fotoAlan = document.getElementById("gufte-foto");
-
-if(gufteAlan && fotoAlan){
-    if(eser.gufte === "Yok"){
-        gufteAlan.style.display = "none";
-        fotoAlan.innerHTML = '<img src="' + eser.fotograf + '" class="w-full rounded-xl shadow-md">';
-    }else{
-        gufteAlan.style.display = "block";
-        gufteAlan.innerText = eser.gufte;
-    }
-}
-
 
                     <div class="lg:col-span-6 flex flex-col gap-6">
                         <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
