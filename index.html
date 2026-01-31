@@ -154,7 +154,7 @@
             satir.className = "satir-link border-b border-gray-100";
             satir.innerHTML = `
                 <td class="px-6 py-4">
-                    <a href="?id=${item.eser}" onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}" class="block font-semibold text-blue-600 serif text-lg hover:underline">${item.eser}</a>
+                    <a href="?id=${item.slug}" onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}" class="block font-semibold text-blue-600 serif text-lg hover:underline">${item.eser}</a>
                 </td>
                 <td class="px-6 py-4 text-gray-600">${item.güftekâr}</td>
                 <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
@@ -217,7 +217,7 @@
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
+        if (pushState) window.history.pushState({slug: eser.slug}, "", "/" + eser.slug);
         window.scrollTo(0, 0);
     }
 }
@@ -234,8 +234,15 @@
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
     window.onload = () => { 
-        const id = new URLSearchParams(window.location.search).get('id'); 
-        if (id) detayGoster(parseInt(id), false); else listele(); 
+        const slug = window.location.pathname.replace("/", "");
+        if (slug) {
+   const eser = eserler.find(e => e.slug === slug);
+   if (eser) detayGoster(eser.id, false);
+   else listele();
+} else {
+   listele();
+}
+    
     };
     document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
