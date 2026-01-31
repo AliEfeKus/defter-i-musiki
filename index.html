@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -166,67 +167,64 @@
 
     function detayGoster(id, pushState = true) {
     const eser = eserler.find(e => e.id === id);
-    if (!eser) return;
-
-    // Sekme Başlığı
-    document.title = eser.eser + " - Defter-i Mûsikî";
-
-    // İçerik Oluşturma
-    document.getElementById('detaySayfasi').innerHTML = `
-        <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
-            <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
-        </button>
-        <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
-            <h1 class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight">${eser.eser}</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div class="lg:col-span-6 space-y-6">
-                    <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
-                        <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>MAKAM:</strong> <span>${eser.makam}</span></p>
-                        <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>GÜFTEKÂR:</strong> <span>${eser.güftekâr}</span></p>
-                        <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>BESTEKÂR:</strong> <span>${eser.bestekâr}</span></p>
-                        <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
-                        <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>FORM:</strong> <span>${eser.form}</span></p>
+    if (eser) {
+        document.getElementById('detaySayfasi').innerHTML = `
+            <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+                <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+            </button>
+            
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
+                <h1 class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight">${eser.eser}</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>MAKAM:</strong> <span>${eser.makam}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>GÜFTEKÂR:</strong> <span>${eser.güftekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>BESTEKÂR:</strong> <span>${eser.bestekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>FORM:</strong> <span>${eser.form}</span></p>
+                        </div>
+                        <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
+                            <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
+                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
+                        </div>
                     </div>
-                    <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
-                        <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
-                        <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
+
+                    <div class="lg:col-span-6 flex flex-col gap-6">
+                        <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
+                                ${eser.icrâ ? (() => {
+                                    let vId = "";
+                                    if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
+                                    else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                                    let params = "";
+                                    if(eser.baslangic) params += `?start=${eser.baslangic}`;
+                                    if(eser.bitis) params += (params ? `&` : `?`) + `end=${eser.bitis}`;
+                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}${params}" frameborder="0" allowfullscreen></iframe>`;
+                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
+                            </div>
+
+                            <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md rounded-lg">
+                                ${eser.nota ? 
+                                    `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
+                                    : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="lg:col-span-6 flex flex-col gap-6">
-                    <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
-                        ${eser.icrâ ? `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${eser.icrâ.includes('v=') ? eser.icrâ.split('v=')[1].split('&')[0] : eser.icrâ.split('youtu.be/')[1]}" frameborder="0" allowfullscreen></iframe>` : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
-                    </div>
-                    <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md rounded-lg">
-                        ${eser.nota ? `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
-                    </div>
-                </div>
-            </div>
-        </div>`;
+            </div>`;
 
-    document.getElementById('listeSayfasi').classList.add('hidden');
-    document.getElementById('detaySayfasi').classList.remove('hidden');
-
-    // Link Güncelleme (Hatasız Versiyon)
-    if (pushState) {
-        let slug = "eser";
-        if (typeof temizle === "function") {
-            slug = temizle(eser.eser).replace(/\s+/g, '-');
-        }
-        window.history.pushState({id: id}, "", "?eser=" + slug);
+        document.getElementById('listeSayfasi').classList.add('hidden');
+        document.getElementById('detaySayfasi').classList.remove('hidden');
+        if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
+        window.scrollTo(0, 0);
     }
-    window.scrollTo(0, 0);
-}
 }
 
     function anaSayfayaDon(pushState = true) {
         document.getElementById('detaySayfasi').classList.add('hidden');
         document.getElementById('listeSayfasi').classList.remove('hidden');
-
-        if (pushState) {
-            const eserSlug = temizle(eser.eser).replace(/\s+/g, '-');
-            window.history.pushState({id: id}, "", "?eser=" + eserSlug);
-        }
-        window.scrollTo(0, 0);
         
         listele();
         
