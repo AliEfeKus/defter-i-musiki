@@ -225,6 +225,12 @@
     function anaSayfayaDon(pushState = true) {
         document.getElementById('detaySayfasi').classList.add('hidden');
         document.getElementById('listeSayfasi').classList.remove('hidden');
+
+        if (pushState) {
+            const eserSlug = temizle(eser.eser).replace(/\s+/g, '-');
+            window.history.pushState({id: id}, "", "?eser=" + eserSlug);
+        }
+        window.scrollTo(0, 0);
         
         listele();
         
