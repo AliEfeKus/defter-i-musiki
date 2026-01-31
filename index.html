@@ -211,12 +211,14 @@
                     const gufteAlan = document.getElementById("gufte");
 const fotoAlan = document.getElementById("gufte-foto");
 
-if(eser.gufte === "Yok"){
-    gufteAlan.style.display = "none";
-    fotoAlan.innerHTML = `<img src="${eser.fotograf}" class="w-full rounded-xl shadow-md">`;
-}else{
-    gufteAlan.style.display = "block";
-    gufteAlan.innerText = eser.gufte;
+if(gufteAlan && fotoAlan){
+    if(eser.gufte === "Yok"){
+        gufteAlan.style.display = "none";
+        fotoAlan.innerHTML = '<img src="' + eser.fotograf + '" class="w-full rounded-xl shadow-md">';
+    }else{
+        gufteAlan.style.display = "block";
+        gufteAlan.innerText = eser.gufte;
+    }
 }
 
 
