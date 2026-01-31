@@ -217,7 +217,9 @@
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({id: id}, "", "?id=" + id);
+       if (pushState) {
+           const eserSlug = temizle(eser.eser).replace(/\s+/g, '-');
+           window.history.pushState({id: id}, "", "?eser=" + eserSlug)
         window.scrollTo(0, 0);
     }
 }
