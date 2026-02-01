@@ -3,67 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <title>Defter-i Mûsikî</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://cdn.tailwindcss.com" rel="stylesheet">
 </head>
 
 <body class="bg-stone-100">
 
-<header class="text-center py-20 bg-stone-900 text-amber-200">
-    <h1 class="text-5xl font-serif mb-4">Defter-i Mûsikî</h1>
-    <p class="text-xl">Klasik Türk Mûsikîsi Dijital Arşivi</p>
-</header>
-
+<!-- ÜST MENÜ -->
 <nav class="bg-stone-900 text-amber-200">
-  <div class="max-w-7xl mx-auto px-6">
-    <ul class="flex flex-wrap justify-center gap-8 py-4 text-lg font-serif">
-
+  <div class="max-w-7xl mx-auto px-4">
+    <ul class="flex flex-wrap justify-center gap-6 py-4 text-lg font-serif">
       <li><a href="/" class="hover:text-amber-400">Ana Sayfa</a></li>
-
       <li><a href="eserler" class="hover:text-amber-400">Eser (Nota) Arşivi</a></li>
-
       <li><a href="kayitlar" class="hover:text-amber-400">Kayıt Arşivi</a></li>
-
       <li><a href="koseyazilari" class="hover:text-amber-400">Köşe Yazıları</a></li>
-
       <li><a href="ansiklopedi" class="hover:text-amber-400">Ansiklopedi</a></li>
-
       <li><a href="paylas" class="hover:text-amber-400">Bizimle Paylaşın!</a></li>
-
     </ul>
   </div>
 </nav>
 
+<!-- BAŞLIK -->
+<header class="text-center py-12">
+  <h1 class="text-5xl font-serif text-stone-900">Defter-i Mûsikî</h1>
+  <p class="text-lg mt-2 text-stone-600">Klasik Türk Mûsikîsi Dijital Arşivi</p>
+</header>
 
-<section class="max-w-6xl mx-auto py-20 px-6">
+<!-- KATEGORİLER -->
+<section class="max-w-6xl mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-<h2 class="text-3xl font-serif text-center mb-12">Bestekârlar</h2>
+    <a href="eserler" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-serif mb-2">🎼 Eser (Nota) Arşivi</h2>
+      <p>Binlerce eser, nota ve bilgiler</p>
+    </a>
 
-<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <a href="kayitlar" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-serif mb-2">🎧 Kayıt Arşivi</h2>
+      <p>İcrâlar, plaklar, konser kayıtları</p>
+    </a>
 
-<a href="tanburicemilbey" class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition">
-    <img src="fotograflar/cemil-bey.jpg" class="mx-auto mb-4 rounded-full w-40 h-40 object-cover">
-    <h3 class="font-serif text-xl">Tanbûrî Cemil Bey</h3>
-</a>
+    <a href="ansiklopedi" class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-serif mb-2">📚 Ansiklopedi</h2>
+      <p>Makamlar, usûller, bestekârlar</p>
+    </a>
 
-<div class="bg-white rounded-xl shadow-lg p-6 text-center opacity-50">
-    <h3>Dede Efendi</h3>
-    <p class="text-sm mt-2">Yakında</p>
-</div>
-
-<div class="bg-white rounded-xl shadow-lg p-6 text-center opacity-50">
-    <h3>Hacı Arif Bey</h3>
-    <p class="text-sm mt-2">Yakında</p>
-</div>
-
-<div class="bg-white rounded-xl shadow-lg p-6 text-center opacity-50">
-    <h3>Şevki Bey</h3>
-    <p class="text-sm mt-2">Yakında</p>
-</div>
-
-</div>
-
+  </div>
 </section>
 
+<!-- ÖNE ÇIKAN BESTEKÂRLAR -->
+<section class="max-w-6xl mx-auto px-4 py-12">
+<h2 class="text-2xl font-serif mb-6">Öne Çıkan Bestekârlar</h2>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+<a href="tanburicemilbey" class="bg-white p-4 rounded-lg shadow text-center hover:shadow-lg">
+  <img src="fotograflar/cemil-bey.jpg" class="mx-auto mb-3 w-32 h-32 object-cover rounded-full">
+  <h3 class="font-serif">Tanbûrî Cemil Bey</h3>
+</a>
+
+<div class="bg-white p-4 rounded-lg shadow text-center opacity-50">
+  <h3>Dede Efendi</h3>
+</div>
+
+<div class="bg-white p-4 rounded-lg shadow text-center opacity-50">
+  <h3>Hacı Arif Bey</h3>
+</div>
+
+<div class="bg-white p-4 rounded-lg shadow text-center opacity-50">
+  <h3>Şevki Bey</h3>
+</div>
+
+</div>
+</section>
+
+<!-- ALT BİLGİ -->
 <footer class="text-center py-6 text-sm text-stone-500">
 © Defter-i Mûsikî
 </footer>
