@@ -4,123 +4,150 @@
 <meta charset="UTF-8">
 <title>Defter-i Mûsikî</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdn.tailwindcss.com" rel="stylesheet">
-</head>
 
-  <style>
-    
+<!-- Tailwind -->
+<link href="https://cdn.tailwindcss.com" rel="stylesheet">
+
+<style>
+
+body{
+  background:#f4f1ea;
+  font-family: serif;
+}
+
+/* Üst kutular */
 .ust-kutu{
   background:#3b2f24;
   color:#f5e6c8;
-  border:1px solid #6b4f2a;
-  padding:14px 10px;
+  padding:12px 8px;
   text-align:center;
-  font-family: serif;
   border-radius:4px;
-  box-shadow: inset 0 0 4px rgba(255,255,255,0.1);
-  transition:0.3s;
+  border:1px solid #6b4f2a;
+  transition:.3s;
 }
-
 .ust-kutu:hover{
   background:#5a3f1f;
-  color:#fff;
-}
-  
-body{
-  background: linear-gradient(180deg,#f5f3ef,#ebe6dc);
 }
 
-.hero{
-  background: url("fotograflar/tezhip-bg.jpg");
-  background-size: cover;
-  background-position: center;
+/* Banner */
+.banner{
+  position:relative;
+  height:300px;
+  overflow:hidden;
+}
+.banner img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.banner-yazi{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:rgba(0,0,0,0.55);
+  text-align:center;
+  padding:25px 10px;
+}
+.banner-yazi h1{
+  font-size:46px;
+  color:#f5e6c8;
+}
+.banner-yazi p{
+  color:#ddd;
 }
 
+/* Kart */
 .kart{
-  background: linear-gradient(135deg,#fff,#f1e9db);
-  border: 1px solid #e2d6bd;
+  background:#fff;
+  padding:15px;
+  border-radius:6px;
+  border:1px solid #ddd;
 }
-
-
 .kart:hover{
-  transform: translateY(-5px);
+  background:#f7f3ea;
 }
+
 </style>
+</head>
 
-<body class="bg-stone-100">
+<body>
 
-</div>
-  
-<header class="banner-wrap">
-    <img src="fasil--musiki-2.jpg" class="banner-img">
-  <div class="banner-yazi">
-    <h1>Defter-i Mûsıkî</h1>
-    <p>Klasik Türk Mûsikîsi Dijital Arşivi</p>
-</div>  
-  
+<!-- ÜST MENÜ -->
 <section class="max-w-6xl mx-auto px-4 mt-6">
-  <div class="grid grid-cols-2 md:grid-cols-6 gap-2">
+<div class="grid grid-cols-2 md:grid-cols-6 gap-2">
 
-    <a href="/" class="ust-kutu">Ana Sayfa</a>
-    <a href="eserler" class="ust-kutu">Eser (Nota) Arşivi</a>
-    <a href="kayitlar" class="ust-kutu">Kayıt Arşivi</a>
-    <a href="koseyazilari" class="ust-kutu">Köşe Yazıları</a>
-    <a href="ansiklopedi" class="ust-kutu">Ansiklopedi</a>
-    <a href="paylas" class="ust-kutu">Bizimle Paylaşın!</a>
-
-  </div>
-</section>
-
-
-</header>
-
-<section class="max-w-6xl mx-auto px-4 py-8">
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-    <a href="eserler" class="kart p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h2 class="text-xl font-serif mb-2">🎼 Eser (Nota) Arşivi</h2>
-      <p>Binlerce eser, nota ve bilgiler</p>
-    </a>
-
-    <a href="kayitlar" class="kart p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h2 class="text-xl font-serif mb-2">🎧 Kayıt Arşivi</h2>
-      <p>İcrâlar, plaklar, konser kayıtları</p>
-    </a>
-
-    <a href="ansiklopedi" class="kart p-6 rounded-lg shadow hover:shadow-lg transition">
-      <h2 class="text-xl font-serif mb-2">📚 Ansiklopedi</h2>
-      <p>Makamlar, usûller, bestekârlar</p>
-    </a>
-
-  </div>
-</section>
-
-<section class="max-w-6xl mx-auto px-4 py-12">
-<h2 class="text-2xl font-serif mb-6">Öne Çıkan Bestekârlar</h2>
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-<a href="tanburicemilbey" class="kart p-4 rounded-lg shadow text-center hover:shadow-lg">
-  <img src="tanburicemilbey/cemil-bey-tanburi-1.jpg" class="mx-auto mb-3 w-32 h-32 object-cover rounded-full">
-  <h3 class="font-serif">Tanbûrî Cemil Bey</h3>
-</a>
-
-<div class="kart p-4 rounded-lg shadow text-center opacity-50">
-  <h3>Dede Efendi</h3>
-</div>
-
-<div class="kart p-4 rounded-lg shadow text-center opacity-50">
-  <h3>Hacı Arif Bey</h3>
-</div>
-
-<div class="kart p-4 rounded-lg shadow text-center opacity-50">
-  <h3>Şevki Bey</h3>
-</div>
+<a href="/" class="ust-kutu">Ana Sayfa</a>
+<a href="eserler" class="ust-kutu">Eser (Nota) Arşivi</a>
+<a href="kayitlar" class="ust-kutu">Kayıt Arşivi</a>
+<a href="koseyazilari" class="ust-kutu">Köşe Yazıları</a>
+<a href="ansiklopedi" class="ust-kutu">Ansiklopedi</a>
+<a href="paylas" class="ust-kutu">Bizimle Paylaşın!</a>
 
 </div>
 </section>
 
-<footer class="text-center py-6 text-sm text-stone-500">
+<!-- BANNER -->
+<div class="banner mt-6">
+<img src="fotograflar/arka-plan.jpg">
+<div class="banner-yazi">
+<h1>Defter-i Mûsikî</h1>
+<p>Klasik Türk Mûsikîsi Dijital Arşivi</p>
+</div>
+</div>
+
+<!-- ORTA ALAN -->
+<section class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6">
+
+<!-- SOL -->
+<div class="md:col-span-2 space-y-6">
+
+<div class="kart">
+<h2 class="text-xl mb-3">Son Eklenen Eserler</h2>
+<ul class="list-disc pl-5 space-y-1">
+<li>Çeçen Kızı – Hüseynî</li>
+<li>Ferahfezâ Saz Semâîsi</li>
+<li>Nihâvend Peşrev</li>
+</ul>
+</div>
+
+<div class="kart">
+<h2 class="text-xl mb-3">Öne Çıkan Bestekârlar</h2>
+<ul class="list-disc pl-5 space-y-1">
+<li><a href="tanburicemilbey">Tanbûrî Cemil Bey</a></li>
+<li>Dede Efendi</li>
+<li>Hacı Arif Bey</li>
+</ul>
+</div>
+
+</div>
+
+<!-- SAĞ -->
+<div class="space-y-6">
+
+<div class="kart">
+<h2 class="text-xl mb-3">Makamlar</h2>
+<ul class="list-disc pl-5 space-y-1">
+<li>Rast</li>
+<li>Hüseynî</li>
+<li>Uşşâk</li>
+</ul>
+</div>
+
+<div class="kart">
+<h2 class="text-xl mb-3">Usûller</h2>
+<ul class="list-disc pl-5 space-y-1">
+<li>Düyek</li>
+<li>Aksak</li>
+<li>Nim Sofyan</li>
+</ul>
+</div>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="text-center py-6 text-sm text-stone-600">
 © Defter-i Mûsikî
 </footer>
 
