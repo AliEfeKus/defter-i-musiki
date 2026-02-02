@@ -283,20 +283,19 @@
     }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
-    window.onload = () => { 
-    const q = window.location.search.replace("?", "");
+    window.onload = function(){ 
+    const yol = window.location.pathname;
+    const parca = yol.split("/").pop();
 
-    if(q && q.startsWith("pesrev")){
-        const id = parseInt(q.replace("pesrev",""));
-        if(!isNaN(id)){
-            detayGoster(id, false);
-        }else{
-            listele();
+    if(parca && parca !== "tanburicemilbey" && parca !== "tanburicemilbey.html"){
+        const eser = eserler.find(e => e.slug === parca);
+        if(eser){
+            detayGoster(eser.id, false);
+        return;
         }
-    }else{
-        listele();
     }
-}
+    listele();
+};
     document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
 </body>
