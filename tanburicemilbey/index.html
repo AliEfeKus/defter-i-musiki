@@ -267,7 +267,7 @@
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({}, "", "#/" + slugYap(eser.eser));
+        if (pushState) window.history.pushState({}, "", "#" + slugYap(eser.eser));
         window.scrollTo(0, 0);
     }
 }
@@ -279,11 +279,10 @@
         listele();
         
         if(pushState){
-            history.pushState(null,null,"#"+slugYap(eser.eser));
+            history.pushState(null,null,"#");
         window.scrollTo(0, 0);
     }
 
-    window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
     window.onload = function(){
 
   const hash = window.location.hash.replace("#","");
