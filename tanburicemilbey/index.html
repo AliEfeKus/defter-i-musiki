@@ -1,145 +1,303 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Tanbûrî Cemil Bey – Defter-i Mûsikî</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="tanburicemilbey/eserler.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defter-i Mûsikî</title>
+    
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="icon" href="logo.png?v=1" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Crimson Pro', serif; }
+        .satir-link:hover { background-color: #f8fafc; }
 
-<link href="https://cdn.tailwindcss.com" rel="stylesheet">
-<script src="eserler.js"></script>
+        .nota-arkaplan-konteynir {
+            background-image: url('mecmua-i-saz-u-soz-2.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+            width: 100%;
+        }
+        #notaLink {
+            backdrop-filter: blur(2px);
+            background-color: rgba(28, 25, 23, 0.9);
+        }
+        .kagit-efekti {
+            background-color: #fdf6e3 !important;
+            background-image: radial-gradient(#d4a373 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+            border: 1px solid #e5e7eb;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 30px 15px !important;
+            margin: 20px 0 !important;
+        }
 
-<style>
-body{background:#f4f1ea;font-family:serif;}
+        #detayGufteMetin {
+            white-space: pre !important;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem !important;
+            line-height: 1.8;
+            color: #2d2d2d;
+            overflow-x: auto;
 
-.eser-satir{
-  padding:10px;
-  border-bottom:1px solid #ddd;
-  cursor:pointer;
-}
-.eser-satir:hover{
-  background:#fdf3d7;
-}
+        }
 
+        .modal-dialog {
+            max-width: 95% !important;
+            width: 1200px !important;
+        }
+
+        .modal-content {
+            width: 100% !important;
+            border-radius: 15px;
+        }    
+
+        .bg-stone-50.p-4.rounded-lg.border.border-stone-200.shadow-sm h4 {
+             display: none !important;
+        }
+
+        .bg-stone-50.p-4.rounded-lg.border.border-stone-200.shadow-sm {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin-top: -20px !important;
+        }
+        /* === CEMİL BEY HERO === */
 .cemil-hero{
-  background:url("tanburicemilbey/cemil-bey-tanburi-1.jpg") center 70%/cover no-repeat;
-  height:300px;
-  position:relative;
+    background:url("tanburicemilbey/cemil-bey-tanburi-1.jpg") center/cover no-repeat;
+    height:360px;
+    position:relative;
 }
+
 .cemil-overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.55);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
 }
+
 .cemil-overlay h1{
-  color:#f5e6c8;
-  font-size:48px;
+    font-family:'Crimson Pro', serif;
+    font-size:3.5rem;
+    color:#f5e6c8;
+    letter-spacing:2px;
 }
+
 .cemil-overlay p{
-  color:#ddd;
-  font-style:italic;
+    color:#ddd;
+    font-style:italic;
+    font-size:1.3rem;
 }
-</style>
-</head>
 
-<body>
+         .satir-link{
+    transition:all .2s ease;
+}
 
-<header class="cemil-hero">
+.satir-link:hover{
+    background:#fdf3d7;
+    transform:scale(1.01);
+}
+
+
+     </style>
+</head> 
+<body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
+
+    <header class="cemil-hero">
   <div class="cemil-overlay">
     <h1>Tanbûrî Cemil Bey</h1>
     <p>Külliyat & Nota Arşivi</p>
   </div>
 </header>
 
-<div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg -mt-16 relative z-10 p-6">
+ <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
+                    <tr>
+                        <th class="px-6 py-4">Eser Başlığı</th>
+                        <th class="px-6 py-4">Güftekâr</th>
+                        <th class="px-6 py-4">Bestekâr</th>
+                        <th class="px-6 py-4">Makam</th>
+                        <th class="px-6 py-4">Usûl</th>
+                        <th class="px-6 py-4">Form</th>
+                    </tr>
+                </thead>
+                <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white"></tbody>
+            </table>
+        </div>
+    </div>
 
-<div id="listeSayfasi"></div>
+    <div id="detaySayfasi" class="hidden p-4 md:p-10 max-w-6xl mx-auto mt-10">
+        <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+            <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+        </button>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-5 space-y-6">
+            <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
+            
+            <div class="flex flex-col space-y-4 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>MAKAM:</strong> <span id="detayMakam"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>GÜFTEKÂR:</strong> <span id="detayGufte"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>BESTEKÂR:</strong> <span id="detayBestekar"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>USÛL:</strong> <span id="detayUsul"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>FORM:</strong> <span id="detayForm"></span></p>
+            </div>
 
-<div id="detaySayfasi" class="hidden"></div>
+            <div id="gufteAlani" class="mt-8 kagit-efekti max-w-2xl mx-auto rounded-sm">
+                <h3 class="serif text-center text-stone-700 uppercase text-2xl mb-4 tracking-[0.3em] font-bold border-b border-stone-300 pb-2 w-max mx-auto">
+                    Güfte
+                </h3>
+                <div id="detayGufteMetin" class="text-center serif text-xl italic leading-relaxed"></div>
+            </div>
 
-</div>
+            <div id="notaAlani"></div>
+        </div>
+    </div>
 
-<script>
+    <script>
 
-/* SLUG */
-function slugYap(metin){
-  return metin.toLowerCase()
-  .replaceAll("ç","c")
-  .replaceAll("ğ","g")
-  .replaceAll("ı","i")
-  .replaceAll("ö","o")
-  .replaceAll("ş","s")
-  .replaceAll("ü","u")
-  .replace(/[^a-z0-9]+/g,"-")
-  .replace(/^-|-$/g,"");
-}
-
-/* LİSTELE */
-function listele(){
-  const alan=document.getElementById("listeSayfasi");
-  const detay=document.getElementById("detaySayfasi");
-  detay.classList.add("hidden");
-  alan.innerHTML="";
-
-  eserler.forEach(e=>{
-    alan.innerHTML+=`
-      <div class="eser-satir">
-        <a href="#${slugYap(e.eser)}"
-           onclick="detayGoster(${e.id});return false;">
-           ${e.eser} – ${e.makam}
-        </a>
-      </div>
-    `;
-  });
-}
-
-/* DETAY */
-function detayGoster(id){
-  const eser=eserler.find(x=>x.id===id);
-  if(!eser) return;
-
-  location.hash=slugYap(eser.eser);
-
-  const alan=document.getElementById("detaySayfasi");
-  const liste=document.getElementById("listeSayfasi");
-
-  liste.innerHTML="";
-  alan.classList.remove("hidden");
-
-  alan.innerHTML=`
-  <button onclick="listele()">← Geri</button>
-
-  <h2 class="text-3xl mt-4">${eser.eser}</h2>
-
-  <p><b>Makam:</b> ${eser.makam}</p>
-  <p><b>Bestekâr:</b> ${eser.bestekâr}</p>
-  <p><b>Usûl:</b> ${eser.usûl}</p>
-  <p><b>Form:</b> ${eser.form}</p>
-
-  <p class="mt-4">${eser.güfte && eser.güfte!=="Yok" ? eser.güfte : ""}</p>
-  `;
-}
-
-/* ROUTER */
-function router(){
-  const hash=location.hash.replace("#","");
-  if(hash){
-    const eser=eserler.find(e=>slugYap(e.eser)===hash);
-    if(eser){
-      detayGoster(eser.id);
-      return;
+        function slugYap(text) {
+          return text.toLowerCase()
+            .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
+            .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c")
+            .replace(/â|î|û/g,"")
+            .replace(/[^a-z0-9\s-]/g,"")
+            .replace(/\s+/g,"-")
+            .replace(/-+/g,"-")
+            .trim();
+        }
+        function temizle(metin) {
+        if (!metin) return "";
+        return metin.toString().replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
+            .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
+            .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+            .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").trim();
     }
-  }
-  listele();
+
+    function listele(filtre = '') {
+        const govde = document.getElementById('liste-govdesi');
+        if (!govde) return;
+        const aramaTerimi = temizle(filtre);
+        const sonuc = eserler.filter(item => temizle(item.eser).includes(aramaTerimi) || temizle(item.makam).includes(aramaTerimi));
+        govde.innerHTML = '';
+        sonuc.forEach(item => {
+            const satir = document.createElement('tr');
+            satir.className = "satir-link border-b border-gray-100";
+            satir.innerHTML = `
+                <td class="px-6 py-4">
+                    <a href="#/${slugYap(item.eser)}"
+                       onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
+                       class="block font-semibold text-blue-600 serif text-lg hover:underline">
+                       ${item.eser}
+                    </a>
+                </td>
+                <td class="px-6 py-4 text-gray-600">${item.güftekâr}</td>
+                <td class="px-6 py-4 text-gray-600">${item.bestekâr}</td>
+                <td class="px-6 py-4"><span class="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-bold">${item.makam}</span></td>
+                <td class="px-6 py-4 text-gray-600">${item.usûl || item.usul}</td>
+                <td class="px-6 py-4 text-gray-600">${item.form}</td>`;
+            govde.appendChild(satir);
+        });
+    }
+
+    function detayGoster(id, pushState = true) {
+    const eser = eserler.find(e => e.id === id);
+    if (eser) {
+        document.getElementById('detaySayfasi').innerHTML = `
+            <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+                <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+            </button>
+            
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
+                <h1 class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight">${eser.eser}</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>MAKAM:</strong> <span>${eser.makam}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>GÜFTEKÂR:</strong> <span>${eser.güftekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>BESTEKÂR:</strong> <span>${eser.bestekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>FORM:</strong> <span>${eser.form}</span></p>
+                        </div>
+                        <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
+                            <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
+                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 flex flex-col gap-6">
+                        <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
+                                ${eser.icrâ ? (() => {
+                                    let vId = "";
+                                    if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
+                                    else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                                    let params = "";
+                                    if(eser.baslangic) params += `?start=${eser.baslangic}`;
+                                    if(eser.bitis) params += (params ? `&` : `?`) + `end=${eser.bitis}`;
+                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}${params}" frameborder="0" allowfullscreen></iframe>`;
+                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
+                            </div>
+
+                            <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md rounded-lg">
+                                ${eser.nota ? 
+                                    `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
+                                    : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        document.getElementById('listeSayfasi').classList.add('hidden');
+        document.getElementById('detaySayfasi').classList.remove('hidden');
+        if (pushState) window.history.pushState({}, "", "#/" + slugYap(eser.eser));
+        window.scrollTo(0, 0);
+    }
 }
 
-window.addEventListener("load",router);
-window.addEventListener("hashchange",router);
+    function anaSayfayaDon(pushState = true) {
+        document.getElementById('detaySayfasi').classList.add('hidden');
+        document.getElementById('listeSayfasi').classList.remove('hidden');
+        
+        listele();
+        
+        if (pushState) window.history.pushState({}, "", window.location.pathname);
+        window.scrollTo(0, 0);
+    }
 
+    window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
+    window.onload = () => { 
+    const hash = window.location.hash.replace("#/", "");
+
+    if(hash){
+        const eser = eserler.find(e => slugYap(e.eser) === hash);
+        if(eser){
+            detayGoster(eser.id, false);
+        }else{
+            listele();
+        }
+    }else{
+        listele();
+    }
+}
+    document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
-
 </body>
 </html>
