@@ -120,11 +120,23 @@
     <header class="cemil-hero">
   <div class="cemil-overlay">
     <h1>Tanbûrî Cemil Bey</h1>
-    <p>Defter-i Mûsıkî</p>
+    <p>Külliyat & Nota Arşivi</p>
   </div>
 </header>
 
- <div id="listeSayfasi" class="overflow-x-auto">
+
+    <div id="listeSayfasi" class="max-w-5xl mx-auto bg-[#fffaf0] shadow-xl rounded-xl overflow-hidden min-h-[600px] -mt-20 relative z-10 border border-stone-200">
+        <div class="pt-10 pb-6 px-6 text-center border-b border-stone-100 bg-stone-50">
+            <h1 class="text-5xl font-bold text-stone-900 serif tracking-tighter mb-2">Defter-i Mûsikî</h1>
+            <p class="text-xl text-stone-600 serif italic tracking-wide">Klasik Türk Müziği Arşivi</p>
+        </div>
+
+        <div class="p-6 border-b border-gray-100">
+            <input type="text" id="arama" placeholder="Eser, makam veya bestekâr ara..." 
+                   class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-stone-500 outline-none">
+        </div>
+            
+        <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse text-sm">
                 <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
                     <tr>
@@ -200,7 +212,7 @@
             satir.className = "satir-link border-b border-gray-100";
             satir.innerHTML = `
                 <td class="px-6 py-4">
-                    <a href="/tanburicemilbey/${slugYap(item.eser)}"
+                    <a href="#/${slugYap(item.eser)}"
                        onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
                        class="block font-semibold text-blue-600 serif text-lg hover:underline">
                        ${item.eser}
@@ -283,19 +295,21 @@
     }
 
     window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
-    window.addEventListener("load", () => {
-    const parcalar = window.location.pathname.split("/");
-    const slug = parcalar[parcalar.length - 1];
+    window.onload = () => { 
+    const hash = window.location.hash.replace("#/", "");
 
-    if(slug && slug !== "tanburicemilbey" && slug !== "tanburicemilbey.html"){
-        const eser = eserler.find(e => slugYap(e.eser) === slug);
+    if(hash){
+        const eser = eserler.find(e => slugYap(e.eser) === hash);
         if(eser){
-            detayGoster(eser.id,false);
-            return;
+            detayGoster(eser.id, false);
+        }else{
+            listele();
         }
+    }else{
+        listele();
     }
-    listele();
-});
+}
+    document.getElementById('arama').addEventListener('input', (e) => listele(e.target.value));
 </script>
 </body>
 </html>
