@@ -72,12 +72,60 @@
             padding: 0 !important;
             margin-top: -20px !important;
         }
-    }
+        /* === CEMİL BEY HERO === */
+.cemil-hero{
+    background:url("tanburicemilbey/cemil-bey-tanburi-1.jpg") center/cover no-repeat;
+    height:360px;
+    position:relative;
+}
+
+.cemil-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.cemil-overlay h1{
+    font-family:'Crimson Pro', serif;
+    font-size:3.5rem;
+    color:#f5e6c8;
+    letter-spacing:2px;
+}
+
+.cemil-overlay p{
+    color:#ddd;
+    font-style:italic;
+    font-size:1.3rem;
+}
+
+         .satir-link{
+    transition:all .2s ease;
+}
+
+.satir-link:hover{
+    background:#fdf3d7;
+    transform:scale(1.01);
+}
+
+
      </style>
 </head> 
 <body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
 
-    <div id="listeSayfasi" class="max-w-4xl mx-auto bg-white shadow-2xl rounded-2xl overflow-hidden min-h-[600px] mt-10">
+    <header class="cemil-hero">
+  <div class="cemil-overlay">
+    <h1>Tanbûrî Cemil Bey</h1>
+    <p>Külliyat & Nota Arşivi</p>
+  </div>
+</header>
+
+
+    <div id="listeSayfasi" class="max-w-5xl mx-auto bg-[#fffaf0] shadow-xl rounded-xl overflow-hidden min-h-[600px] -mt-20 relative z-10 border border-stone-200">
         <div class="pt-10 pb-6 px-6 text-center border-b border-stone-100 bg-stone-50">
             <h1 class="text-5xl font-bold text-stone-900 serif tracking-tighter mb-2">Defter-i Mûsikî</h1>
             <p class="text-xl text-stone-600 serif italic tracking-wide">Klasik Türk Müziği Arşivi</p>
@@ -105,7 +153,7 @@
         </div>
     </div>
 
-    <div id="detaySayfasi" class="hidden p-4 md:p-8 max-w-5xl mx-auto mt-10">
+    <div id="detaySayfasi" class="hidden p-4 md:p-10 max-w-6xl mx-auto mt-10">
         <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
             <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
         </button>
