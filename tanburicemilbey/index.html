@@ -171,18 +171,19 @@
 
     <script>
 
-        function slugYap(eser){
-          return eser.eser.toLowerCase()
-          .replaceAll("ç","c")
-          .replaceAll("ğ","g")
-          .replaceAll("ı","i")
-          .replaceAll("ö","o")
-          .replaceAll("ş","s")
-          .replaceAll("ü","u")
-          .replace(/[^a-z0-9]+/g,"-")
-          .replace(/^-|-$/g,"")
-          + "-" + eser.id;
-        }
+     function slugYap(eser){
+  return eser.eser.toLowerCase()
+    .replaceAll("ç","c")
+    .replaceAll("ğ","g")
+    .replaceAll("ı","i")
+    .replaceAll("ö","o")
+    .replaceAll("ş","s")
+    .replaceAll("ü","u")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"")
+    + "-" + eser.id;
+}
+
 
         function temizle(metin) {
         if (!metin) return "";
@@ -203,7 +204,7 @@
             satir.className = "satir-link border-b border-gray-100";
             satir.innerHTML = `
                 <td class="px-6 py-4">
-                    <a href="#/${slugYap(item.eser)}"
+                    <a href="#/${slugYap(item)}"
                        onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
                        class="block font-semibold text-blue-600 serif text-lg hover:underline">
                        ${item.eser}
@@ -270,7 +271,7 @@
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({}, "", "#/" + slugYap(eser.eser));
+        if (pushState) window.history.pushState({}, "", "#/" + slugYap(eser));
         window.scrollTo(0, 0);
     }
 }
@@ -290,7 +291,7 @@
     const hash = window.location.hash.replace("#/", "");
 
     if(hash){
-        const eser = eserler.find(e => slugYap(e.eser) === hash);
+        const eser = eserler.find(e => slugYap(e) === hash);
         if(eser){
             detayGoster(eser.id, false);
         }else{
