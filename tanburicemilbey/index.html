@@ -171,16 +171,19 @@
 
     <script>
 
-        function slugYap(text) {
-          return text.toLowerCase()
-            .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
-            .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c")
-            .replace(/â|î|û/g,"")
-            .replace(/[^a-z0-9\s-]/g,"")
-            .replace(/\s+/g,"-")
-            .replace(/-+/g,"-")
-            .trim();
+        function slugYap(eser){
+          return eser.eser.toLowerCase()
+          .replaceAll("ç","c")
+          .replaceAll("ğ","g")
+          .replaceAll("ı","i")
+          .replaceAll("ö","o")
+          .replaceAll("ş","s")
+          .replaceAll("ü","u")
+          .replace(/[^a-z0-9]+/g,"-")
+          .replace(/^-|-$/g,"")
+          + "-" + eser.id;
         }
+
         function temizle(metin) {
         if (!metin) return "";
         return metin.toString().replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
