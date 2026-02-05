@@ -221,11 +221,20 @@ tbody tr:nth-child(even){
     + "-" + eser.id;
 }
 
+
+        function temizle(metin) {
+        if (!metin) return "";
+        return metin.toString().replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
+            .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
+            .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+            .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").trim();
+    }
+
     function listele(filtre = '') {
         const govde = document.getElementById('liste-govdesi');
         if (!govde) return;
-        const aramaTerimi = slugYap(filtre);
-       const sonuc = eserler.filter(item => slugYap(item.eser).includes(aramaTerimi) || slugYap(item.makam).includes(aramaTerimi));
+        const aramaTerimi = temizle(filtre);
+        const sonuc = eserler.filter(item => temizle(item.eser).includes(aramaTerimi) || temizle(item.makam).includes(aramaTerimi));
         govde.innerHTML = '';
         sonuc.forEach(item => {
             const satir = document.createElement('tr');
