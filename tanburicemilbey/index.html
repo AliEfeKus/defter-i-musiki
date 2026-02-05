@@ -128,6 +128,10 @@
     transition:all .2s ease;
 }
 
+tbody tr:nth-child(even){
+   background:#efe2c6;
+}
+
 .satir-link:hover{
     background:#fdf3d7;
     transform:scale(1.01);
@@ -155,8 +159,10 @@
 
         <div id="listeSayfasi">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse text-sm">
-                <thead class="bg-gray-50 border-b border-gray-200 text-gray-500 uppercase text-xs font-semibold">
+            <table class="w-full text-left border-collapse text-sm"
+                   style="background:#f3ead7;">
+                <thead class="border-b text-gray-700 uppercase text-xs font-semibold"
+                       style="background:#e6d3a3;">
                     <tr>
                         <th class="px-6 py-4">Eser</th>
                         <th class="px-6 py-4">Güftekâr</th>
@@ -166,7 +172,8 @@
                         <th class="px-6 py-4">Form</th>
                     </tr>
                 </thead>
-                <tbody id="liste-govdesi" class="divide-y divide-gray-100 bg-white"></tbody>
+                <tbody id="liste-govdesi" class="divide-y divide-gray-200"
+                      style="background:#f7efdf;"></tbody>
             </table>
         </div>
     </div>
