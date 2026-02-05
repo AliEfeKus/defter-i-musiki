@@ -292,18 +292,14 @@ tbody tr:nth-child(even){
     }
 
     window.onpopstate = () => {
-        const hash = window.location.hash.replace("#/", "");
-        
-        if (hash) { 
-            const eser = eserler.find(e => slugYap(e) === hash);
-            if (eser) {
-                detayGoster(eser.id, false);
-            } else {
-                anaSayfayaDon(false);
-            }
-        } else {
-            anaSayfayaDon(false);
-        }
+    const hash = window.location.hash.replace("#/", "");
+
+    if (!hash) return;
+
+    const eser = eserler.find(e => slugYap(e) === hash);
+    if (eser) {
+        detayGoster(eser.id, false);
+    }
 }
 </script>
 <script src="tanburicemilbey/eserler.js"></script>
