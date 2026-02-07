@@ -207,21 +207,21 @@ tbody tr:nth-child(even){
             const satir = document.createElement('tr');
             satir.className = "satir-link border-b border-gray-100";
             satir.innerHTML = `
-                <td class="px-6 py-4">
-                    <a href="#/${slugYap(item)}"
-                       onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
-                       class="px-6 py-4"
-                       style="color:#6b1f1f;">
-                       ${item.eser}
-                    </a>
-                </td>
-                <td class="px-6 py-4" style="color:#6b1f1f;">${item.güftekâr}</td>
-                <td class="px-6 py-4" style="color:#6b1f1f;">${item.bestekâr}</td>
-                <td class="px-6 py-4" style="color:#6b1f1f;">${item.makam}</td>
-                <td class="px-6 py-4" style="color:#6b1f1f;">${item.usûl || item.usul}</td>
-                <td class="px-6 py-4" style="color:#6b1f1f;">${item.form}</td>
-            govde.appendChild(satir);
-        });
+    <td class="px-6 py-4">
+        <a href="#/${slugYap(item)}"
+           onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
+           style="color:#6b1f1f;">
+           ${item.eser}
+        </a>
+    </td>
+    <td class="px-6 py-4" style="color:#6b1f1f;">${item.güftekâr}</td>
+    <td class="px-6 py-4" style="color:#6b1f1f;">${item.bestekâr}</td>
+    <td class="px-6 py-4" style="color:#6b1f1f;">${item.makam}</td>
+    <td class="px-6 py-4" style="color:#6b1f1f;">${item.usûl || item.usul}</td>
+    <td class="px-6 py-4" style="color:#6b1f1f;">${item.form}</td>
+`;
+govde.appendChild(satir);
+
     }
 
     function detayGoster(id, pushState = true) {
