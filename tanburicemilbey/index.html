@@ -210,15 +210,15 @@ tbody tr:nth-child(even){
                 <td class="px-6 py-4">
                     <a href="#/${slugYap(item)}"
                        onclick="if(!event.ctrlKey && !event.metaKey){event.preventDefault(); detayGoster(${item.id});}"
-                       class="block font-semibold text-blue-600 serif text-lg hover:underline">
+                       class="px-6 py-4 text-gray-800">
                        ${item.eser}
                     </a>
                 </td>
-                <td class="px-6 py-4 text-gray-800">${item.güftekâr}</td>
-                <td class="px-6 py-4 text-gray-800">${item.bestekâr}</td>
-                <td class="px-6 py-4 text-gray-800">${item.makam}</td>
-                <td class="px-6 py-4 text-gray-800">${item.usûl || item.usul}</td>
-                <td class="px-6 py-4 text-gray-800">${item.form}</td>`;
+                <td class="px-6 py-4 text-burgundy-800">${item.güftekâr}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.bestekâr}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.makam}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.usûl || item.usul}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.form}</td>`;
             govde.appendChild(satir);
         });
     }
