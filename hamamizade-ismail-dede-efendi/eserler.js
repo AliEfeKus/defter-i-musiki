@@ -1,5 +1,5 @@
 const eserler = [
-            { "id": 1, "eser": "A zalim kanıma girdin", "makam": "Hisar", "güftekâr": "Mechul", "bestekâr": "Hamâmîzâde İsmâil Dede Efendi", "usûl": "Aksak", "form": "Şarkı", "nota": "", "icrâ": "", "güfte": ""},
+            { "id": 1, "eser": "A zalim kanıma girdin", "makam": "Hisar", "güftekâr": "Mechul", "bestekâr": "Hamâmîzâde İsmâil Dede Efendi", "usûl": "Aksak", "form": "Şarkı", "nota": "hamamizade-ismail-dede-efendi/notalar/A-zalim-kanıma.pdf", "icrâ": "", "güfte": ""},
             { "id": 1, "eser": "Açıl açıl gel efendim cihan bahar olsun ", "makam": "Hicaz Buselik", "güftekâr": "Mechul", "bestekâr": "Hamâmîzâde İsmâil Dede Efendi", "usûl": "Yürük Semai", "form": "Yürük Semai", "nota": "", "icrâ": "", "güfte": ""},
             { "id": 1, "eser": "Açıldı lale-izarın dağ-ı derun", "makam": "Şehnaz", "güftekâr": "Mechul", "bestekâr": "Hamâmîzâde İsmâil Dede Efendi", "usûl": "Zincir", "form": "Beste", "nota": "", "icrâ": "", "güfte": ""},
             { "id": 1, "eser": "Ağlar inler payine yüzler sürer gönlüm gözüm", "makam": "Eviç bûselik", "güftekâr": "Danişli Ali Dede (İlmî)", "bestekâr": "Hamâmîzâde İsmâil Dede Efendi", "usûl": "Çenber (ağır)", "form": "Beste", "nota": "", "icrâ": "", "güfte": ""},
