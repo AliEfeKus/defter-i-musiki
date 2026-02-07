@@ -185,17 +185,20 @@ tbody tr:nth-child(even){
 
     <script>
 
-     function slugYap(eser){
-  return eser.toLowerCase()
-    .replaceAll("ç","c")
-    .replaceAll("ğ","g")
-    .replaceAll("ı","i")
-    .replaceAll("ö","o")
-    .replaceAll("ş","s")
-    .replaceAll("ü","u")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-|-$/g,"")
-    + "-" + eser.id;
+     function slugYap(eser) {
+         let metin = (typeof eser === 'object') ? eser.eser : eser;
+
+         if (!metin) return "";
+             
+         return metin.toLowerCase()
+             .replaceAll("ç","c")
+             .replaceAll("ğ","g")
+             .replaceAll("ı","i")
+             .replaceAll("ö","o")
+             .replaceAll("ş","s")
+             .replaceAll("ü","u")
+             .replace(/[^a-z0-9]+/g,"-")
+             .replace(/^-|-$/g,"");
 }
 
 
@@ -283,7 +286,7 @@ tbody tr:nth-child(even){
 
         document.getElementById('listeSayfasi').classList.add('hidden');
         document.getElementById('detaySayfasi').classList.remove('hidden');
-        if (pushState) window.history.pushState({id: eser.id}, "", "#/" + slugYap(eser));
+        if (pushState) window.history.pushState({id: eser.id}, "", "#/" + slugYap(eser.eser) + "-" + eser.id);
         window.scrollTo(0, 0);
     }
 }
