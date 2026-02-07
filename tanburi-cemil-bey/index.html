@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defter-i Mûsikî</title>
+    
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+    <link rel="icon" href="logo.png?v=1" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Crimson Pro', serif; }
+        .satir-link:hover { background-color: #f8fafc; }
+
+        .nota-arkaplan-konteynir {
+            background-image: url('mecmua-i-saz-u-soz-2.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.2);
+            width: 100%;
+        }
+  
+        .kagit-efekti {
+            background-color: #fdf6e3 !important;
+            background-image: radial-gradient(#d4a373 0.5px, transparent 0.5px);
+            background-size: 30px 30px;
+            border: 1px solid #e5e7eb;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 30px 15px !important;
+            margin: 20px 0 !important;
+        }
+
+        #detayGufteMetin {
+            white-space: pre !important;
+            display: block;
+            width: 100%;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem !important;
+            line-height: 1.8;
+            color: #2d2d2d;
+            overflow-x: auto;
+
+        }
+        /* === CEMİL BEY HERO === */
+.cemil-hero{
+    background:url("tanburi-cemil-bey/cemil-bey-tanburi-1.jpg") center/cover no-repeat;
+    height:360px;
+    position:relative;
+}
+
+.cemil-dark{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.55);
+    z-index:1;
+}
+
+.cemil-text{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.cemil-text h1{
+    font-family:'Crimson Pro', serif;
+    font-size:3.5rem;
+    color:#f5e6c8;
+    letter-spacing:2px;
+}
+
+.cemil-text p{
+    color:#ddd;
+    font-style:italic;
+    font-size:1.3rem;
+}
+
+.ana-buton{
+   position:absolute;
+   top:30px;
+   left:30px;
+   background:#8b5e2f;
+   color:#fff;
+   padding:10px 20px;
+   border-radius:8px;
+   text-decoration:none;
+   font-size:16px;
+   z-index:5;
+}
+
+
+.satir-link{
+    transition:all .2s ease;
+}
+
+tbody tr:nth-child(even){
+   background:#efe2c6;
+}
+
+.satir-link:hover{
+    background:#fdf3d7;
+    transform:scale(1.01);
+}
+
+.eser-link {
+    color: #800000 !important; /* Bordo renk */
+    transition: color 0.3s ease;
+}
+
+.eser-link:hover {
+    color: #b91c1c !important; /* Üzerine gelince biraz daha açık kırmızı/bordo */
+    text-decoration: underline;
+}
+         
+     </style>
+</head> 
+<body class="bg-[#f0f2f5] min-h-screen text-gray-900 pb-10">
+
+    <header class="cemil-hero">
+
+  <div class="cemil-dark"></div>
+
+  <div class="cemil-text">
+    <h1>Tanbûrî Cemil Bey</h1>
+    <p>Nota ve İcrâ Arşivi</p>
+  </div>
+
+    <a href="https://defterimusiki.com"
+       class="ana-buton">
+      ← Ana Sayfa
+    </a>
+
+</header>
+
+        <div id="listeSayfasi">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm"
+                   style="background:#f3ead7;">
+                <thead class="border-b text-gray-700 uppercase text-xs font-semibold"
+                       style="background:#e6d3a3;">
+                    <tr>
+                        <th class="px-6 py-4">Eser</th>
+                        <th class="px-6 py-4">Güftekâr</th>
+                        <th class="px-6 py-4">Bestekâr</th>
+                        <th class="px-6 py-4">Makam</th>
+                        <th class="px-6 py-4">Usûl</th>
+                        <th class="px-6 py-4">Form</th>
+                    </tr>
+                </thead>
+                <tbody id="liste-govdesi" class="divide-y divide-gray-200"
+                      style="background:#f7efdf;"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="detaySayfasi" class="hidden p-4 md:p-10 max-w-6xl mx-auto mt-10">
+        <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+            <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+        </button>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            <div class="lg:col-span-5 space-y-6">
+            <h1 id="detayAd" class="serif text-4xl md:text-5xl text-stone-800 mb-6 font-bold italic text-center leading-tight"></h1>
+            
+            <div class="flex flex-col space-y-4 text-stone-700 text-xl border-y border-stone-100 py-8 my-8 serif">
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>GÜFTEKÂR:</strong> <span id="detayGufte"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>BESTEKÂR:</strong> <span id="detayBestekar"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>MAKAM:</strong> <span id="detayMakam"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>USÛL:</strong> <span id="detayUsul"></span></p>
+                <p class="flex justify-between border-b border-stone-50 pb-2"><strong>FORM:</strong> <span id="detayForm"></span></p>
+            </div>
+
+            <div id="notaAlani"></div>
+        </div>
+    </div>
+
+    <script>
+
+     function slugYap(eser){
+  return eser.toLowerCase()
+    .replaceAll("ç","c")
+    .replaceAll("ğ","g")
+    .replaceAll("ı","i")
+    .replaceAll("ö","o")
+    .replaceAll("ş","s")
+    .replaceAll("ü","u")
+    .replace(/[^a-z0-9]+/g,"-")
+    .replace(/^-|-$/g,"")
+    + "-" + eser.id;
+}
+
+
+        function temizle(metin) {
+        if (!metin) return "";
+        return metin.toString().replace(/İ/g, "i").replace(/I/g, "i").toLowerCase()
+            .replace(/â/g, "a").replace(/î/g, "i").replace(/û/g, "u")
+            .replace(/ı/g, "i").replace(/ğ/g, "g").replace(/ü/g, "u")
+            .replace(/ş/g, "s").replace(/ö/g, "o").replace(/ç/g, "c").trim();
+    }
+
+    function listele(filtre = '') {
+        const govde = document.getElementById('liste-govdesi');
+        if (!govde) return;
+        const aramaTerimi = temizle(filtre);
+        const sonuc = eserler.filter(item => temizle(item.eser).includes(aramaTerimi) || temizle(item.makam).includes(aramaTerimi));
+        govde.innerHTML = '';
+        sonuc.forEach(item => {
+            const satir = document.createElement('tr');
+            satir.className = "satir-link border-b border-gray-100";
+            satir.innerHTML = `
+                <td class="px-6 py-4">
+                   <a href="#/${slugYap(item.eser)}"
+                       onclick="event.preventDefault(); detayGoster(${item.id});"
+                       class="block font-semibold eser-link serif text-lg">${item.eser}</a>
+                </td>
+                <td class="px-6 py-4 text-burgundy-800">${item.güftekâr}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.bestekâr}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.makam}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.usûl || item.usul}</td>
+                <td class="px-6 py-4 text-burgundy-800">${item.form}</td>`;
+            govde.appendChild(satir);
+        });
+    }
+
+    function detayGoster(id, pushState = true) {
+    const eser = eserler.find(e => e.id === id);
+    if (eser) {
+        document.getElementById('detaySayfasi').innerHTML = `
+            <button onclick="anaSayfayaDon()" class="text-amber-800 font-bold mb-6 flex items-center hover:text-amber-600 transition-colors">
+                <span class="mr-2 text-xl">←</span> Ana Sayfaya Dön
+            </button>
+            
+            <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border-t-8 border-amber-800">
+                <h1 class="serif text-3xl md:text-5xl text-stone-800 mb-8 font-bold italic text-center leading-tight">${eser.eser}</h1>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="flex flex-col space-y-3 text-stone-700 text-lg border-b border-stone-100 pb-6 serif">
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>GÜFTEKÂR:</strong> <span>${eser.güftekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>BESTEKÂR:</strong> <span>${eser.bestekâr}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>MAKAM:</strong> <span>${eser.makam}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>USÛL:</strong> <span>${eser.usûl || eser.usul}</span></p>
+                            <p class="flex justify-between border-b border-stone-450 pb-1 text-lg md:text-xl text-stone-800"><strong>FORM:</strong> <span>${eser.form}</span></p>
+                        </div>
+                        <div class="kagit-efekti p-1 rounded-2xl border border-stone-100 shadow-inner">
+                            <h3 class="serif text-center text-stone-950 uppercase text-2xl mb-4 tracking-widest font-bold border-b border-stone-900 pb-2 w-max mx-auto">GÜFTE</h3>
+                            <div id="detayGufteMetin" class="text-center serif italic text-stone-850">${eser.güfte || "Güfte henüz eklenmedi."}</div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 flex flex-col gap-6">
+                        <div class="aspect-video bg-black rounded overflow-hidden shadow-2xl">
+                                ${eser.icrâ ? (() => {
+                                    let vId = "";
+                                    if(eser.icrâ.includes('v=')) vId = eser.icrâ.split('v=')[1].split('&')[0];
+                                    else if(eser.icrâ.includes('youtu.be/')) vId = eser.icrâ.split('youtu.be/')[1].split('?')[0];
+                                    let params = "";
+                                    if(eser.baslangic) params += `?start=${eser.baslangic}`;
+                                    if(eser.bitis) params += (params ? `&` : `?`) + `end=${eser.bitis}`;
+                                    return `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${vId}${params}" frameborder="0" allowfullscreen></iframe>`;
+                                })() : "<div class='flex items-center justify-center h-full text-stone-400'>İcrâ bulunamadı.</div>"}
+                            </div>
+
+                            <div class="nota-arkaplan-konteynir min-h-[300px] flex items-center justify-center border border-stone-200 shadow-md rounded-lg">
+                                ${eser.nota ? 
+                                    `<a href="${eser.nota}" target="_blank" class="px-8 py-3 bg-amber-800/90 text-white serif text-lg tracking-widest uppercase rounded-sm shadow-xl hover:scale-105 transition-all border border-amber-900 z-10 text-center">Notayı Görüntüle</a>` 
+                                    : `<span class="text-stone-500 serif italic bg-white/80 px-4 py-2 rounded">Notası Henüz Yüklenmedi</span>`}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+
+        document.getElementById('listeSayfasi').classList.add('hidden');
+        document.getElementById('detaySayfasi').classList.remove('hidden');
+        if (pushState) window.history.pushState({id: eser.id}, "", "#/" + slugYap(eser));
+        window.scrollTo(0, 0);
+    }
+}
+
+    function anaSayfayaDon(pushState = true) {
+        document.getElementById('detaySayfasi').classList.add('hidden');
+        document.getElementById('listeSayfasi').classList.remove('hidden');
+        
+        listele();
+        
+        if (pushState) window.history.pushState({}, "", window.location.pathname);
+        window.scrollTo(0, 0);
+    }
+
+    window.onpopstate = (e) => { if (e.state && e.state.id) detayGoster(e.state.id, false); else anaSayfayaDon(false); };
+    window.onload = () => { 
+    const hash = window.location.hash.replace("#/", "");
+
+    if(hash){
+        const eser = eserler.find(e => slugYap(e) === hash);
+        if(eser){
+            detayGoster(eser.id, false);
+        }else{
+            listele();
+        }
+    }else{
+        listele();
+    }
+}
+</script>
+<script src="tanburi-cemil-bey/eserler.js"></script>
+</body>
+</html>
