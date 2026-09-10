@@ -1,13 +1,217 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Defter-i Musiki Arşivi</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Eser (Nota) Arşivi | Defter-i Mûsıkî</title>
+  <meta name="description" content="Defter-i Mûsıkî eser ve nota arşivi">
+  <link rel="icon" href="/icon.png">
+  <style>
+    :root{--bordo:#641b24;--bordo2:#4d141b;--krem:#f3eadb;--kagit:#fffaf0;--altin:#b89a66;--yazi:#2f2020;--soluk:#746763;--cizgi:#d7c7ae}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--krem);color:var(--yazi);font-family:Georgia,"Times New Roman",serif}
+    a{color:inherit}
+    .wrap{width:min(1220px,calc(100% - 30px));margin:auto}
+    header{background:var(--bordo2);color:white;border-bottom:4px solid var(--altin)}
+    .head{padding:20px 0}
+    .head h1{margin:0;font-size:clamp(30px,5vw,48px);font-weight:normal}
+    .head p{margin:5px 0 13px;opacity:.85}
+    .home{color:white;text-decoration:none}
+    main{padding:28px 0 50px}
+    .panel{background:var(--kagit);border:1px solid var(--cizgi);padding:20px;box-shadow:0 5px 18px #0000000d}
+    h2{margin:0 0 18px;color:var(--bordo);font-weight:normal;font-size:29px}
+    .controls{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px}
+    input,select{width:100%;min-width:0;padding:11px 12px;border:1px solid #cdbca4;background:white;color:var(--yazi);font:inherit}
+    .status{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:16px 0;color:var(--soluk)}
+    .table-wrap{overflow:auto;border:1px solid var(--cizgi)}
+    table{width:100%;border-collapse:collapse;background:white;min-width:960px}
+    th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee4d5;vertical-align:top}
+    th{background:#eadbc5;color:#4c2226;position:sticky;top:0;z-index:1}
+    tbody tr:hover{background:#fff8eb}
+    .eser{font-weight:bold;min-width:240px}
+    .pdfs a,.source{color:var(--bordo);display:inline-block;margin-right:8px}
+    .empty{text-align:center;padding:32px;color:var(--soluk)}
+    .pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:18px}
+    button{border:0;background:var(--bordo);color:white;padding:10px 15px;font:inherit;cursor:pointer}
+    button:disabled{opacity:.4;cursor:default}
+    @media(max-width:900px){.controls{grid-template-columns:1fr 1fr}.controls input{grid-column:1/-1}}
+    @media(max-width:560px){.controls{grid-template-columns:1fr}.controls input{grid-column:auto}.status{display:block}.status span{display:block;margin:5px 0}}
+  </style>
 </head>
 <body>
+<header>
+  <div class="wrap head">
+    <h1>Defter-i Mûsıkî</h1>
+    <p>Eser (Nota) Arşivi</p>
+    <a class="home" href="/">← Ana Sayfa</a>
+  </div>
+</header>
 
-  <h1>Defter-i Musiki Arşivi</h1>
-  <p>Arşiv hazırlanıyor.</p>
+<main class="wrap">
+  <section class="panel">
+    <h2>Eser Arşivi</h2>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Eser, bestekâr veya güfte sahibi ara…">
+      <select id="bestekar"><option value="">Tüm bestekârlar</option></select>
+      <select id="makam"><option value="">Tüm makamlar</option></select>
+      <select id="usul"><option value="">Tüm usûller</option></select>
+      <select id="form"><option value="">Tüm formlar</option></select>
+    </div>
 
+    <div class="status">
+      <span id="count">Arşiv yükleniyor…</span>
+      <span>Sayfa başına 50 eser</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Eser</th><th>Bestekâr</th><th>Makam</th><th>Usûl</th><th>Form</th><th>Nota</th><th>Kaynak</th>
+          </tr>
+        </thead>
+        <tbody id="rows"><tr><td colspan="7" class="empty">Yükleniyor…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button id="prev">← Önceki</button>
+      <span id="page"></span>
+      <button id="next">Sonraki →</button>
+    </div>
+  </section>
+</main>
+
+<script>
+const PAGE_SIZE=50;
+const BASE="/arsiv/";
+let works=[], filtered=[], currentPage=1;
+
+const $=id=>document.getElementById(id);
+const norm=s=>(s??"").toString().toLocaleLowerCase("tr-TR").trim();
+const esc=s=>(s??"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+const safeUrl=u=>(typeof u==="string" && /^https?:\/\//i.test(u))?u:"#";
+
+async function getJSON(name){
+  const r=await fetch(BASE+name+"?v=3",{cache:"no-store"});
+  if(!r.ok) throw new Error(name+" yüklenemedi ("+r.status+")");
+  return r.json();
+}
+
+function fillSelect(id,values){
+  const s=$(id);
+  const frag=document.createDocumentFragment();
+  (Array.isArray(values)?values:[]).forEach(v=>{
+    if(v===null || v===undefined || v==="") return;
+    const o=document.createElement("option");
+    o.value=v;
+    o.textContent=v;
+    frag.appendChild(o);
+  });
+  s.appendChild(frag);
+}
+
+function applyFilters(){
+  const q=norm($("q").value);
+  const b=$("bestekar").value,m=$("makam").value,u=$("usul").value,f=$("form").value;
+
+  filtered=works.filter(w=>{
+    const hay=norm([w.eser,w.bestekar,w.gufte_sahibi,w.makam,w.usul,w.form].join(" "));
+    return (!q||hay.includes(q))
+      &&(!b||w.bestekar===b)
+      &&(!m||w.makam===m)
+      &&(!u||w.usul===u)
+      &&(!f||w.form===f);
+  });
+  currentPage=1;
+  render();
+}
+
+function render(){
+  const totalPages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));
+  if(currentPage>totalPages) currentPage=totalPages;
+
+  const start=(currentPage-1)*PAGE_SIZE;
+  const list=filtered.slice(start,start+PAGE_SIZE);
+
+  $("count").textContent=filtered.length.toLocaleString("tr-TR")+" eser bulundu";
+  $("page").textContent=currentPage+" / "+totalPages;
+  $("prev").disabled=currentPage<=1;
+  $("next").disabled=currentPage>=totalPages;
+
+  if(!list.length){
+    $("rows").innerHTML='<tr><td colspan="7" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';
+    return;
+  }
+
+  $("rows").innerHTML=list.map(w=>{
+    const pdfs=Array.isArray(w.pdfler)?w.pdfler:[];
+    const notes=pdfs.map((p,i)=>{
+      const url=(p && typeof p==="object")?p.url:p;
+      const name=(p && typeof p==="object" && p.dosya_adi)?p.dosya_adi:"Nota "+(i+1);
+      const safe=safeUrl(url);
+      if(safe==="#") return "";
+      return '<a href="'+esc(safe)+'" target="_blank" rel="noopener" title="'+esc(name)+'">Nota '+(i+1)+'</a>';
+    }).filter(Boolean).join("");
+
+    const sourceUrl=safeUrl(w.divanmakam_url);
+    const src=sourceUrl!=="#"
+      ? '<a class="source" href="'+esc(sourceUrl)+'" target="_blank" rel="noopener">DivanMakam</a>'
+      : "—";
+
+    return '<tr>'+
+      '<td class="eser">'+esc(w.eser)+'</td>'+
+      '<td>'+esc(w.bestekar)+'</td>'+
+      '<td>'+esc(w.makam)+'</td>'+
+      '<td>'+esc(w.usul)+'</td>'+
+      '<td>'+esc(w.form)+'</td>'+
+      '<td class="pdfs">'+(notes||"—")+'</td>'+
+      '<td>'+src+'</td>'+
+      '</tr>';
+  }).join("");
+}
+
+let timer;
+$("q").addEventListener("input",()=>{
+  clearTimeout(timer);
+  timer=setTimeout(applyFilters,180);
+});
+["bestekar","makam","usul","form"].forEach(id=>$(id).addEventListener("change",applyFilters));
+
+$("prev").onclick=()=>{
+  if(currentPage>1){currentPage--;render();window.scrollTo({top:0,behavior:"smooth"});}
+};
+$("next").onclick=()=>{
+  if(currentPage*PAGE_SIZE<filtered.length){currentPage++;render();window.scrollTo({top:0,behavior:"smooth"});}
+};
+
+(async()=>{
+  try{
+    const [e,b,m,u,f]=await Promise.all([
+      getJSON("eserler.json"),
+      getJSON("bestekarlar.json"),
+      getJSON("makamlar.json"),
+      getJSON("usuller.json"),
+      getJSON("formlar.json")
+    ]);
+
+    if(!Array.isArray(e)) throw new Error("eserler.json liste biçiminde değil.");
+
+    works=e;
+    filtered=e.slice();
+
+    fillSelect("bestekar",b);
+    fillSelect("makam",m);
+    fillSelect("usul",u);
+    fillSelect("form",f);
+
+    render();
+  }catch(err){
+    console.error(err);
+    $("count").textContent="Arşiv yüklenemedi.";
+    $("rows").innerHTML='<tr><td colspan="7" class="empty">'+esc(err.message)+'</td></tr>';
+  }
+})();
+</script>
 </body>
 </html>

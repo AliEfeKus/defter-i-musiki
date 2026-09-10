@@ -3,160 +3,217 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Eser (Nota) Arşivi | Defter-i Mûsıkî</title>
-  <meta name="description" content="Defter-i Mûsıkî eser ve nota arşivi">
+  <title>Defter-i Mûsıkî</title>
+  <meta name="description" content="Defter-i Mûsıkî — Türk mûsıkîsi nota, kayıt ve bilgi arşivi.">
+  <link rel="icon" href="/icon.png">
   <style>
-    :root{--bordo:#681b24;--koyu:#2d1718;--krem:#f5efe3;--kagit:#fffdf8;--cizgi:#d9cdbb;--soluk:#746862}
+    :root{
+      --bordo:#641b24;
+      --bordo2:#4d141b;
+      --krem:#f3eadb;
+      --kagit:#fffaf0;
+      --altin:#b89a66;
+      --yazi:#2f2020;
+      --soluk:#746763;
+      --cizgi:#d7c7ae;
+    }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--krem);color:var(--koyu);font-family:Georgia,"Times New Roman",serif}
-    header{background:var(--bordo);color:white;padding:22px 18px;border-bottom:5px solid #b99862}
-    .wrap{max-width:1180px;margin:auto}
-    header h1{margin:0;font-size:clamp(27px,4vw,42px);font-weight:normal}
-    header p{margin:6px 0 0;opacity:.88}
-    nav{margin-top:14px}
-    nav a{color:white;text-decoration:none;margin-right:18px}
-    main{padding:28px 18px 50px}
-    .panel{background:var(--kagit);border:1px solid var(--cizgi);padding:20px;box-shadow:0 3px 14px #0000000d}
-    h2{margin-top:0;font-weight:normal}
-    .controls{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px}
-    input,select{width:100%;padding:11px;border:1px solid #c8b9a6;background:white;color:var(--koyu);font:inherit}
-    .status{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:16px 0;color:var(--soluk)}
-    button{border:0;background:var(--bordo);color:white;padding:10px 15px;cursor:pointer;font:inherit}
-    button:disabled{opacity:.45;cursor:default}
-    .table-wrap{overflow:auto;border:1px solid var(--cizgi)}
-    table{width:100%;border-collapse:collapse;background:white;min-width:900px}
-    th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee5d8;vertical-align:top}
-    th{background:#eee2d0;color:#4c2226;position:sticky;top:0}
-    tbody tr:hover{background:#fff9ee}
-    .eser{font-weight:bold}
-    .pdfs a,.source{display:inline-block;color:var(--bordo);margin-right:7px}
-    .pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:18px}
-    .empty{text-align:center;padding:30px;color:var(--soluk)}
-    @media(max-width:900px){.controls{grid-template-columns:1fr 1fr}.controls input{grid-column:1/-1}}
-    @media(max-width:560px){.controls{grid-template-columns:1fr}.controls input{grid-column:auto}.status{display:block}.status span{display:block;margin:5px 0}}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      color:var(--yazi);
+      background:
+        linear-gradient(rgba(243,234,219,.96),rgba(243,234,219,.96)),
+        url("/mecmua-i-saz-u-soz-2.jpg") center/cover fixed;
+    }
+    a{color:inherit}
+    .wrap{width:min(1160px,calc(100% - 32px));margin:auto}
+    .topbar{
+      background:var(--bordo2);
+      color:#fff;
+      border-bottom:3px solid var(--altin);
+    }
+    .nav{
+      min-height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+    .brand{
+      font-size:26px;
+      text-decoration:none;
+      letter-spacing:.4px;
+      white-space:nowrap;
+    }
+    .links{display:flex;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+    .links a{font-size:15px;text-decoration:none;opacity:.92}
+    .links a:hover{opacity:1;text-decoration:underline}
+    .hero{
+      min-height:500px;
+      position:relative;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      color:white;
+      background:
+        linear-gradient(rgba(25,8,10,.42),rgba(25,8,10,.68)),
+        url("/fasıl---musiki-2.jpg") center 42%/cover no-repeat;
+      border-bottom:5px solid var(--altin);
+    }
+    .hero-inner{padding:70px 20px;max-width:900px}
+    .hero h1{
+      margin:0 0 12px;
+      font-size:clamp(45px,8vw,88px);
+      line-height:.95;
+      font-weight:normal;
+      text-shadow:0 3px 18px #000;
+    }
+    .hero p{
+      margin:0 auto 26px;
+      max-width:700px;
+      font-size:clamp(18px,2.2vw,24px);
+      line-height:1.5;
+      text-shadow:0 2px 10px #000;
+    }
+    .cta{
+      display:inline-block;
+      padding:13px 22px;
+      background:var(--bordo);
+      border:1px solid #d8bc88;
+      color:white;
+      text-decoration:none;
+      font-weight:bold;
+      box-shadow:0 4px 18px #0005;
+    }
+    main{padding:42px 0 60px}
+    .intro{
+      background:rgba(255,250,240,.92);
+      border:1px solid var(--cizgi);
+      padding:26px;
+      margin-bottom:28px;
+      box-shadow:0 6px 22px #0000000d;
+    }
+    .intro h2{margin:0 0 10px;font-size:31px;font-weight:normal;color:var(--bordo)}
+    .intro p{margin:0;color:var(--soluk);line-height:1.7}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .card{
+      display:block;
+      min-height:185px;
+      padding:24px;
+      text-decoration:none;
+      background:rgba(255,250,240,.95);
+      border:1px solid var(--cizgi);
+      border-top:4px solid var(--bordo);
+      box-shadow:0 6px 20px #0000000b;
+      transition:.18s ease;
+    }
+    .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px #00000017}
+    .card h3{margin:0 0 10px;font-size:24px;font-weight:normal;color:var(--bordo)}
+    .card p{margin:0;color:var(--soluk);line-height:1.55}
+    .feature{
+      margin-top:30px;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      background:rgba(255,250,240,.95);
+      border:1px solid var(--cizgi);
+      overflow:hidden;
+    }
+    .feature img{width:100%;height:100%;min-height:300px;object-fit:cover}
+    .feature-text{padding:32px}
+    .feature h2{margin-top:0;color:var(--bordo);font-weight:normal;font-size:30px}
+    .feature p{line-height:1.7;color:var(--soluk)}
+    footer{
+      background:var(--bordo2);
+      color:#eee4d7;
+      text-align:center;
+      padding:24px 16px;
+      border-top:3px solid var(--altin);
+    }
+    @media(max-width:850px){
+      .grid{grid-template-columns:1fr 1fr}
+      .feature{grid-template-columns:1fr}
+      .feature img{max-height:360px}
+    }
+    @media(max-width:620px){
+      .nav{align-items:flex-start;flex-direction:column;padding:16px 0}
+      .links{justify-content:flex-start;gap:12px 16px}
+      .hero{min-height:420px}
+      .grid{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <h1>Defter-i Mûsıkî</h1>
-    <p>Eser (Nota) Arşivi</p>
-    <nav><a href="../">Ana Sayfa</a></nav>
-  </div>
-</header>
-
-<main class="wrap">
-  <section class="panel">
-    <h2>Eser Arşivi</h2>
-    <div class="controls">
-      <input id="q" type="search" placeholder="Eser veya güfte sahibi ara…">
-      <select id="bestekar"><option value="">Tüm bestekârlar</option></select>
-      <select id="makam"><option value="">Tüm makamlar</option></select>
-      <select id="usul"><option value="">Tüm usûller</option></select>
-      <select id="form"><option value="">Tüm formlar</option></select>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="/">Defter-i Mûsıkî</a>
+      <nav class="links" aria-label="Ana menü">
+        <a href="/">Ana Sayfa</a>
+        <a href="/arsiv/">Eser (Nota) Arşivi</a>
+        <a href="#kayit">Kayıt Arşivi</a>
+        <a href="#yazilar">Köşe Yazıları</a>
+        <a href="#ansiklopedi">Ansiklopedi</a>
+        <a href="#paylas">Bizimle Paylaşın</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="status">
-      <span id="count">Arşiv yükleniyor…</span>
-      <span>Sayfa başına 50 eser</span>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Eser</th><th>Bestekâr</th><th>Makam</th><th>Usûl</th><th>Form</th><th>Nota</th><th>Kaynak</th>
-          </tr>
-        </thead>
-        <tbody id="rows"><tr><td colspan="7" class="empty">Yükleniyor…</td></tr></tbody>
-      </table>
-    </div>
-
-    <div class="pagination">
-      <button id="prev">← Önceki</button>
-      <span id="page"></span>
-      <button id="next">Sonraki →</button>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Defter-i Mûsıkî</h1>
+      <p>Türk mûsıkîsinin eserlerini, notalarını, icralarını ve mûsıkîşinaslarını bir araya getiren dijital arşiv.</p>
+      <a class="cta" href="/arsiv/">Eser Arşivine Gir</a>
     </div>
   </section>
-</main>
 
-<script>
-const PAGE_SIZE=50;
-let works=[], filtered=[], currentPage=1;
-const $=id=>document.getElementById(id);
-const norm=s=>(s??"").toString().toLocaleLowerCase("tr-TR").trim();
-const esc=s=>(s??"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
-const safeUrl=u=>/^https?:\/\//i.test(u||"") ? u : "#";
+  <main class="wrap">
+    <section class="intro">
+      <h2>Defter-i Mûsıkî</h2>
+      <p>Bu mecmua; klasik Türk mûsıkîsi repertuvarını düzenli, aranabilir ve erişilebilir bir yapı içinde toplamak amacıyla hazırlanmıştır. Arşiv geliştikçe eser, bestekâr, makam, usûl ve form başlıkları altında yeni içerikler eklenecektir.</p>
+    </section>
 
-async function getJSON(name){
-  const r=await fetch(name,{cache:"no-store"});
-  if(!r.ok) throw new Error(name+" yüklenemedi");
-  return r.json();
-}
-function fillSelect(id,values){
-  const s=$(id);
-  const frag=document.createDocumentFragment();
-  values.forEach(v=>{
-    const o=document.createElement("option"); o.value=v; o.textContent=v; frag.appendChild(o);
-  });
-  s.appendChild(frag);
-}
-function applyFilters(){
-  const q=norm($("q").value), b=$("bestekar").value, m=$("makam").value, u=$("usul").value, f=$("form").value;
-  filtered=works.filter(w=>{
-    const hay=norm([w.eser,w.bestekar,w.gufte_sahibi,w.makam,w.usul,w.form].join(" "));
-    return (!q||hay.includes(q))&&(!b||w.bestekar===b)&&(!m||w.makam===m)&&(!u||w.usul===u)&&(!f||w.form===f);
-  });
-  currentPage=1; render();
-}
-function render(){
-  const totalPages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));
-  if(currentPage>totalPages) currentPage=totalPages;
-  const start=(currentPage-1)*PAGE_SIZE;
-  const list=filtered.slice(start,start+PAGE_SIZE);
-  $("count").textContent=`${filtered.length.toLocaleString("tr-TR")} eser bulundu`;
-  $("page").textContent=`${currentPage} / ${totalPages}`;
-  $("prev").disabled=currentPage<=1;
-  $("next").disabled=currentPage>=totalPages;
+    <section class="grid" aria-label="Bölümler">
+      <a class="card" href="/arsiv/">
+        <h3>Eser (Nota) Arşivi</h3>
+        <p>On binlerce eseri bestekâr, makam, usûl ve forma göre ara; mevcut nota bağlantılarına ulaş.</p>
+      </a>
+      <a class="card" id="kayit" href="#kayit">
+        <h3>Kayıt Arşivi</h3>
+        <p>Tarihî ve güncel icraların düzenleneceği ses ve görüntü arşivi.</p>
+      </a>
+      <a class="card" id="yazilar" href="#yazilar">
+        <h3>Köşe Yazıları</h3>
+        <p>Türk mûsıkîsi tarihi, nazariyatı, repertuvarı ve icrası üzerine yazılar.</p>
+      </a>
+      <a class="card" id="ansiklopedi" href="#ansiklopedi">
+        <h3>Ansiklopedi</h3>
+        <p>Bestekârlar, icracılar, makamlar, usûller, formlar ve mûsıkî terimleri.</p>
+      </a>
+      <a class="card" href="/tanburi-cemil-bey/">
+        <h3>Tanbûrî Cemil Bey</h3>
+        <p>Sanatkâr sayfasına ve repertuvarına göz at.</p>
+      </a>
+      <a class="card" id="paylas" href="#paylas">
+        <h3>Bizimle Paylaşın</h3>
+        <p>Arşive katkıda bulunmak için nota, kayıt, düzeltme ve kaynak bilgisi paylaşımı.</p>
+      </a>
+    </section>
 
-  if(!list.length){
-    $("rows").innerHTML='<tr><td colspan="7" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';
-    return;
-  }
-  $("rows").innerHTML=list.map(w=>{
-    const pdfs=Array.isArray(w.pdfler)?w.pdfler:[];
-    const notes=pdfs.map((p,i)=>`<a href="${esc(safeUrl(p))}" target="_blank" rel="noopener">Nota ${i+1}</a>`).join("");
-    const src=w.divanmakam_url?`<a class="source" href="${esc(safeUrl(w.divanmakam_url))}" target="_blank" rel="noopener">DivanMakam</a>`:"";
-    return `<tr>
-      <td class="eser">${esc(w.eser)}</td>
-      <td>${esc(w.bestekar)}</td>
-      <td>${esc(w.makam)}</td>
-      <td>${esc(w.usul)}</td>
-      <td>${esc(w.form)}</td>
-      <td class="pdfs">${notes||"—"}</td>
-      <td>${src}</td>
-    </tr>`;
-  }).join("");
-}
-let timer;
-$("q").addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(applyFilters,180)});
-["bestekar","makam","usul","form"].forEach(id=>$(id).addEventListener("change",applyFilters));
-$("prev").onclick=()=>{if(currentPage>1){currentPage--;render();scrollTo({top:0,behavior:"smooth"})}};
-$("next").onclick=()=>{if(currentPage*PAGE_SIZE<filtered.length){currentPage++;render();scrollTo({top:0,behavior:"smooth"})}};
+    <section class="feature">
+      <img src="/mecmua-i-saz-u-soz-2.jpg" alt="Mûsıkî mecmuası">
+      <div class="feature-text">
+        <h2>Bir dijital mûsıkî mecmuası</h2>
+        <p>Defter-i Mûsıkî yalnızca bir nota listesi değil; eserleri kaynaklarıyla, icralarıyla ve mûsıkîşinaslarıyla birlikte ele alan genişleyen bir arşiv olarak tasarlanmaktadır.</p>
+        <p><a href="/arsiv/">Arşivi incele →</a></p>
+      </div>
+    </section>
+  </main>
 
-(async()=>{
-  try{
-    const [e,b,m,u,f]=await Promise.all([
-      getJSON("eserler.json"),getJSON("bestekarlar.json"),getJSON("makamlar.json"),getJSON("usuller.json"),getJSON("formlar.json")
-    ]);
-    works=e; filtered=e;
-    fillSelect("bestekar",b); fillSelect("makam",m); fillSelect("usul",u); fillSelect("form",f);
-    render();
-  }catch(err){
-    $("count").textContent="Arşiv yüklenemedi.";
-    $("rows").innerHTML=`<tr><td colspan="7" class="empty">${esc(err.message)}</td></tr>`;
-  }
-})();
-</script>
+  <footer>Defter-i Mûsıkî</footer>
 </body>
 </html>
