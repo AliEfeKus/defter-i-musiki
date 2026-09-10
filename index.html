@@ -1,147 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<title>Defter-i Mûsikî</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Tailwind -->
-<link href="https://cdn.tailwindcss.com" rel="stylesheet">
-
-<style>
-
-body{
-  background:#f4f1ea;
-  font-family: serif;
-}
-
-/* Üst kutular */
-.ust-kutu{
-  background:#3b2f24;
-  color:#f5e6c8;
-  padding:12px 8px;
-  text-align:center;
-  border-radius:4px;
-  border:1px solid #6b4f2a;
-  transition:.3s;
-}
-.ust-kutu:hover{
-  background:#5a3f1f;
-}
-
-/* Banner */
-.banner{
-  position:relative;
-  height:300px;
-  overflow:hidden;
-}
-.banner img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.banner-yazi{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:rgba(0,0,0,0.55);
-  text-align:center;
-  padding:25px 10px;
-}
-.banner-yazi h1{
-  font-size:46px;
-  color:#f5e6c8;
-}
-.banner-yazi p{
-  color:#ddd;
-}
-
-/* Kart */
-.kart{
-  background:#fff;
-  padding:15px;
-  border-radius:6px;
-  border:1px solid #ddd;
-}
-.kart:hover{
-  background:#f7f3ea;
-}
-  
-</style>
-  
-<link rel="icon" href="icon.png?v=2" type="image/png" sizes="32x32">
-<link rel="apple-touch-icon" href="logo.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Eser (Nota) Arşivi | Defter-i Mûsıkî</title>
+  <meta name="description" content="Defter-i Mûsıkî eser ve nota arşivi">
+  <style>
+    :root{--bordo:#681b24;--koyu:#2d1718;--krem:#f5efe3;--kagit:#fffdf8;--cizgi:#d9cdbb;--soluk:#746862}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--krem);color:var(--koyu);font-family:Georgia,"Times New Roman",serif}
+    header{background:var(--bordo);color:white;padding:22px 18px;border-bottom:5px solid #b99862}
+    .wrap{max-width:1180px;margin:auto}
+    header h1{margin:0;font-size:clamp(27px,4vw,42px);font-weight:normal}
+    header p{margin:6px 0 0;opacity:.88}
+    nav{margin-top:14px}
+    nav a{color:white;text-decoration:none;margin-right:18px}
+    main{padding:28px 18px 50px}
+    .panel{background:var(--kagit);border:1px solid var(--cizgi);padding:20px;box-shadow:0 3px 14px #0000000d}
+    h2{margin-top:0;font-weight:normal}
+    .controls{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px}
+    input,select{width:100%;padding:11px;border:1px solid #c8b9a6;background:white;color:var(--koyu);font:inherit}
+    .status{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:16px 0;color:var(--soluk)}
+    button{border:0;background:var(--bordo);color:white;padding:10px 15px;cursor:pointer;font:inherit}
+    button:disabled{opacity:.45;cursor:default}
+    .table-wrap{overflow:auto;border:1px solid var(--cizgi)}
+    table{width:100%;border-collapse:collapse;background:white;min-width:900px}
+    th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee5d8;vertical-align:top}
+    th{background:#eee2d0;color:#4c2226;position:sticky;top:0}
+    tbody tr:hover{background:#fff9ee}
+    .eser{font-weight:bold}
+    .pdfs a,.source{display:inline-block;color:var(--bordo);margin-right:7px}
+    .pagination{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:18px}
+    .empty{text-align:center;padding:30px;color:var(--soluk)}
+    @media(max-width:900px){.controls{grid-template-columns:1fr 1fr}.controls input{grid-column:1/-1}}
+    @media(max-width:560px){.controls{grid-template-columns:1fr}.controls input{grid-column:auto}.status{display:block}.status span{display:block;margin:5px 0}}
+  </style>
 </head>
-
 <body>
+<header>
+  <div class="wrap">
+    <h1>Defter-i Mûsıkî</h1>
+    <p>Eser (Nota) Arşivi</p>
+    <nav><a href="../">Ana Sayfa</a></nav>
+  </div>
+</header>
 
-<!-- BANNER -->
-<div class="banner mt-6">
-<img src="fasil--musiki-2.jpg">
-<div class="banner-yazi">
-<h1>Defter-i Mûsikî</h1>
-</div>
-</div>
+<main class="wrap">
+  <section class="panel">
+    <h2>Eser Arşivi</h2>
+    <div class="controls">
+      <input id="q" type="search" placeholder="Eser veya güfte sahibi ara…">
+      <select id="bestekar"><option value="">Tüm bestekârlar</option></select>
+      <select id="makam"><option value="">Tüm makamlar</option></select>
+      <select id="usul"><option value="">Tüm usûller</option></select>
+      <select id="form"><option value="">Tüm formlar</option></select>
+    </div>
 
-<!-- ÜST MENÜ -->
-<section class="max-w-6xl mx-auto px-4 mt-6">
-<div class="grid grid-cols-2 md:grid-cols-6 gap-2">
+    <div class="status">
+      <span id="count">Arşiv yükleniyor…</span>
+      <span>Sayfa başına 50 eser</span>
+    </div>
 
-<a href="/" class="ust-kutu">Ana Sayfa</a>
-<a href="eserler" class="ust-kutu">Nota Arşivi</a>
-<a href="kayitlar" class="ust-kutu">Kayıt Arşivi</a>
-<a href="ansiklopedi" class="ust-kutu">Ansiklopedi</a>
-<a href="paylas" class="ust-kutu">Bize Ulaşın!</a>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Eser</th><th>Bestekâr</th><th>Makam</th><th>Usûl</th><th>Form</th><th>Nota</th><th>Kaynak</th>
+          </tr>
+        </thead>
+        <tbody id="rows"><tr><td colspan="7" class="empty">Yükleniyor…</td></tr></tbody>
+      </table>
+    </div>
 
-</div>
-</section>
+    <div class="pagination">
+      <button id="prev">← Önceki</button>
+      <span id="page"></span>
+      <button id="next">Sonraki →</button>
+    </div>
+  </section>
+</main>
 
-<!-- ORTA ALAN -->
-<section class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6">
+<script>
+const PAGE_SIZE=50;
+let works=[], filtered=[], currentPage=1;
+const $=id=>document.getElementById(id);
+const norm=s=>(s??"").toString().toLocaleLowerCase("tr-TR").trim();
+const esc=s=>(s??"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||"") ? u : "#";
 
-<!-- SOL -->
-<div class="md:col-span-2 space-y-6">
+async function getJSON(name){
+  const r=await fetch(name,{cache:"no-store"});
+  if(!r.ok) throw new Error(name+" yüklenemedi");
+  return r.json();
+}
+function fillSelect(id,values){
+  const s=$(id);
+  const frag=document.createDocumentFragment();
+  values.forEach(v=>{
+    const o=document.createElement("option"); o.value=v; o.textContent=v; frag.appendChild(o);
+  });
+  s.appendChild(frag);
+}
+function applyFilters(){
+  const q=norm($("q").value), b=$("bestekar").value, m=$("makam").value, u=$("usul").value, f=$("form").value;
+  filtered=works.filter(w=>{
+    const hay=norm([w.eser,w.bestekar,w.gufte_sahibi,w.makam,w.usul,w.form].join(" "));
+    return (!q||hay.includes(q))&&(!b||w.bestekar===b)&&(!m||w.makam===m)&&(!u||w.usul===u)&&(!f||w.form===f);
+  });
+  currentPage=1; render();
+}
+function render(){
+  const totalPages=Math.max(1,Math.ceil(filtered.length/PAGE_SIZE));
+  if(currentPage>totalPages) currentPage=totalPages;
+  const start=(currentPage-1)*PAGE_SIZE;
+  const list=filtered.slice(start,start+PAGE_SIZE);
+  $("count").textContent=`${filtered.length.toLocaleString("tr-TR")} eser bulundu`;
+  $("page").textContent=`${currentPage} / ${totalPages}`;
+  $("prev").disabled=currentPage<=1;
+  $("next").disabled=currentPage>=totalPages;
 
-<div class="kart">
-<h2 class="text-xl mb-3">Bestekârlar</h2>
-<ul class="list-disc pl-5 space-y-1">
-<li><a href="tanburi-cemil-bey">Tanbûrî Cemil Bey</a></li>
-<li><a href="hamamizade-ismail-dede-efendi">Hamâmîzâde İsmâil Dede Efendi</a></li>
-<li>Hacı Ârif Bey</li>
-</ul>
-</div>
+  if(!list.length){
+    $("rows").innerHTML='<tr><td colspan="7" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';
+    return;
+  }
+  $("rows").innerHTML=list.map(w=>{
+    const pdfs=Array.isArray(w.pdfler)?w.pdfler:[];
+    const notes=pdfs.map((p,i)=>`<a href="${esc(safeUrl(p))}" target="_blank" rel="noopener">Nota ${i+1}</a>`).join("");
+    const src=w.divanmakam_url?`<a class="source" href="${esc(safeUrl(w.divanmakam_url))}" target="_blank" rel="noopener">DivanMakam</a>`:"";
+    return `<tr>
+      <td class="eser">${esc(w.eser)}</td>
+      <td>${esc(w.bestekar)}</td>
+      <td>${esc(w.makam)}</td>
+      <td>${esc(w.usul)}</td>
+      <td>${esc(w.form)}</td>
+      <td class="pdfs">${notes||"—"}</td>
+      <td>${src}</td>
+    </tr>`;
+  }).join("");
+}
+let timer;
+$("q").addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(applyFilters,180)});
+["bestekar","makam","usul","form"].forEach(id=>$(id).addEventListener("change",applyFilters));
+$("prev").onclick=()=>{if(currentPage>1){currentPage--;render();scrollTo({top:0,behavior:"smooth"})}};
+$("next").onclick=()=>{if(currentPage*PAGE_SIZE<filtered.length){currentPage++;render();scrollTo({top:0,behavior:"smooth"})}};
 
-</div>
-
-<!-- SAĞ -->
-<div class="space-y-6">
-
-<div class="kart">
-<h2 class="text-xl mb-3">Makâmlar</h2>
-<ul class="list-disc pl-5 space-y-1">
-<li>Rast</li>
-<li>Hüseynî</li>
-<li>Uşşak</li>
-</ul>
-</div>
-
-<div class="kart">
-<h2 class="text-xl mb-3">Usûller</h2>
-<ul class="list-disc pl-5 space-y-1">
-<li>Düyek</li>
-<li>Aksak</li>
-<li>Nîm-sofyan</li>
-</ul>
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="text-center py-6 text-sm text-stone-600">
-© Defter-i Mûsikî
-</footer>
-
+(async()=>{
+  try{
+    const [e,b,m,u,f]=await Promise.all([
+      getJSON("eserler.json"),getJSON("bestekarlar.json"),getJSON("makamlar.json"),getJSON("usuller.json"),getJSON("formlar.json")
+    ]);
+    works=e; filtered=e;
+    fillSelect("bestekar",b); fillSelect("makam",m); fillSelect("usul",u); fillSelect("form",f);
+    render();
+  }catch(err){
+    $("count").textContent="Arşiv yüklenemedi.";
+    $("rows").innerHTML=`<tr><td colspan="7" class="empty">${esc(err.message)}</td></tr>`;
+  }
+})();
+</script>
 </body>
 </html>
