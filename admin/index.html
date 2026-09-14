@@ -986,11 +986,22 @@
           Virgül PostgREST OR ifadesini bozmasın.
         */
 
-        const temizArama =
-          aktifArama
-            .replace(/[(),]/g, " ")
-            .replace(/\s+/g, " ")
-            .trim();
+        let temizArama = aktifArama.trim();
+
+        /*
+          Parantezli bestekâr adlarında PostgREST OR ifadesi sorun çıkarabiliyor.
+          Örn: "Itri(Buhurizade Mustafa Efendi)" arandığında
+          parantezden önceki ana adı arama terimi olarak kullan.
+        */
+        if (temizArama.includes("(")) {
+          const parantezOncesi = temizArama.split("(")[0].trim();
+          if (parantezOncesi) temizArama = parantezOncesi;
+        }
+
+        temizArama = temizArama
+          .replaceAll(",", " ")
+          .replace(/\s+/g, " ")
+          .trim();
 
         sorgu =
           sorgu.or(
