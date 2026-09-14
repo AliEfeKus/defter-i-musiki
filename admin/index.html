@@ -565,7 +565,7 @@
 
               <textarea
                 id="pdfler"
-                placeholder="Her satıra: dosya.pdf | https://...  (yalnız URL de olur)"
+                placeholder="Her satıra bir PDF bağlantısı yaz"
               ></textarea>
 
               <div class="form-butonlar">
@@ -770,46 +770,7 @@
         return "";
       }
 
-      return pdfler
-        .map((pdf) => {
-
-          /*
-            Eski/ithal kayıt:
-            { dosya_adi: "...pdf", url: "https://..." }
-
-            Olası eski panel kaydı:
-            "https://..."
-          */
-
-          if (typeof pdf === "string") {
-            return pdf.trim();
-          }
-
-          if (
-            pdf &&
-            typeof pdf === "object" &&
-            typeof pdf.url === "string"
-          ) {
-
-            const url = pdf.url.trim();
-            const dosyaAdi =
-              typeof pdf.dosya_adi === "string"
-                ? pdf.dosya_adi.trim()
-                : "";
-
-            if (!url) {
-              return "";
-            }
-
-            return dosyaAdi
-              ? `${dosyaAdi} | ${url}`
-              : url;
-          }
-
-          return "";
-        })
-        .filter(Boolean)
-        .join("\n");
+      return pdfler.join("\n");
     }
 
 
@@ -818,60 +779,7 @@
       return metin
         .split("\n")
         .map(x => x.trim())
-        .filter(Boolean)
-        .map((satir) => {
-
-          let dosyaAdi = "";
-          let url = satir;
-
-          /*
-            Yönetim panelinde:
-            dosya.pdf | https://adres...
-            biçimi desteklenir.
-
-            Sadece URL girilirse dosya adı URL'den alınmaya çalışılır.
-          */
-
-          const ayirici = satir.indexOf("|");
-
-          if (ayirici !== -1) {
-
-            dosyaAdi =
-              satir
-                .slice(0, ayirici)
-                .trim();
-
-            url =
-              satir
-                .slice(ayirici + 1)
-                .trim();
-          }
-
-          if (!dosyaAdi && url) {
-
-            try {
-
-              const adres = new URL(url);
-
-              dosyaAdi =
-                decodeURIComponent(
-                  adres.pathname
-                    .split("/")
-                    .filter(Boolean)
-                    .pop() || ""
-                );
-
-            } catch (e) {
-              dosyaAdi = "";
-            }
-          }
-
-          return {
-            dosya_adi: dosyaAdi,
-            url: url
-          };
-        })
-        .filter(pdf => pdf.url);
+        .filter(Boolean);
     }
 
 
@@ -1080,7 +988,8 @@
 
         const temizArama =
           aktifArama
-            .replaceAll(",", " ")
+            .replace(/[(),]/g, " ")
+            .replace(/\s+/g, " ")
             .trim();
 
         sorgu =
