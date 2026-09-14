@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Yönetim Paneli | Defter-i Mûsıkî</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f4efe4;
+      color: #2d241b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 430px;
+      background: #fffdf7;
+      border: 1px solid #d7c9ad;
+      border-radius: 12px;
+      padding: 34px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.12);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    .alt {
+      text-align: center;
+      color: #746756;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #c9b99b;
+      border-radius: 7px;
+      background: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 13px;
+      border: 0;
+      border-radius: 7px;
+      background: #3f3022;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    #mesaj {
+      min-height: 24px;
+      margin-top: 18px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .hata {
+      color: #a12626;
+    }
+
+    .basarili {
+      color: #26733a;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="panel">
+    <h1>Defter-i Mûsıkî</h1>
+    <div class="alt">Yönetim Paneli</div>
+
+    <form id="girisFormu">
+      <label for="email">E-posta</label>
+      <input
+        type="email"
+        id="email"
+        autocomplete="username"
+        required
+      >
+
+      <label for="sifre">Şifre</label>
+      <input
+        type="password"
+        id="sifre"
+        autocomplete="current-password"
+        required
+      >
+
+      <button type="submit" id="girisButonu">
+        Giriş Yap
+      </button>
+    </form>
+
+    <div id="mesaj"></div>
+  </div>
+
+  <script>
+    const SUPABASE_URL =
+      "https://mdudrzlathbtbgschmmu.supabase.co";
+
+    const SUPABASE_KEY =
+      "BURAYA_PUBLISHABLE_KEY";
+
+    const db = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    const form = document.getElementById("girisFormu");
+    const mesaj = document.getElementById("mesaj");
+    const buton = document.getElementById("girisButonu");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      mesaj.textContent = "Giriş yapılıyor...";
+      mesaj.className = "";
+      buton.disabled = true;
+
+      const email = document.getElementById("email").value;
+      const sifre = document.getElementById("sifre").value;
+
+      const { data, error } =
+        await db.auth.signInWithPassword({
+          email: email,
+          password: sifre
+        });
+
+      buton.disabled = false;
+
+      if (error) {
+        mesaj.textContent = "Giriş başarısız: " + error.message;
+        mesaj.className = "hata";
+        return;
+      }
+
+      mesaj.textContent = "Giriş başarılı ✓";
+      mesaj.className = "basarili";
+
+      console.log("Giriş yapan kullanıcı:", data.user.id);
+
+      // Bir sonraki aşamada burada
+      // gerçek yönetim ekranını açacağız.
+    });
+  </script>
+
+</body>
+</html>
