@@ -48,7 +48,11 @@ const $=id=>document.getElementById(id);
 const esc=s=>(s??"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
 const safeUrl=u=>(typeof u==="string"&&/^https?:\/\//i.test(u))?u:"#";
 
-async function getJSON(name){const r=await fetch(BASE+name+"?v=4",{cache:"no-store"});if(!r.ok)throw new Error(name+" yüklenemedi ("+r.status+")");return r.json();}
+async function getFilterValues(viewName){
+  const {data,error}=await db.from(viewName).select("ad").order("ad",{ascending:true});
+  if(error) throw error;
+  return (data||[]).map(x=>x.ad).filter(Boolean);
+}
 function fillSelect(id,values){const s=$(id),frag=document.createDocumentFragment();[...new Set(Array.isArray(values)?values:[])].filter(v=>v!==null&&v!==undefined&&v!=="").sort((a,b)=>String(a).localeCompare(String(b),"tr")).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;frag.appendChild(o)});s.appendChild(frag);}
 function temizAramaMetni(s){return(s??"").trim().replaceAll(","," ").replaceAll("("," ").replaceAll(")"," ");}
 
@@ -78,7 +82,20 @@ $("q").addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(filtre
 $("prev").onclick=()=>{if(currentPage>1){currentPage--;eserleriGetir();window.scrollTo({top:0,behavior:"smooth"});}};
 $("next").onclick=()=>{const totalPages=Math.max(1,Math.ceil(totalCount/PAGE_SIZE));if(currentPage<totalPages){currentPage++;eserleriGetir();window.scrollTo({top:0,behavior:"smooth"});}};
 (async()=>{
-  try{const[b,m,u,f]=await Promise.all([getJSON("bestekarlar.json"),getJSON("makamlar.json"),getJSON("usuller.json"),getJSON("formlar.json")]);fillSelect("bestekar",b);fillSelect("makam",m);fillSelect("usul",u);fillSelect("form",f);}catch(err){console.warn("Filtre listeleri yüklenemedi:",err)}
+  try{
+    const[b,m,u,f]=await Promise.all([
+      getFilterValues("filtre_bestekarlar"),
+      getFilterValues("filtre_makamlar"),
+      getFilterValues("filtre_usuller"),
+      getFilterValues("filtre_formlar")
+    ]);
+    fillSelect("bestekar",b);
+    fillSelect("makam",m);
+    fillSelect("usul",u);
+    fillSelect("form",f);
+  }catch(err){
+    console.warn("Canlı filtre listeleri yüklenemedi:",err);
+  }
   await eserleriGetir();
 })();
 </script>
