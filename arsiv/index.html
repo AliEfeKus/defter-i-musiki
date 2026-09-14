@@ -49,9 +49,24 @@ const esc=s=>(s??"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;","
 const safeUrl=u=>(typeof u==="string"&&/^https?:\/\//i.test(u))?u:"#";
 
 async function getFilterValues(viewName){
-  const {data,error}=await db.from(viewName).select("ad").order("ad",{ascending:true});
-  if(error) throw error;
-  return (data||[]).map(x=>x.ad).filter(Boolean);
+  const tumu=[];
+  const parca=1000;
+
+  for(let baslangic=0;;baslangic+=parca){
+    const {data,error}=await db
+      .from(viewName)
+      .select("ad")
+      .order("ad",{ascending:true})
+      .range(baslangic,baslangic+parca-1);
+
+    if(error) throw error;
+
+    tumu.push(...(data||[]));
+
+    if(!data || data.length<parca) break;
+  }
+
+  return tumu.map(x=>x.ad).filter(Boolean);
 }
 function fillSelect(id,values){const s=$(id),frag=document.createDocumentFragment();[...new Set(Array.isArray(values)?values:[])].filter(v=>v!==null&&v!==undefined&&v!=="").sort((a,b)=>String(a).localeCompare(String(b),"tr")).forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;frag.appendChild(o)});s.appendChild(frag);}
 function temizAramaMetni(s){return(s??"").trim().replaceAll(","," ").replaceAll("("," ").replaceAll(")"," ");}
