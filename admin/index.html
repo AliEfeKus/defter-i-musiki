@@ -13,168 +13,1552 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #f3eee4;
+      --panel: #fffdf8;
+      --text: #2e271f;
+      --muted: #776b5e;
+      --border: #d8cdbd;
+      --dark: #3b3027;
+      --danger: #9d2f2f;
+      --success: #26733a;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Georgia, "Times New Roman", serif;
-      background: #f4efe4;
-      color: #2d241b;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .gizli {
+      display: none !important;
+    }
+
+    /* GİRİŞ */
+
+    #girisEkrani {
+      min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       padding: 20px;
     }
 
-    .panel {
+    .giris-kutu {
       width: 100%;
       max-width: 430px;
-      background: #fffdf7;
-      border: 1px solid #d7c9ad;
-      border-radius: 12px;
       padding: 34px;
-      box-shadow: 0 10px 35px rgba(0,0,0,.12);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.10);
     }
 
-    h1 {
-      margin: 0 0 8px;
+    .giris-kutu h1 {
       text-align: center;
-      font-size: 30px;
+      margin: 0 0 5px;
     }
 
-    .alt {
+    .giris-kutu .alt {
       text-align: center;
-      color: #746756;
+      color: var(--muted);
       margin-bottom: 28px;
     }
 
     label {
       display: block;
-      margin: 16px 0 7px;
       font-weight: bold;
+      margin: 14px 0 6px;
     }
 
-    input {
+    input,
+    textarea,
+    select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #c9b99b;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
       border-radius: 7px;
       background: white;
-      font-size: 16px;
+      color: var(--text);
     }
 
-    button {
-      width: 100%;
-      margin-top: 22px;
-      padding: 13px;
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .ana-buton {
       border: 0;
       border-radius: 7px;
-      background: #3f3022;
+      background: var(--dark);
       color: white;
-      font-size: 16px;
-      cursor: pointer;
+      padding: 12px 17px;
     }
 
-    button:hover {
-      opacity: .9;
+    .giris-kutu .ana-buton {
+      width: 100%;
+      margin-top: 22px;
     }
 
-    #mesaj {
-      min-height: 24px;
-      margin-top: 18px;
+    #girisMesaji {
+      margin-top: 16px;
       text-align: center;
+      min-height: 22px;
       font-family: Arial, sans-serif;
       font-size: 14px;
     }
 
     .hata {
-      color: #a12626;
+      color: var(--danger);
     }
 
     .basarili {
-      color: #26733a;
+      color: var(--success);
+    }
+
+    /* PANEL */
+
+    #panel {
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--dark);
+      color: white;
+      padding: 17px 24px;
+    }
+
+    .header-ic {
+      max-width: 1450px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    header small {
+      color: #ded4c8;
+    }
+
+    .cikis {
+      background: transparent;
+      color: white;
+      border: 1px solid #88796c;
+      padding: 8px 13px;
+      border-radius: 6px;
+    }
+
+    main {
+      max-width: 1450px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    .ust-satir {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .arama-alani {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      max-width: 700px;
+    }
+
+    .arama-alani input {
+      flex: 1;
+    }
+
+    .ikincil {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 7px;
+      padding: 10px 14px;
+    }
+
+    .icerik {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .kart {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .kart-baslik {
+      padding: 15px 18px;
+      border-bottom: 1px solid var(--border);
+      font-weight: bold;
+      background: #faf6ee;
+    }
+
+    .tablo-kapsayici {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 11px 10px;
+      border-bottom: 1px solid #e8dfd2;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8f4ec;
+      white-space: nowrap;
+    }
+
+    td {
+      max-width: 260px;
+    }
+
+    .islem-butonlari {
+      white-space: nowrap;
+    }
+
+    .duzenle,
+    .sil {
+      border: 0;
+      border-radius: 5px;
+      padding: 7px 9px;
+      margin: 2px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+    }
+
+    .duzenle {
+      background: #e6dfd4;
+      color: #302820;
+    }
+
+    .sil {
+      background: #f1d6d6;
+      color: #812525;
+    }
+
+    .form-kart {
+      position: sticky;
+      top: 20px;
+    }
+
+    .form-ic {
+      padding: 18px;
+    }
+
+    .iki {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-butonlar {
+      display: flex;
+      gap: 8px;
+      margin-top: 19px;
+    }
+
+    .form-butonlar button {
+      flex: 1;
+    }
+
+    #formMesaji {
+      min-height: 22px;
+      margin-top: 12px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .sayfalama {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 15px;
+    }
+
+    .sayfalama button {
+      padding: 7px 12px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    #yukleniyor {
+      padding: 25px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: var(--muted);
+    }
+
+    .bos {
+      padding: 35px;
+      text-align: center;
+      color: var(--muted);
+      font-family: Arial, sans-serif;
+    }
+
+    @media (max-width: 1050px) {
+      .icerik {
+        grid-template-columns: 1fr;
+      }
+
+      .form-kart {
+        position: static;
+      }
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 15px;
+      }
+
+      .iki {
+        grid-template-columns: 1fr;
+      }
+
+      .header-ic {
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="panel">
-    <h1>Defter-i Mûsıkî</h1>
-    <div class="alt">Yönetim Paneli</div>
+  <!-- GİRİŞ EKRANI -->
 
-    <form id="girisFormu">
-      <label for="email">E-posta</label>
-      <input
-        type="email"
-        id="email"
-        autocomplete="username"
-        required
-      >
+  <section id="girisEkrani">
+    <div class="giris-kutu">
 
-      <label for="sifre">Şifre</label>
-      <input
-        type="password"
-        id="sifre"
-        autocomplete="current-password"
-        required
-      >
+      <h1>Defter-i Mûsıkî</h1>
+      <div class="alt">Yönetim Paneli</div>
 
-      <button type="submit" id="girisButonu">
-        Giriş Yap
-      </button>
-    </form>
+      <form id="girisFormu">
 
-    <div id="mesaj"></div>
-  </div>
+        <label for="email">E-posta</label>
+        <input
+          type="email"
+          id="email"
+          autocomplete="username"
+          required
+        >
+
+        <label for="sifre">Şifre</label>
+        <input
+          type="password"
+          id="sifre"
+          autocomplete="current-password"
+          required
+        >
+
+        <button class="ana-buton" type="submit" id="girisButonu">
+          Giriş Yap
+        </button>
+
+      </form>
+
+      <div id="girisMesaji"></div>
+
+    </div>
+  </section>
+
+
+  <!-- YÖNETİM PANELİ -->
+
+  <section id="panel" class="gizli">
+
+    <header>
+      <div class="header-ic">
+
+        <div>
+          <h1>Defter-i Mûsıkî</h1>
+          <small>Arşiv Yönetim Paneli</small>
+        </div>
+
+        <button id="cikisButonu" class="cikis">
+          Çıkış Yap
+        </button>
+
+      </div>
+    </header>
+
+    <main>
+
+      <div class="ust-satir">
+
+        <div class="arama-alani">
+          <input
+            type="search"
+            id="arama"
+            placeholder="Eser, bestekâr, makam, usûl ara..."
+          >
+
+          <button id="aramaButonu" class="ikincil">
+            Ara
+          </button>
+        </div>
+
+        <button id="yeniEserButonu" class="ana-buton">
+          + Yeni Eser
+        </button>
+
+      </div>
+
+
+      <div class="icerik">
+
+        <!-- ESER LİSTESİ -->
+
+        <div class="kart">
+
+          <div class="kart-baslik">
+            Eserler
+            <span id="toplamBilgisi"></span>
+          </div>
+
+          <div id="yukleniyor" class="gizli">
+            Eserler yükleniyor...
+          </div>
+
+          <div class="tablo-kapsayici">
+
+            <table id="eserTablosu">
+
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Eser</th>
+                  <th>Bestekâr</th>
+                  <th>Makam</th>
+                  <th>Usûl</th>
+                  <th>Form</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+
+              <tbody id="eserGovdesi"></tbody>
+
+            </table>
+
+          </div>
+
+          <div class="sayfalama">
+
+            <button id="oncekiButon">
+              ← Önceki
+            </button>
+
+            <span id="sayfaBilgisi">
+              Sayfa 1
+            </span>
+
+            <button id="sonrakiButon">
+              Sonraki →
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ESER FORMU -->
+
+        <div class="kart form-kart">
+
+          <div class="kart-baslik" id="formBasligi">
+            Yeni Eser
+          </div>
+
+          <div class="form-ic">
+
+            <form id="eserFormu">
+
+              <input type="hidden" id="eserId">
+
+              <label for="eser">Eser adı *</label>
+              <input type="text" id="eser" required>
+
+              <label for="slug">Slug</label>
+              <input
+                type="text"
+                id="slug"
+                placeholder="otomatik-olusturulur"
+              >
+
+              <label for="bestekar">Bestekâr</label>
+              <input type="text" id="bestekar">
+
+              <label for="gufte">Güfte sahibi</label>
+              <input type="text" id="gufte">
+
+              <div class="iki">
+
+                <div>
+                  <label for="makam">Makam</label>
+                  <input type="text" id="makam">
+                </div>
+
+                <div>
+                  <label for="usul">Usûl</label>
+                  <input type="text" id="usul">
+                </div>
+
+              </div>
+
+              <label for="form">Form</label>
+              <input type="text" id="form">
+
+              <label for="kaynak">Kaynak</label>
+              <input type="text" id="kaynak">
+
+              <label for="divanmakam">
+                DivanMakam bağlantısı
+              </label>
+
+              <input
+                type="url"
+                id="divanmakam"
+                placeholder="https://..."
+              >
+
+              <label for="pdfler">
+                PDF bağlantıları
+              </label>
+
+              <textarea
+                id="pdfler"
+                placeholder="Her satıra bir PDF bağlantısı yaz"
+              ></textarea>
+
+              <div class="form-butonlar">
+
+                <button
+                  type="submit"
+                  class="ana-buton"
+                  id="kaydetButonu"
+                >
+                  Kaydet
+                </button>
+
+                <button
+                  type="button"
+                  class="ikincil"
+                  id="formTemizleButonu"
+                >
+                  Temizle
+                </button>
+
+              </div>
+
+            </form>
+
+            <div id="formMesaji"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </section>
+
 
   <script>
+
+    /*
+      =========================================================
+      BURADAKİ İKİ DEĞERİ KENDİ ÇALIŞAN DEĞERLERİNLE DEĞİŞTİR
+      =========================================================
+    */
+
     const SUPABASE_URL =
       "https://mdudrzlathbtbqschnmu.supabase.co";
 
     const SUPABASE_KEY =
       "sb_publishable_017pwWESopoIzZaXV9WwdA_lGB9m3hV";
 
+
     const db = supabase.createClient(
       SUPABASE_URL,
       SUPABASE_KEY
     );
 
-    const form = document.getElementById("girisFormu");
-    const mesaj = document.getElementById("mesaj");
-    const buton = document.getElementById("girisButonu");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    /*
+      =========================================================
+      DEĞİŞKENLER
+      =========================================================
+    */
 
-      mesaj.textContent = "Giriş yapılıyor...";
-      mesaj.className = "";
-      buton.disabled = true;
+    const SAYFA_BOYUTU = 25;
 
-      const email = document.getElementById("email").value;
-      const sifre = document.getElementById("sifre").value;
+    let aktifSayfa = 1;
+    let toplamKayit = 0;
+    let aktifArama = "";
+    let aktifKullanici = null;
+
+
+    /*
+      =========================================================
+      HTML ELEMANLARI
+      =========================================================
+    */
+
+    const girisEkrani =
+      document.getElementById("girisEkrani");
+
+    const panel =
+      document.getElementById("panel");
+
+    const girisFormu =
+      document.getElementById("girisFormu");
+
+    const girisMesaji =
+      document.getElementById("girisMesaji");
+
+    const girisButonu =
+      document.getElementById("girisButonu");
+
+    const cikisButonu =
+      document.getElementById("cikisButonu");
+
+    const eserGovdesi =
+      document.getElementById("eserGovdesi");
+
+    const toplamBilgisi =
+      document.getElementById("toplamBilgisi");
+
+    const sayfaBilgisi =
+      document.getElementById("sayfaBilgisi");
+
+    const oncekiButon =
+      document.getElementById("oncekiButon");
+
+    const sonrakiButon =
+      document.getElementById("sonrakiButon");
+
+    const yukleniyor =
+      document.getElementById("yukleniyor");
+
+    const arama =
+      document.getElementById("arama");
+
+    const aramaButonu =
+      document.getElementById("aramaButonu");
+
+    const yeniEserButonu =
+      document.getElementById("yeniEserButonu");
+
+    const eserFormu =
+      document.getElementById("eserFormu");
+
+    const formBasligi =
+      document.getElementById("formBasligi");
+
+    const formMesaji =
+      document.getElementById("formMesaji");
+
+    const formTemizleButonu =
+      document.getElementById("formTemizleButonu");
+
+
+    /*
+      =========================================================
+      YARDIMCI FONKSİYONLAR
+      =========================================================
+    */
+
+    function htmlGuvenli(deger) {
+
+      if (deger === null || deger === undefined) {
+        return "";
+      }
+
+      return String(deger)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    function slugOlustur(metin) {
+
+      const ceviri = {
+        "ç": "c",
+        "Ç": "c",
+        "ğ": "g",
+        "Ğ": "g",
+        "ı": "i",
+        "İ": "i",
+        "ö": "o",
+        "Ö": "o",
+        "ş": "s",
+        "Ş": "s",
+        "ü": "u",
+        "Ü": "u"
+      };
+
+      return metin
+        .split("")
+        .map(harf => ceviri[harf] ?? harf)
+        .join("")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+
+    function formuTemizle() {
+
+      eserFormu.reset();
+
+      document.getElementById("eserId").value = "";
+
+      formBasligi.textContent = "Yeni Eser";
+
+      formMesaji.textContent = "";
+      formMesaji.className = "";
+    }
+
+
+    function pdfMetnineCevir(pdfler) {
+
+      if (!Array.isArray(pdfler)) {
+        return "";
+      }
+
+      return pdfler.join("\n");
+    }
+
+
+    function pdfDizisineCevir(metin) {
+
+      return metin
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean);
+    }
+
+
+    /*
+      =========================================================
+      ADMIN KONTROLÜ
+      =========================================================
+    */
+
+    async function adminMi(userId) {
 
       const { data, error } =
-        await db.auth.signInWithPassword({
-          email: email,
-          password: sifre
-        });
-
-      buton.disabled = false;
+        await db
+          .from("adminler")
+          .select("user_id")
+          .eq("user_id", userId)
+          .maybeSingle();
 
       if (error) {
-        mesaj.textContent = "Giriş başarısız: " + error.message;
-        mesaj.className = "hata";
+
+        console.error(
+          "Admin kontrol hatası:",
+          error
+        );
+
+        return false;
+      }
+
+      return !!data;
+    }
+
+
+    async function paneliAc(user) {
+
+      const yetkili = await adminMi(user.id);
+
+      if (!yetkili) {
+
+        await db.auth.signOut();
+
+        girisMesaji.textContent =
+          "Bu hesap yönetici yetkisine sahip değil.";
+
+        girisMesaji.className = "hata";
+
         return;
       }
 
-      mesaj.textContent = "Giriş başarılı ✓";
-      mesaj.className = "basarili";
+      aktifKullanici = user;
 
-      console.log("Giriş yapan kullanıcı:", data.user.id);
+      girisEkrani.classList.add("gizli");
+      panel.classList.remove("gizli");
 
-      // Bir sonraki aşamada burada
-      // gerçek yönetim ekranını açacağız.
-    });
+      await eserleriGetir();
+    }
+
+
+    async function girisiKontrolEt() {
+
+      const {
+        data: { session }
+      } = await db.auth.getSession();
+
+      if (session?.user) {
+
+        await paneliAc(session.user);
+
+      } else {
+
+        girisEkrani.classList.remove("gizli");
+        panel.classList.add("gizli");
+      }
+    }
+
+
+    /*
+      =========================================================
+      GİRİŞ
+      =========================================================
+    */
+
+    girisFormu.addEventListener(
+      "submit",
+      async (e) => {
+
+        e.preventDefault();
+
+        girisMesaji.textContent =
+          "Giriş yapılıyor...";
+
+        girisMesaji.className = "";
+
+        girisButonu.disabled = true;
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const sifre =
+          document
+            .getElementById("sifre")
+            .value;
+
+        const { data, error } =
+          await db.auth.signInWithPassword({
+            email,
+            password: sifre
+          });
+
+        girisButonu.disabled = false;
+
+        if (error) {
+
+          girisMesaji.textContent =
+            "Giriş başarısız: " +
+            error.message;
+
+          girisMesaji.className = "hata";
+
+          return;
+        }
+
+        girisMesaji.textContent =
+          "Giriş başarılı ✓";
+
+        girisMesaji.className =
+          "basarili";
+
+        await paneliAc(data.user);
+      }
+    );
+
+
+    /*
+      =========================================================
+      ÇIKIŞ
+      =========================================================
+    */
+
+    cikisButonu.addEventListener(
+      "click",
+      async () => {
+
+        await db.auth.signOut();
+
+        aktifKullanici = null;
+
+        panel.classList.add("gizli");
+        girisEkrani.classList.remove("gizli");
+
+        girisFormu.reset();
+
+        girisMesaji.textContent = "";
+      }
+    );
+
+
+    /*
+      =========================================================
+      ESERLERİ GETİR
+      =========================================================
+    */
+
+    async function eserleriGetir() {
+
+      yukleniyor.classList.remove("gizli");
+
+      eserGovdesi.innerHTML = "";
+
+      const baslangic =
+        (aktifSayfa - 1) * SAYFA_BOYUTU;
+
+      const bitis =
+        baslangic + SAYFA_BOYUTU - 1;
+
+      let sorgu =
+        db
+          .from("eserler")
+          .select(
+            `
+            id,
+            slug,
+            eser,
+            bestekar,
+            gufte_sahibi,
+            makam,
+            form,
+            usul,
+            kaynak,
+            pdfler,
+            divanmakam_url
+            `,
+            {
+              count: "exact"
+            }
+          );
+
+
+      if (aktifArama) {
+
+        /*
+          Virgül PostgREST OR ifadesini bozmasın.
+        */
+
+        const temizArama =
+          aktifArama
+            .replaceAll(",", " ")
+            .trim();
+
+        sorgu =
+          sorgu.or(
+            [
+              `eser.ilike.%${temizArama}%`,
+              `bestekar.ilike.%${temizArama}%`,
+              `gufte_sahibi.ilike.%${temizArama}%`,
+              `makam.ilike.%${temizArama}%`,
+              `usul.ilike.%${temizArama}%`,
+              `form.ilike.%${temizArama}%`
+            ].join(",")
+          );
+      }
+
+
+      const {
+        data,
+        error,
+        count
+      } =
+        await sorgu
+          .order("id", {
+            ascending: false
+          })
+          .range(
+            baslangic,
+            bitis
+          );
+
+
+      yukleniyor.classList.add("gizli");
+
+
+      if (error) {
+
+        eserGovdesi.innerHTML =
+          `
+          <tr>
+            <td colspan="7" class="bos">
+              Eserler yüklenemedi:
+              ${htmlGuvenli(error.message)}
+            </td>
+          </tr>
+          `;
+
+        console.error(error);
+
+        return;
+      }
+
+
+      toplamKayit = count ?? 0;
+
+      toplamBilgisi.textContent =
+        `(${toplamKayit.toLocaleString("tr-TR")} kayıt)`;
+
+
+      if (!data || data.length === 0) {
+
+        eserGovdesi.innerHTML =
+          `
+          <tr>
+            <td colspan="7" class="bos">
+              Kayıt bulunamadı.
+            </td>
+          </tr>
+          `;
+
+      } else {
+
+        for (const eser of data) {
+
+          const satir =
+            document.createElement("tr");
+
+          satir.innerHTML =
+            `
+            <td>
+              ${htmlGuvenli(eser.id)}
+            </td>
+
+            <td>
+              <strong>
+                ${htmlGuvenli(eser.eser)}
+              </strong>
+            </td>
+
+            <td>
+              ${htmlGuvenli(eser.bestekar)}
+            </td>
+
+            <td>
+              ${htmlGuvenli(eser.makam)}
+            </td>
+
+            <td>
+              ${htmlGuvenli(eser.usul)}
+            </td>
+
+            <td>
+              ${htmlGuvenli(eser.form)}
+            </td>
+
+            <td class="islem-butonlari">
+
+              <button
+                class="duzenle"
+                type="button"
+              >
+                Düzenle
+              </button>
+
+              <button
+                class="sil"
+                type="button"
+              >
+                Sil
+              </button>
+
+            </td>
+            `;
+
+
+          satir
+            .querySelector(".duzenle")
+            .addEventListener(
+              "click",
+              () => eseriFormaYukle(eser)
+            );
+
+
+          satir
+            .querySelector(".sil")
+            .addEventListener(
+              "click",
+              () => eserSil(
+                eser.id,
+                eser.eser
+              )
+            );
+
+
+          eserGovdesi.appendChild(satir);
+        }
+      }
+
+
+      const toplamSayfa =
+        Math.max(
+          1,
+          Math.ceil(
+            toplamKayit /
+            SAYFA_BOYUTU
+          )
+        );
+
+
+      sayfaBilgisi.textContent =
+        `Sayfa ${aktifSayfa} / ${toplamSayfa}`;
+
+
+      oncekiButon.disabled =
+        aktifSayfa <= 1;
+
+
+      sonrakiButon.disabled =
+        aktifSayfa >= toplamSayfa;
+    }
+
+
+    /*
+      =========================================================
+      SAYFALAMA
+      =========================================================
+    */
+
+    oncekiButon.addEventListener(
+      "click",
+      async () => {
+
+        if (aktifSayfa <= 1) {
+          return;
+        }
+
+        aktifSayfa--;
+
+        await eserleriGetir();
+      }
+    );
+
+
+    sonrakiButon.addEventListener(
+      "click",
+      async () => {
+
+        const toplamSayfa =
+          Math.max(
+            1,
+            Math.ceil(
+              toplamKayit /
+              SAYFA_BOYUTU
+            )
+          );
+
+        if (aktifSayfa >= toplamSayfa) {
+          return;
+        }
+
+        aktifSayfa++;
+
+        await eserleriGetir();
+      }
+    );
+
+
+    /*
+      =========================================================
+      ARAMA
+      =========================================================
+    */
+
+    async function ara() {
+
+      aktifArama =
+        arama.value.trim();
+
+      aktifSayfa = 1;
+
+      await eserleriGetir();
+    }
+
+
+    aramaButonu.addEventListener(
+      "click",
+      ara
+    );
+
+
+    arama.addEventListener(
+      "keydown",
+      async (e) => {
+
+        if (e.key === "Enter") {
+
+          e.preventDefault();
+
+          await ara();
+        }
+      }
+    );
+
+
+    /*
+      =========================================================
+      YENİ ESER
+      =========================================================
+    */
+
+    yeniEserButonu.addEventListener(
+      "click",
+      () => {
+
+        formuTemizle();
+
+        document
+          .getElementById("eser")
+          .focus();
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    );
+
+
+    formTemizleButonu.addEventListener(
+      "click",
+      formuTemizle
+    );
+
+
+    /*
+      =========================================================
+      DÜZENLEME
+      =========================================================
+    */
+
+    function eseriFormaYukle(kayit) {
+
+      document
+        .getElementById("eserId")
+        .value =
+        kayit.id ?? "";
+
+      document
+        .getElementById("eser")
+        .value =
+        kayit.eser ?? "";
+
+      document
+        .getElementById("slug")
+        .value =
+        kayit.slug ?? "";
+
+      document
+        .getElementById("bestekar")
+        .value =
+        kayit.bestekar ?? "";
+
+      document
+        .getElementById("gufte")
+        .value =
+        kayit.gufte_sahibi ?? "";
+
+      document
+        .getElementById("makam")
+        .value =
+        kayit.makam ?? "";
+
+      document
+        .getElementById("usul")
+        .value =
+        kayit.usul ?? "";
+
+      document
+        .getElementById("form")
+        .value =
+        kayit.form ?? "";
+
+      document
+        .getElementById("kaynak")
+        .value =
+        kayit.kaynak ?? "";
+
+      document
+        .getElementById("divanmakam")
+        .value =
+        kayit.divanmakam_url ?? "";
+
+      document
+        .getElementById("pdfler")
+        .value =
+        pdfMetnineCevir(
+          kayit.pdfler
+        );
+
+      formBasligi.textContent =
+        `Eseri Düzenle #${kayit.id}`;
+
+      formMesaji.textContent = "";
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+
+    /*
+      =========================================================
+      KAYDET / GÜNCELLE
+      =========================================================
+    */
+
+    eserFormu.addEventListener(
+      "submit",
+      async (e) => {
+
+        e.preventDefault();
+
+        formMesaji.textContent =
+          "Kaydediliyor...";
+
+        formMesaji.className = "";
+
+        const id =
+          document
+            .getElementById("eserId")
+            .value;
+
+        const eserAdi =
+          document
+            .getElementById("eser")
+            .value
+            .trim();
+
+        let slug =
+          document
+            .getElementById("slug")
+            .value
+            .trim();
+
+        if (!slug) {
+          slug = slugOlustur(eserAdi);
+        }
+
+
+        const kayit = {
+
+          slug,
+
+          eser: eserAdi,
+
+          bestekar:
+            document
+              .getElementById("bestekar")
+              .value
+              .trim() || null,
+
+          gufte_sahibi:
+            document
+              .getElementById("gufte")
+              .value
+              .trim() || null,
+
+          makam:
+            document
+              .getElementById("makam")
+              .value
+              .trim() || null,
+
+          form:
+            document
+              .getElementById("form")
+              .value
+              .trim() || null,
+
+          usul:
+            document
+              .getElementById("usul")
+              .value
+              .trim() || null,
+
+          kaynak:
+            document
+              .getElementById("kaynak")
+              .value
+              .trim() || null,
+
+          pdfler:
+            pdfDizisineCevir(
+              document
+                .getElementById("pdfler")
+                .value
+            ),
+
+          divanmakam_url:
+            document
+              .getElementById("divanmakam")
+              .value
+              .trim() || null
+        };
+
+
+        let sonuc;
+
+
+        if (id) {
+
+          sonuc =
+            await db
+              .from("eserler")
+              .update(kayit)
+              .eq("id", id);
+
+        } else {
+
+          sonuc =
+            await db
+              .from("eserler")
+              .insert(kayit);
+        }
+
+
+        if (sonuc.error) {
+
+          formMesaji.textContent =
+            "Hata: " +
+            sonuc.error.message;
+
+          formMesaji.className =
+            "hata";
+
+          console.error(
+            sonuc.error
+          );
+
+          return;
+        }
+
+
+        formMesaji.textContent =
+          id
+            ? "Eser güncellendi ✓"
+            : "Yeni eser eklendi ✓";
+
+        formMesaji.className =
+          "basarili";
+
+
+        aktifSayfa = 1;
+
+        await eserleriGetir();
+
+
+        setTimeout(
+          () => formuTemizle(),
+          900
+        );
+      }
+    );
+
+
+    /*
+      =========================================================
+      SİLME
+      =========================================================
+    */
+
+    async function eserSil(
+      id,
+      eserAdi
+    ) {
+
+      const onay =
+        confirm(
+          `"${eserAdi}" adlı eser silinsin mi?\n\nBu işlem geri alınamaz.`
+        );
+
+      if (!onay) {
+        return;
+      }
+
+
+      const { error } =
+        await db
+          .from("eserler")
+          .delete()
+          .eq("id", id);
+
+
+      if (error) {
+
+        alert(
+          "Silme işlemi başarısız:\n" +
+          error.message
+        );
+
+        console.error(error);
+
+        return;
+      }
+
+
+      formuTemizle();
+
+      await eserleriGetir();
+    }
+
+
+    /*
+      =========================================================
+      SAYFA AÇILIŞI
+      =========================================================
+    */
+
+    girisiKontrolEt();
+
   </script>
 
 </body>
