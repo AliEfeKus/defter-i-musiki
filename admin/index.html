@@ -546,8 +546,8 @@
               <label for="form">Form</label>
               <input type="text" id="form">
 
-              <label for="gufte">Güfte</label>
-        <textarea id="gufte" rows="10" placeholder="Eserin güftesini buraya yazın…"></textarea>
+              <label for="gufteMetni">Güfte</label>
+        <textarea id="gufteMetni" rows="10" placeholder="Eserin güftesini buraya yazın…"></textarea>
 
         <label for="ornekIcra">Örnek İcra</label>
         <input id="ornekIcra" type="url" placeholder="YouTube veya başka bir icra bağlantısı">
@@ -762,7 +762,7 @@
       eserFormu.reset();
 
       document.getElementById("eserId").value = "";
-      document.getElementById("gufte").value = "";
+      document.getElementById("gufteMetni").value = "";
       document.getElementById("ornekIcra").value = "";
 
       mevcutPdfler = [];
@@ -1436,7 +1436,7 @@
         .value =
         kayit.divanmakam_url ?? "";
 
-      document.getElementById("gufte").value = kayit.gufte ?? "";
+      document.getElementById("gufteMetni").value = kayit.gufte ?? "";
 
       document.getElementById("ornekIcra").value =
         kayit.ornek_icra ?? "";
@@ -1550,7 +1550,7 @@
 
           gufte:
             document
-              .getElementById("gufte")
+              .getElementById("gufteMetni")
               .value
               .trim() || null,
 
