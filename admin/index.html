@@ -440,9 +440,6 @@
         <button id="yeniEserButonu" class="ana-buton">
           + Yeni Eser
         </button>
-        <button id="topluBestekarAc" class="ana-buton" type="button">
-          Toplu Bestekâr Değiştir
-        </button>
 
       </div>
 
@@ -504,8 +501,8 @@
 
 
         <!-- TOPLU BESTEKÂR PANELİ -->
-        <div id="topluBestekarPaneli" class="kart form-kart" style="display:none;margin-bottom:20px;">
-          <div class="kart-baslik">Toplu Bestekâr Değiştir</div>
+        <details class="kart form-kart" style="margin-bottom:20px;">
+          <summary class="kart-baslik" style="cursor:pointer;">Toplu Bestekâr Değiştir</summary>
           <div class="form-ic">
             <label for="topluEskiBestekar">Eski bestekâr adı</label>
             <input id="topluEskiBestekar" type="text" placeholder="Örn: Ali">
@@ -516,12 +513,9 @@
             <button id="topluBestekarUygula" type="button" class="ana-buton" style="margin-top:12px;">
               Kaç eser olduğunu kontrol et
             </button>
-            <button id="topluBestekarKapat" type="button" style="margin-top:12px;">
-              Kapat
-            </button>
             <div id="topluBestekarMesaji" style="margin-top:10px;"></div>
           </div>
-        </div>
+        </details>
 
         <!-- ESER FORMU -->
 
@@ -1585,22 +1579,10 @@
 
       /* Ayrı toplu bestekâr aracı — mevcut eser düzenleme formuna dokunmaz. */
     (() => {
-      const ac = document.getElementById("topluBestekarAc");
-      const panel = document.getElementById("topluBestekarPaneli");
-      const kapat = document.getElementById("topluBestekarKapat");
       const uygula = document.getElementById("topluBestekarUygula");
       const eski = document.getElementById("topluEskiBestekar");
       const yeni = document.getElementById("topluYeniBestekar");
       const mesaj = document.getElementById("topluBestekarMesaji");
-
-      ac.addEventListener("click", () => {
-        panel.style.display = panel.style.display === "none" ? "block" : "none";
-        mesaj.textContent = "";
-      });
-      kapat.addEventListener("click", () => {
-        panel.style.display = "none";
-        mesaj.textContent = "";
-      });
 
       uygula.addEventListener("click", async () => {
         const eskiAd = eski.value.trim();
