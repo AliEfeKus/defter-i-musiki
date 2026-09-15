@@ -6,8 +6,7 @@
 
   <title>Yönetim Paneli | Defter-i Mûsıkî</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     * {
@@ -500,23 +499,6 @@
         </div>
 
 
-        <!-- TOPLU BESTEKÂR PANELİ -->
-        <details class="kart form-kart" style="margin-bottom:20px;">
-          <summary class="kart-baslik" style="cursor:pointer;">Toplu Bestekâr Değiştir</summary>
-          <div class="form-ic">
-            <label for="topluEskiBestekar">Eski bestekâr adı</label>
-            <input id="topluEskiBestekar" type="text" placeholder="Örn: Ali">
-
-            <label for="topluYeniBestekar">Yeni bestekâr adı</label>
-            <input id="topluYeniBestekar" type="text" placeholder="Örn: Ali Rifat Çağatay">
-
-            <button id="topluBestekarUygula" type="button" class="ana-buton" style="margin-top:12px;">
-              Kaç eser olduğunu kontrol et
-            </button>
-            <div id="topluBestekarMesaji" style="margin-top:10px;"></div>
-          </div>
-        </details>
-
         <!-- ESER FORMU -->
 
         <div class="kart form-kart">
@@ -583,7 +565,7 @@
 
               <textarea
                 id="pdfler"
-                placeholder="Her satıra bir PDF bağlantısı yaz"
+                placeholder="Her satıra: dosya.pdf | https://...  (yalnız URL de olur)"
               ></textarea>
 
               <div class="form-butonlar">
@@ -775,6 +757,9 @@
 
       document.getElementById("eserId").value = "";
 
+      mevcutPdfler = [];
+      pdfAlaniIlkDeger = "";
+
       formBasligi.textContent = "Yeni Eser";
 
       formMesaji.textContent = "";
@@ -782,13 +767,55 @@
     }
 
 
+    let mevcutPdfler = [];
+    let pdfAlaniIlkDeger = "";
+
     function pdfMetnineCevir(pdfler) {
 
       if (!Array.isArray(pdfler)) {
         return "";
       }
 
-      return pdfler.join("\n");
+      return pdfler
+        .map((pdf) => {
+
+          /*
+            Eski/ithal kayıt:
+            { dosya_adi: "...pdf", url: "https://..." }
+
+            Olası eski panel kaydı:
+            "https://..."
+          */
+
+          if (typeof pdf === "string") {
+            return pdf.trim();
+          }
+
+          if (
+            pdf &&
+            typeof pdf === "object" &&
+            typeof pdf.url === "string"
+          ) {
+
+            const url = pdf.url.trim();
+            const dosyaAdi =
+              typeof pdf.dosya_adi === "string"
+                ? pdf.dosya_adi.trim()
+                : "";
+
+            if (!url) {
+              return "";
+            }
+
+            return dosyaAdi
+              ? `${dosyaAdi} | ${url}`
+              : url;
+          }
+
+          return "";
+        })
+        .filter(Boolean)
+        .join("\n");
     }
 
 
@@ -797,7 +824,60 @@
       return metin
         .split("\n")
         .map(x => x.trim())
-        .filter(Boolean);
+        .filter(Boolean)
+        .map((satir) => {
+
+          let dosyaAdi = "";
+          let url = satir;
+
+          /*
+            Yönetim panelinde:
+            dosya.pdf | https://adres...
+            biçimi desteklenir.
+
+            Sadece URL girilirse dosya adı URL'den alınmaya çalışılır.
+          */
+
+          const ayirici = satir.indexOf("|");
+
+          if (ayirici !== -1) {
+
+            dosyaAdi =
+              satir
+                .slice(0, ayirici)
+                .trim();
+
+            url =
+              satir
+                .slice(ayirici + 1)
+                .trim();
+          }
+
+          if (!dosyaAdi && url) {
+
+            try {
+
+              const adres = new URL(url);
+
+              dosyaAdi =
+                decodeURIComponent(
+                  adres.pathname
+                    .split("/")
+                    .filter(Boolean)
+                    .pop() || ""
+                );
+
+            } catch (e) {
+              dosyaAdi = "";
+            }
+          }
+
+          return {
+            dosya_adi: dosyaAdi,
+            url: url
+          };
+        })
+        .filter(pdf => pdf.url);
     }
 
 
@@ -1348,12 +1428,19 @@
         .value =
         kayit.divanmakam_url ?? "";
 
+      mevcutPdfler = Array.isArray(kayit.pdfler)
+        ? JSON.parse(JSON.stringify(kayit.pdfler))
+        : [];
+
       document
         .getElementById("pdfler")
         .value =
         pdfMetnineCevir(
           kayit.pdfler
         );
+
+      pdfAlaniIlkDeger =
+        document.getElementById("pdfler").value;
 
       formBasligi.textContent =
         `Eseri Düzenle #${kayit.id}`;
@@ -1449,11 +1536,16 @@
               .trim() || null,
 
           pdfler:
-            pdfDizisineCevir(
-              document
-                .getElementById("pdfler")
-                .value
-            ),
+            (
+              id &&
+              document.getElementById("pdfler").value === pdfAlaniIlkDeger
+            )
+              ? mevcutPdfler
+              : pdfDizisineCevir(
+                  document
+                    .getElementById("pdfler")
+                    .value
+                ),
 
           divanmakam_url:
             document
@@ -1577,70 +1669,7 @@
 
     girisiKontrolEt();
 
-      /* Ayrı toplu bestekâr aracı — mevcut eser düzenleme formuna dokunmaz. */
-    (() => {
-      const uygula = document.getElementById("topluBestekarUygula");
-      const eski = document.getElementById("topluEskiBestekar");
-      const yeni = document.getElementById("topluYeniBestekar");
-      const mesaj = document.getElementById("topluBestekarMesaji");
-
-      uygula.addEventListener("click", async () => {
-        const eskiAd = eski.value.trim();
-        const yeniAd = yeni.value.trim();
-        mesaj.textContent = "";
-
-        if (!eskiAd || !yeniAd) {
-          mesaj.textContent = "İki adı da yaz.";
-          return;
-        }
-        if (eskiAd === yeniAd) {
-          mesaj.textContent = "Eski ve yeni ad aynı.";
-          return;
-        }
-
-        const { count, error: sayimHatasi } = await db
-          .from("eserler")
-          .select("id", { count: "exact", head: true })
-          .eq("bestekar", eskiAd);
-
-        if (sayimHatasi) {
-          mesaj.textContent = "Kontrol hatası: " + sayimHatasi.message;
-          return;
-        }
-        if (!count) {
-          mesaj.textContent = '"' + eskiAd + '" adına birebir kayıtlı eser bulunamadı.';
-          return;
-        }
-
-        const onay = confirm(
-          count + ' eser bulundu.\n\n"' + eskiAd + '" → "' + yeniAd +
-          '" yapılacak.\n\nDevam edilsin mi?'
-        );
-        if (!onay) return;
-
-        uygula.disabled = true;
-        mesaj.textContent = "Değiştiriliyor...";
-
-        const { error } = await db
-          .from("eserler")
-          .update({ bestekar: yeniAd })
-          .eq("bestekar", eskiAd);
-
-        uygula.disabled = false;
-
-        if (error) {
-          mesaj.textContent = "Güncelleme hatası: " + error.message;
-          return;
-        }
-
-        mesaj.textContent = count + " eser başarıyla değiştirildi ✓";
-        eski.value = "";
-        yeni.value = "";
-        if (typeof eserleriGetir === "function") await eserleriGetir();
-      });
-    })();
-
-</script>
+  </script>
 
 </body>
 </html>
