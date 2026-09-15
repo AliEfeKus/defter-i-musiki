@@ -23,12 +23,12 @@ body{
 }
 .wrap{width:min(900px,calc(100% - 32px));margin:auto}
 header{
-  background:var(--paper);
-  border-bottom:1px solid var(--line);
+  background:#3f2b20;
+  border-bottom:1px solid #2e1e16;
 }
 header .wrap{padding:17px 0}
 header a{
-  color:var(--accent);
+  color:#fff8ed;
   text-decoration:none;
   font-size:15px;
 }
@@ -44,7 +44,9 @@ main{padding:38px 0 64px}
 }
 h1{
   margin:0 0 24px;
-  font-size:clamp(27px,4vw,38px);
+  padding-bottom:18px;
+  border-bottom:2px solid var(--accent);
+  font-size:clamp(30px,4.5vw,42px);
   line-height:1.2;
   font-weight:600;
   letter-spacing:-.015em;
@@ -159,7 +161,7 @@ function youtubeEmbed(url){
     '<div><b>Makam</b>'+esc(data.makam||"—")+'</div>'+
     '<div><b>Form</b>'+esc(data.form||"—")+'</div>'+
     '<div><b>Usûl</b>'+esc(data.usul||"—")+'</div>'+
-    '</div></section>';
+    '</div>';
 
   if(nota) html+='<section class="card"><h2>Nota</h2><div class="actions"><a class="btn" href="'+esc(nota.url)+'" target="_blank" rel="noopener">Notayı Aç</a></div></section>';
   if(data.gufte) html+='<section class="card"><h2>Güfte</h2><div class="gufte">'+esc(data.gufte)+'</div></section>';
@@ -169,7 +171,7 @@ function youtubeEmbed(url){
       '<a class="btn" href="'+esc(data.ornek_icra)+'" target="_blank" rel="noopener">Örnek İcrayı Aç</a>')+
       '</section>';
   }
-  $("icerik").outerHTML='<section class="card">'+html;
+  $("icerik").innerHTML=html;
 })().catch(()=>{$("icerik").innerHTML='<div class="empty">Eser yüklenirken bir hata oluştu.</div>'});
 </script>
 </body>
