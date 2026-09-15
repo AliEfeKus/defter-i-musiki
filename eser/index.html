@@ -254,6 +254,85 @@ h1{
   .bilgi-karti,.gufte-karti{padding:23px 21px}
 }
 
+
+/* === DÜZELTME: küçük ölçüler + gerçekçi eski kâğıt hissi === */
+.wrap{width:min(980px,calc(100% - 32px))}
+main{padding:20px 0 42px}
+h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
+
+.eser-ust,.alt-grid{
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.eser-ust{margin-bottom:16px}
+
+.bilgi-karti,.gufte-karti{
+  padding:22px 24px;
+  min-height:0;
+  border:1px solid #cdb483;
+  border-radius:8px;
+  background-color:#ead7aa;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .13'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 12% 18%,rgba(110,68,28,.12),transparent 28%),
+    radial-gradient(ellipse at 88% 78%,rgba(111,70,30,.10),transparent 30%),
+    linear-gradient(95deg,rgba(255,250,225,.30),transparent 38%,rgba(122,78,34,.06));
+  box-shadow:
+    inset 0 0 24px rgba(112,70,30,.10),
+    0 2px 7px rgba(70,45,24,.08);
+}
+
+.bilgi-karti h2,.gufte-karti h2{
+  font-size:26px;
+  margin:0 0 15px;
+  color:#6a3c20;
+}
+.kunye-ic{
+  grid-template-columns:96px 1fr;
+  gap:3px 9px;
+  font-size:14px;
+  line-height:1.45;
+  padding-bottom:13px;
+  margin-bottom:13px;
+}
+.eser-bilgisi{font-size:13px;line-height:1.65}
+
+.nota-kapak{
+  min-height:285px;
+  border-radius:8px;
+}
+.nota-kapak img{
+  min-height:285px;
+  max-height:315px;
+  object-fit:cover;
+}
+.nota-serit{
+  padding:8px 12px;
+  font-size:27px;
+}
+
+/* Güfte de dev olmayacak */
+.gufte-karti{min-height:260px}
+.gufte-karti .gufte{font-size:15px;line-height:1.7}
+
+/* İcra görünümü kullanıcı tarafından beğenildi: başlıksız, ince kâğıt çerçeve */
+.icra-karti{
+  padding:7px;
+  border:1px solid #cdb483;
+  border-radius:8px;
+  background-color:#ead7aa;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='4' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 .11'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+.icra-karti h2{display:none}
+.icra-karti iframe{display:block;width:100%;aspect-ratio:16/9;border-radius:5px}
+
+@media(max-width:760px){
+  .eser-ust,.alt-grid{grid-template-columns:1fr}
+  .bilgi-karti,.gufte-karti{padding:20px}
+  .nota-kapak,.nota-kapak img{min-height:245px}
+}
+
 </style>
 </head>
 <body>
