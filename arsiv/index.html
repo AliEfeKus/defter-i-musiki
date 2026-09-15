@@ -86,7 +86,10 @@ async function eserleriGetir(){
   $("count").textContent=totalCount.toLocaleString("tr-TR")+" eser bulundu"; $("page").textContent=currentPage+" / "+totalPages; $("prev").disabled=currentPage<=1; $("next").disabled=currentPage>=totalPages;
   if(!data||data.length===0){$("rows").innerHTML='<tr><td colspan="6" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';return;}
   $("rows").innerHTML=data.map(w=>{
-    return '<tr><td class="eser">'+esc(w.eser)+'</td><td>'+esc(w.bestekar)+'</td><td>'+esc(w.gufte_sahibi)+'</td><td>'+esc(w.makam)+'</td><td>'+esc(w.form)+'</td><td>'+esc(w.usul)+'</td></tr>';
+    const eserLinki = w.slug
+      ? '/eser/?slug=' + encodeURIComponent(w.slug)
+      : '/eser/?id=' + encodeURIComponent(w.id);
+    return '<tr><td class="eser"><a href="'+eserLinki+'">'+esc(w.eser)+'</a></td><td>'+esc(w.bestekar)+'</td><td>'+esc(w.gufte_sahibi)+'</td><td>'+esc(w.makam)+'</td><td>'+esc(w.form)+'</td><td>'+esc(w.usul)+'</td></tr>';
   }).join("");
 }
 function filtreleriUygula(){currentPage=1;eserleriGetir();}
