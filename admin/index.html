@@ -499,6 +499,20 @@
         </div>
 
 
+
+        <!-- TOPLU BESTEKÂR DEĞİŞTİRME -->
+        <div class="kart form-kart" style="margin-bottom:20px;">
+          <div class="kart-baslik">Toplu Bestekâr Değiştir</div>
+          <div class="form-ic">
+            <label for="topluEskiBestekar">Eski bestekâr adı</label>
+            <input type="text" id="topluEskiBestekar" placeholder="Örn: Ali">
+            <label for="topluYeniBestekar">Yeni bestekâr adı</label>
+            <input type="text" id="topluYeniBestekar" placeholder="Örn: Ali Rifat Çağatay">
+            <button type="button" id="topluBestekarButonu" class="ana-buton" style="margin-top:12px;">Tümünü Değiştir</button>
+            <div id="topluBestekarMesaji" style="margin-top:10px;"></div>
+          </div>
+        </div>
+
         <!-- ESER FORMU -->
 
         <div class="kart form-kart">
@@ -986,22 +1000,10 @@
           Virgül PostgREST OR ifadesini bozmasın.
         */
 
-        let temizArama = aktifArama.trim();
-
-        /*
-          Parantezli bestekâr adlarında PostgREST OR ifadesi sorun çıkarabiliyor.
-          Örn: "Itri(Buhurizade Mustafa Efendi)" arandığında
-          parantezden önceki ana adı arama terimi olarak kullan.
-        */
-        if (temizArama.includes("(")) {
-          const parantezOncesi = temizArama.split("(")[0].trim();
-          if (parantezOncesi) temizArama = parantezOncesi;
-        }
-
-        temizArama = temizArama
-          .replaceAll(",", " ")
-          .replace(/\s+/g, " ")
-          .trim();
+        const temizArama =
+          aktifArama
+            .replaceAll(",", " ")
+            .trim();
 
         sorgu =
           sorgu.or(
@@ -1252,6 +1254,69 @@
         }
       }
     );
+
+
+
+    /* TOPLU BESTEKÂR DEĞİŞTİR */
+    const topluEskiBestekar = document.getElementById("topluEskiBestekar");
+    const topluYeniBestekar = document.getElementById("topluYeniBestekar");
+    const topluBestekarButonu = document.getElementById("topluBestekarButonu");
+    const topluBestekarMesaji = document.getElementById("topluBestekarMesaji");
+
+    topluBestekarButonu.addEventListener("click", async () => {
+      const eskiAd = topluEskiBestekar.value.trim();
+      const yeniAd = topluYeniBestekar.value.trim();
+      topluBestekarMesaji.textContent = "";
+
+      if (!eskiAd || !yeniAd) {
+        topluBestekarMesaji.textContent = "Eski ve yeni bestekâr adını yaz.";
+        return;
+      }
+      if (eskiAd === yeniAd) {
+        topluBestekarMesaji.textContent = "Eski ve yeni ad aynı.";
+        return;
+      }
+
+      const { count, error: sayimHatasi } = await db
+        .from("eserler")
+        .select("id", { count: "exact", head: true })
+        .eq("bestekar", eskiAd);
+
+      if (sayimHatasi) {
+        topluBestekarMesaji.textContent = "Kontrol hatası: " + sayimHatasi.message;
+        return;
+      }
+      if (!count) {
+        topluBestekarMesaji.textContent = '"' + eskiAd + '" adına birebir kayıtlı eser bulunamadı.';
+        return;
+      }
+
+      if (!confirm(
+        count + ' eserin bestekârı "' + eskiAd + '" → "' + yeniAd +
+        '" olarak değiştirilecek.\n\nDevam edilsin mi?'
+      )) return;
+
+      topluBestekarButonu.disabled = true;
+      topluBestekarMesaji.textContent = "Değiştiriliyor...";
+
+      const { error } = await db
+        .from("eserler")
+        .update({ bestekar: yeniAd })
+        .eq("bestekar", eskiAd);
+
+      topluBestekarButonu.disabled = false;
+
+      if (error) {
+        topluBestekarMesaji.textContent = "Güncelleme hatası: " + error.message;
+        return;
+      }
+
+      topluBestekarMesaji.textContent =
+        count + ' eser başarıyla "' + yeniAd + '" adına geçirildi ✓';
+      topluEskiBestekar.value = "";
+      topluYeniBestekar.value = "";
+      await eserleriGetir();
+    });
 
 
     /*
