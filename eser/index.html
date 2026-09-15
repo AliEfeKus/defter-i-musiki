@@ -333,6 +333,36 @@ h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
   .nota-kapak,.nota-kapak img{min-height:245px}
 }
 
+
+/* Gerçek eski kâğıt görseli */
+.bilgi-karti,
+.gufte-karti,
+.icra-karti{
+  background-color:#ead7aa;
+  background-image:url("/eser/eski-kagit.png") !important;
+  background-size:100% 100% !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+}
+
+/* Eser Bilgisi ve Güfte: dokunun kenarları da görünsün */
+.bilgi-karti,
+.gufte-karti{
+  padding:24px 27px;
+}
+
+/* İcra: kâğıt sadece ince bir çerçeve gibi görünsün */
+.icra-karti{
+  padding:8px !important;
+}
+.icra-karti iframe{
+  display:block;
+  width:100%;
+  max-width:none;
+  aspect-ratio:16/9;
+  border-radius:5px;
+}
+
 </style>
 </head>
 <body>
