@@ -437,6 +437,20 @@ h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
   }
 }
 
+
+/* Eser bilgisi yoksa künye tek başına, çizgisiz ve daha ferah */
+.bilgi-karti.bilgi-yok .kunye-ic{
+  border-bottom:0;
+  padding-bottom:0;
+  margin-bottom:0;
+  flex:1;
+  align-content:center;
+}
+.bilgi-karti.bilgi-yok{
+  display:flex;
+  flex-direction:column;
+}
+
 </style>
 </head>
 <body>
@@ -489,7 +503,7 @@ function youtubeEmbed(url){
   let html='<h1>'+esc(data.eser)+'</h1>';
 
   html+='<div class="eser-ust">'+
-    '<section class="card bilgi-karti"><h2>Eser Bilgisi</h2>'+
+    '<section class="card bilgi-karti'+(data.eser_bilgisi?'':' bilgi-yok')+'"><h2>Eser Bilgisi</h2>'+
     '<div class="kunye-ic">'+
     '<b>Bestekâr:</b><span>'+esc(data.bestekar||"—")+'</span>'+
     '<b>Güftekâr:</b><span>'+esc(data.gufte_sahibi||"—")+'</span>'+
