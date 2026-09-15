@@ -13,7 +13,7 @@
     .wrap{width:min(1220px,calc(100% - 30px));margin:auto} header{background:var(--bordo2);color:white;border-bottom:4px solid var(--altin)} .head{padding:20px 0}
     .head h1{margin:0;font-size:clamp(30px,5vw,48px);font-weight:normal}.head p{margin:5px 0 13px;opacity:.85}.home{color:white;text-decoration:none}
     main{padding:28px 0 50px}.panel{background:var(--kagit);border:1px solid var(--cizgi);padding:20px;box-shadow:0 5px 18px #0000000d}
-    h2{margin:0 0 18px;color:var(--bordo);font-weight:normal;font-size:29px}.controls{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:10px}
+    h2{margin:0 0 18px;color:var(--bordo);font-weight:normal;font-size:29px}.controls{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:10px}
     input,select{width:100%;min-width:0;padding:11px 12px;border:1px solid #cdbca4;background:white;color:var(--yazi);font:inherit}
     .status{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:16px 0;color:var(--soluk)}.table-wrap{overflow:auto;border:1px solid var(--cizgi)}
     table{width:100%;border-collapse:collapse;background:white;min-width:960px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid #eee4d5;vertical-align:top}
@@ -29,13 +29,14 @@
   <div class="controls">
     <input id="q" type="search" placeholder="Eser, bestekâr veya güfte sahibi ara…">
     <select id="bestekar"><option value="">Tüm bestekârlar</option></select>
+    <select id="guftekar"><option value="">Tüm güftekârlar</option></select>
     <select id="makam"><option value="">Tüm makamlar</option></select>
-    <select id="usul"><option value="">Tüm usûller</option></select>
     <select id="form"><option value="">Tüm formlar</option></select>
+    <select id="usul"><option value="">Tüm usûller</option></select>
   </div>
   <div class="status"><span id="count">Arşiv yükleniyor…</span><span>Sayfa başına 50 eser</span></div>
-  <div class="table-wrap"><table><thead><tr><th>Eser</th><th>Bestekâr</th><th>Makam</th><th>Usûl</th><th>Form</th><th>Nota</th><th>Kaynak</th></tr></thead>
-    <tbody id="rows"><tr><td colspan="7" class="empty">Yükleniyor…</td></tr></tbody></table></div>
+  <div class="table-wrap"><table><thead><tr><th>Eser</th><th>Bestekâr</th><th>Güftekâr</th><th>Makam</th><th>Form</th><th>Usûl</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="6" class="empty">Yükleniyor…</td></tr></tbody></table></div>
   <div class="pagination"><button id="prev">← Önceki</button><span id="page"></span><button id="next">Sonraki →</button></div>
 </section></main>
 <script>
@@ -72,42 +73,41 @@ function fillSelect(id,values){const s=$(id),frag=document.createDocumentFragmen
 function temizAramaMetni(s){return(s??"").trim().replaceAll(","," ").replaceAll("("," ").replaceAll(")"," ");}
 
 async function eserleriGetir(){
-  $("rows").innerHTML='<tr><td colspan="7" class="empty">Yükleniyor…</td></tr>';
+  $("rows").innerHTML='<tr><td colspan="6" class="empty">Yükleniyor…</td></tr>';
   const start=(currentPage-1)*PAGE_SIZE,end=start+PAGE_SIZE-1;
-  let query=db.from("eserler").select("id,slug,eser,bestekar,gufte_sahibi,makam,form,usul,kaynak,pdfler,divanmakam_url",{count:"exact"});
-  const q=temizAramaMetni($("q").value),b=$("bestekar").value,m=$("makam").value,u=$("usul").value,f=$("form").value;
+  let query=db.from("eserler").select("id,slug,eser,bestekar,gufte_sahibi,makam,form,usul",{count:"exact"});
+  const q=temizAramaMetni($("q").value),b=$("bestekar").value,g=$("guftekar").value,m=$("makam").value,f=$("form").value,u=$("usul").value;
   if(q)query=query.or([`eser.ilike.%${q}%`,`bestekar.ilike.%${q}%`,`gufte_sahibi.ilike.%${q}%`,`makam.ilike.%${q}%`,`usul.ilike.%${q}%`,`form.ilike.%${q}%`].join(","));
-  if(b)query=query.eq("bestekar",b); if(m)query=query.eq("makam",m); if(u)query=query.eq("usul",u); if(f)query=query.eq("form",f);
+  if(b)query=query.eq("bestekar",b); if(g)query=query.eq("gufte_sahibi",g); if(m)query=query.eq("makam",m); if(f)query=query.eq("form",f); if(u)query=query.eq("usul",u);
   const {data,error,count}=await query.order("id",{ascending:true}).range(start,end);
-  if(error){console.error(error);$("count").textContent="Arşiv yüklenemedi.";$("page").textContent="";$("prev").disabled=true;$("next").disabled=true;$("rows").innerHTML='<tr><td colspan="7" class="empty">'+esc(error.message)+'</td></tr>';return;}
+  if(error){console.error(error);$("count").textContent="Arşiv yüklenemedi.";$("page").textContent="";$("prev").disabled=true;$("next").disabled=true;$("rows").innerHTML='<tr><td colspan="6" class="empty">'+esc(error.message)+'</td></tr>';return;}
   totalCount=count??0; const totalPages=Math.max(1,Math.ceil(totalCount/PAGE_SIZE));
   if(currentPage>totalPages){currentPage=totalPages;return eserleriGetir();}
   $("count").textContent=totalCount.toLocaleString("tr-TR")+" eser bulundu"; $("page").textContent=currentPage+" / "+totalPages; $("prev").disabled=currentPage<=1; $("next").disabled=currentPage>=totalPages;
-  if(!data||data.length===0){$("rows").innerHTML='<tr><td colspan="7" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';return;}
+  if(!data||data.length===0){$("rows").innerHTML='<tr><td colspan="6" class="empty">Aramanıza uygun eser bulunamadı.</td></tr>';return;}
   $("rows").innerHTML=data.map(w=>{
-    const pdfs=Array.isArray(w.pdfler)?w.pdfler:[];
-    const notes=pdfs.map((p,i)=>{const url=(p&&typeof p==="object")?p.url:p;const name=(p&&typeof p==="object"&&p.dosya_adi)?p.dosya_adi:"Nota "+(i+1);const safe=safeUrl(url);if(safe==="#")return"";return '<a href="'+esc(safe)+'" target="_blank" rel="noopener" title="'+esc(name)+'">Nota '+(i+1)+'</a>';}).filter(Boolean).join("");
-    const sourceUrl=safeUrl(w.divanmakam_url),src=sourceUrl!=="#"?'<a class="source" href="'+esc(sourceUrl)+'" target="_blank" rel="noopener">DivanMakam</a>':"—";
-    return '<tr><td class="eser">'+esc(w.eser)+'</td><td>'+esc(w.bestekar)+'</td><td>'+esc(w.makam)+'</td><td>'+esc(w.usul)+'</td><td>'+esc(w.form)+'</td><td class="pdfs">'+(notes||"—")+'</td><td>'+src+'</td></tr>';
+    return '<tr><td class="eser">'+esc(w.eser)+'</td><td>'+esc(w.bestekar)+'</td><td>'+esc(w.gufte_sahibi)+'</td><td>'+esc(w.makam)+'</td><td>'+esc(w.form)+'</td><td>'+esc(w.usul)+'</td></tr>';
   }).join("");
 }
 function filtreleriUygula(){currentPage=1;eserleriGetir();}
 $("q").addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(filtreleriUygula,350)});
-["bestekar","makam","usul","form"].forEach(id=>$(id).addEventListener("change",filtreleriUygula));
+["bestekar","guftekar","makam","form","usul"].forEach(id=>$(id).addEventListener("change",filtreleriUygula));
 $("prev").onclick=()=>{if(currentPage>1){currentPage--;eserleriGetir();window.scrollTo({top:0,behavior:"smooth"});}};
 $("next").onclick=()=>{const totalPages=Math.max(1,Math.ceil(totalCount/PAGE_SIZE));if(currentPage<totalPages){currentPage++;eserleriGetir();window.scrollTo({top:0,behavior:"smooth"});}};
 (async()=>{
   try{
-    const[b,m,u,f]=await Promise.all([
+    const[b,g,m,f,u]=await Promise.all([
       getFilterValues("filtre_bestekarlar"),
+      getFilterValues("filtre_guftekarlar"),
       getFilterValues("filtre_makamlar"),
-      getFilterValues("filtre_usuller"),
-      getFilterValues("filtre_formlar")
+      getFilterValues("filtre_formlar"),
+      getFilterValues("filtre_usuller")
     ]);
     fillSelect("bestekar",b);
+    fillSelect("guftekar",g);
     fillSelect("makam",m);
-    fillSelect("usul",u);
     fillSelect("form",f);
+    fillSelect("usul",u);
   }catch(err){
     console.warn("Canlı filtre listeleri yüklenemedi:",err);
   }
