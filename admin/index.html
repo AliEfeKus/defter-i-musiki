@@ -552,6 +552,9 @@
         <label for="ornekIcra">Örnek İcra</label>
         <input id="ornekIcra" type="url" placeholder="YouTube veya başka bir icra bağlantısı">
 
+        <label for="eserBilgisi">Eser Bilgisi</label>
+        <textarea id="eserBilgisi" rows="5" placeholder="Eser hakkında beste tarihi, hikâyesi, ilk icrası vb. bilgileri cümle olarak yazabilirsiniz."></textarea>
+
         <label for="kaynak">Kaynak</label>
               <input type="text" id="kaynak">
 
@@ -764,6 +767,7 @@
       document.getElementById("eserId").value = "";
       document.getElementById("gufteMetni").value = "";
       document.getElementById("ornekIcra").value = "";
+      document.getElementById("eserBilgisi").value = "";
 
       mevcutPdfler = [];
       pdfAlaniIlkDeger = "";
@@ -1440,6 +1444,8 @@
 
       document.getElementById("ornekIcra").value =
         kayit.ornek_icra ?? "";
+      document.getElementById("eserBilgisi").value =
+        kayit.eser_bilgisi ?? "";
 
       mevcutPdfler = Array.isArray(kayit.pdfler)
         ? JSON.parse(JSON.stringify(kayit.pdfler))
@@ -1548,6 +1554,11 @@
               .value
               .trim() || null,
 
+          eser_bilgisi:
+            document
+              .getElementById("eserBilgisi")
+              .value
+              .trim() || null,
           gufte:
             document
               .getElementById("gufteMetni")
