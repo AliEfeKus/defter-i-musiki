@@ -509,10 +509,10 @@ function youtubeEmbed(url){
   const nota=tekNota(data.pdfler);
   const embed=youtubeEmbed(data.ornek_icra);
 
-  let html='<h1>'+esc(data.eser)+'</h1>';
+  let html='';
 
   html+='<div class="eser-ust">'+
-    '<section class="card bilgi-karti'+(data.eser_bilgisi?'':' bilgi-yok')+'"><h2>Eser Bilgisi</h2>'+
+    '<section class="card bilgi-karti'+(data.eser_bilgisi?'':' bilgi-yok')+'"><h2>'+esc(data.eser)+'</h2>'+
     '<div class="kunye-ic">'+
     '<b>Bestekâr:</b><span>'+esc(data.bestekar||"—")+'</span>'+
     '<b>Güftekâr:</b><span>'+esc(data.gufte_sahibi||"—")+'</span>'+
