@@ -127,6 +127,45 @@ iframe{
   .nota-bilgi,.gufte-icra{grid-template-columns:1fr}
 }
 
+
+/* İstenen kart görünümü */
+.nota-bilgi{
+  display:grid;
+  grid-template-columns:180px minmax(0,1fr);
+  gap:16px;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+}
+.nota-bilgi > div{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:22px 24px;
+}
+.nota-bilgi > div:nth-child(2){
+  background:#eee2c5;
+}
+.nota-bilgi > div:nth-child(2) h2,
+.gufte-icra > section:first-child h2{
+  color:#70472e;
+}
+.nota-bilgi .eser-bilgisi{
+  font-size:14px;
+  line-height:1.7;
+  color:#493b2e;
+}
+.gufte-icra > section:first-child{
+  background:#eee2c5;
+}
+.gufte-icra > section:first-child .gufte{
+  color:#2f281f;
+}
+@media(max-width:760px){
+  .nota-bilgi{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
