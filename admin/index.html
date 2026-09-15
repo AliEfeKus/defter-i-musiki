@@ -546,7 +546,13 @@
               <label for="form">Form</label>
               <input type="text" id="form">
 
-              <label for="kaynak">Kaynak</label>
+              <label for="gufte">Güfte</label>
+        <textarea id="gufte" rows="10" placeholder="Eserin güftesini buraya yazın…"></textarea>
+
+        <label for="ornekIcra">Örnek İcra</label>
+        <input id="ornekIcra" type="url" placeholder="YouTube veya başka bir icra bağlantısı">
+
+        <label for="kaynak">Kaynak</label>
               <input type="text" id="kaynak">
 
               <label for="divanmakam">
@@ -756,6 +762,8 @@
       eserFormu.reset();
 
       document.getElementById("eserId").value = "";
+      document.getElementById("gufte").value = "";
+      document.getElementById("ornekIcra").value = "";
 
       mevcutPdfler = [];
       pdfAlaniIlkDeger = "";
@@ -1428,6 +1436,12 @@
         .value =
         kayit.divanmakam_url ?? "";
 
+      document.getElementById("gufte").value =
+        kayit.gufte ?? "";
+
+      document.getElementById("ornekIcra").value =
+        kayit.ornek_icra ?? "";
+
       mevcutPdfler = Array.isArray(kayit.pdfler)
         ? JSON.parse(JSON.stringify(kayit.pdfler))
         : [];
@@ -1532,6 +1546,18 @@
           kaynak:
             document
               .getElementById("kaynak")
+              .value
+              .trim() || null,
+
+          gufte:
+            document
+              .getElementById("gufte")
+              .value
+              .trim() || null,
+
+          ornek_icra:
+            document
+              .getElementById("ornekIcra")
               .value
               .trim() || null,
 
