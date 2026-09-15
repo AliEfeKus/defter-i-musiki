@@ -149,6 +149,111 @@ iframe{
 .icra-karti iframe{width:100%;max-width:none}
 @media(max-width:760px){.eser-ust,.alt-grid{grid-template-columns:1fr}.nota-kapak,.nota-kapak img{min-height:260px}}
 
+
+/* === Beğenilen makete yakın nihai görünüm === */
+body{
+  background:#f6f0e3;
+}
+.wrap{
+  width:min(1180px,calc(100% - 34px));
+}
+main{padding:26px 0 55px}
+#icerik.card{
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  padding:0;
+}
+h1{
+  color:#3f2515;
+  font-size:clamp(28px,4vw,40px);
+  margin:0 0 20px;
+}
+.eser-ust,.alt-grid{
+  grid-template-columns:1fr 1.22fr;
+  gap:22px;
+}
+.eser-ust{margin-bottom:22px}
+.bilgi-karti,.gufte-karti,.icra-karti{
+  border:1px solid #d5bc8d;
+  border-radius:8px;
+  box-shadow:0 3px 12px rgba(74,45,22,.10);
+}
+.bilgi-karti,.gufte-karti{
+  background-color:#f0dfb8;
+  background-image:
+    radial-gradient(circle at 8% 15%,rgba(102,62,28,.10) 0 1px,transparent 2px),
+    radial-gradient(circle at 75% 23%,rgba(119,76,36,.08) 0 1px,transparent 2px),
+    radial-gradient(circle at 30% 82%,rgba(92,55,26,.08) 0 1px,transparent 2px),
+    repeating-linear-gradient(12deg,rgba(105,70,35,.025) 0 1px,transparent 1px 4px),
+    linear-gradient(100deg,rgba(255,255,255,.22),transparent 35%,rgba(116,76,35,.035));
+}
+.bilgi-karti{padding:30px 32px}
+.bilgi-karti h2,.gufte-karti h2{
+  color:#5b3219;
+  font-size:31px;
+  margin-bottom:20px;
+}
+.kunye-ic{
+  grid-template-columns:112px 1fr;
+  gap:5px 10px;
+  font-size:16px;
+  line-height:1.55;
+  padding-bottom:18px;
+  margin-bottom:18px;
+}
+.eser-bilgisi{
+  font-size:14px;
+  line-height:1.72;
+}
+.nota-kapak{
+  min-height:410px;
+  border-radius:8px;
+  border:1px solid #b99561;
+  box-shadow:0 3px 12px rgba(74,45,22,.13);
+}
+.nota-kapak img{
+  min-height:410px;
+  object-fit:cover;
+}
+.nota-serit{
+  top:50%;
+  padding:12px 18px;
+  background:rgba(82,45,22,.88);
+  font-size:38px;
+  color:#fff4d9;
+}
+.gufte-karti{
+  padding:27px 32px;
+  min-height:330px;
+}
+.gufte-karti .gufte{
+  font-size:17px;
+  line-height:1.85;
+}
+.icra-karti{
+  padding:8px;
+  background-color:#ead5aa;
+  background-image:
+    radial-gradient(circle at 18% 20%,rgba(95,57,25,.10) 0 1px,transparent 2px),
+    repeating-linear-gradient(15deg,rgba(100,65,30,.025) 0 1px,transparent 1px 5px);
+  overflow:hidden;
+}
+.icra-karti h2{display:none}
+.icra-karti iframe{
+  display:block;
+  width:100%;
+  max-width:none;
+  aspect-ratio:16/9;
+  border-radius:5px;
+}
+.icra-karti .empty,.icra-karti .btn{margin:16px}
+@media(max-width:760px){
+  .eser-ust,.alt-grid{grid-template-columns:1fr}
+  .nota-kapak,.nota-kapak img{min-height:300px}
+  .bilgi-karti,.gufte-karti{padding:23px 21px}
+}
+
 </style>
 </head>
 <body>
