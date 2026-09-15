@@ -23,12 +23,12 @@ body{
 }
 .wrap{width:min(900px,calc(100% - 32px));margin:auto}
 header{
-  background:#3f2b20;
-  border-bottom:1px solid #2e1e16;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
 }
 header .wrap{padding:17px 0}
 header a{
-  color:#fff8ed;
+  color:var(--accent);
   text-decoration:none;
   font-size:15px;
 }
@@ -44,9 +44,7 @@ main{padding:38px 0 64px}
 }
 h1{
   margin:0 0 24px;
-  padding-bottom:18px;
-  border-bottom:2px solid var(--accent);
-  font-size:clamp(30px,4.5vw,42px);
+  font-size:clamp(27px,4vw,38px);
   line-height:1.2;
   font-weight:600;
   letter-spacing:-.015em;
@@ -105,6 +103,31 @@ iframe{
   .meta{grid-template-columns:1fr 1fr}
   .meta div:last-child{grid-column:1/-1}
 }
+
+.nota-bilgi{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:28px;
+  align-items:start;
+}
+.nota-bilgi h2,.alt-grid h2{margin-bottom:12px}
+.eser-bilgisi{
+  white-space:pre-wrap;
+  font-size:16px;
+  line-height:1.75;
+}
+.alt-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+  gap:16px;
+  align-items:start;
+}
+.alt-grid .card{margin-bottom:0;height:100%}
+.alt-grid iframe{width:100%;max-width:none}
+@media(max-width:760px){
+  .nota-bilgi{grid-template-columns:1fr}
+  .alt-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -142,7 +165,7 @@ function youtubeEmbed(url){
 (async()=>{
   const p=new URLSearchParams(location.search);
   const slug=p.get("slug"), id=p.get("id");
-  let q=db.from("eserler").select("id,slug,eser,bestekar,gufte_sahibi,makam,form,usul,pdfler,gufte,ornek_icra");
+  let q=db.from("eserler").select("id,slug,eser,bestekar,gufte_sahibi,makam,form,usul,pdfler,gufte,ornek_icra,eser_bilgisi");
   if(slug) q=q.eq("slug",slug);
   else if(id) q=q.eq("id",id);
   else { $("icerik").innerHTML='<div class="empty">Eser belirtilmedi.</div>'; return; }
@@ -163,13 +186,26 @@ function youtubeEmbed(url){
     '<div><b>Usûl</b>'+esc(data.usul||"—")+'</div>'+
     '</div>';
 
-  if(nota) html+='<section class="card"><h2>Nota</h2><div class="actions"><a class="btn" href="'+esc(nota.url)+'" target="_blank" rel="noopener">Notayı Aç</a></div></section>';
-  if(data.gufte) html+='<section class="card"><h2>Güfte</h2><div class="gufte">'+esc(data.gufte)+'</div></section>';
-  if(data.ornek_icra){
-    html+='<section class="card"><h2>Örnek İcra</h2>'+
-      (embed?'<iframe src="'+embed+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>':
-      '<a class="btn" href="'+esc(data.ornek_icra)+'" target="_blank" rel="noopener">Örnek İcrayı Aç</a>')+
-      '</section>';
+  if(nota || data.eser_bilgisi){
+    html+='<section class="card nota-bilgi">'+
+      '<div><h2>Nota</h2>'+
+      (nota?'<div class="actions"><a class="btn" href="'+esc(nota.url)+'" target="_blank" rel="noopener">Notayı Aç</a></div>':'<div class="empty">Nota yok.</div>')+
+      '</div>'+
+      '<div><h2>Eser Bilgisi</h2><div class="eser-bilgisi">'+
+      (data.eser_bilgisi?esc(data.eser_bilgisi):'<span class="empty">Henüz eser bilgisi eklenmemiş.</span>')+
+      '</div></div></section>';
+  }
+
+  if(data.gufte || data.ornek_icra){
+    html+='<div class="alt-grid">';
+    if(data.gufte) html+='<section class="card"><h2>Güfte</h2><div class="gufte">'+esc(data.gufte)+'</div></section>';
+    if(data.ornek_icra){
+      html+='<section class="card"><h2>Örnek İcra</h2>'+
+        (embed?'<iframe src="'+embed+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>':
+        '<a class="btn" href="'+esc(data.ornek_icra)+'" target="_blank" rel="noopener">Örnek İcrayı Aç</a>')+
+        '</section>';
+    }
+    html+='</div>';
   }
   $("icerik").innerHTML=html;
 })().catch(()=>{$("icerik").innerHTML='<div class="empty">Eser yüklenirken bir hata oluştu.</div>'});
