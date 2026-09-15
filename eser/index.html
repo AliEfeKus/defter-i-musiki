@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eser | Defter-i Mûsıkî</title>
+<style>
+:root{--bg:#f4efe6;--paper:#fffdf8;--ink:#29241d;--muted:#756b5d;--line:#ded3c3;--accent:#6d4429}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.65}
+.wrap{width:min(980px,calc(100% - 32px));margin:auto}
+header{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--paper)}
+header a{color:var(--accent);text-decoration:none}
+main{padding:32px 0 60px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;margin-bottom:20px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 22px}
+h2{font-size:22px;margin:0 0 16px}
+.meta{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.meta div{border-top:1px solid var(--line);padding-top:9px}
+.meta b{display:block;font:600 12px Arial,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:3px}
+.gufte{white-space:pre-wrap;font-size:18px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 16px;border:1px solid var(--accent);border-radius:8px;color:var(--accent);text-decoration:none;font-family:Arial,sans-serif}
+.empty{color:var(--muted);font-style:italic}
+iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px}
+@media(max-width:700px){.meta{grid-template-columns:1fr 1fr}.card{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/arsiv/">← Eser Arşivine Dön</a></div></header>
+<main class="wrap">
+  <section id="icerik" class="card"><div class="empty">Eser yükleniyor…</div></section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://mdudrzlathbtbqschnmu.supabase.co";
+const SUPABASE_KEY="sb_publishable_017pwWESopoIzZaXV9WwdA_lGB9m3hV";
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function tekNota(pdfler){
+  if(!Array.isArray(pdfler) || !pdfler.length) return null;
+  const p=pdfler[0];
+  if(typeof p==="string") return {url:p, ad:"Notayı Aç"};
+  if(p && p.url) return {url:p.url, ad:p.dosya_adi || "Notayı Aç"};
+  return null;
+}
+function youtubeEmbed(url){
+  if(!url) return null;
+  try{
+    const u=new URL(url);
+    let id=null;
+    if(u.hostname.includes("youtu.be")) id=u.pathname.slice(1);
+    if(u.hostname.includes("youtube.com")) id=u.searchParams.get("v");
+    if(!id && u.pathname.includes("/shorts/")) id=u.pathname.split("/shorts/")[1]?.split("/")[0];
+    return id ? "https://www.youtube.com/embed/"+encodeURIComponent(id) : null;
+  }catch{return null}
+}
+(async()=>{
+  const p=new URLSearchParams(location.search);
+  const slug=p.get("slug"), id=p.get("id");
+  let q=db.from("eserler").select("id,slug,eser,bestekar,gufte_sahibi,makam,form,usul,pdfler,gufte,ornek_icra");
+  if(slug) q=q.eq("slug",slug);
+  else if(id) q=q.eq("id",id);
+  else { $("icerik").innerHTML='<div class="empty">Eser belirtilmedi.</div>'; return; }
+
+  const {data,error}=await q.maybeSingle();
+  if(error || !data){ $("icerik").innerHTML='<div class="empty">Eser bulunamadı.</div>'; return; }
+
+  document.title=data.eser+" | Defter-i Mûsıkî";
+  const nota=tekNota(data.pdfler);
+  const embed=youtubeEmbed(data.ornek_icra);
+
+  let html='<h1>'+esc(data.eser)+'</h1>'+
+    '<div class="meta">'+
+    '<div><b>Bestekâr</b>'+esc(data.bestekar||"—")+'</div>'+
+    '<div><b>Güftekâr</b>'+esc(data.gufte_sahibi||"—")+'</div>'+
+    '<div><b>Makam</b>'+esc(data.makam||"—")+'</div>'+
+    '<div><b>Form</b>'+esc(data.form||"—")+'</div>'+
+    '<div><b>Usûl</b>'+esc(data.usul||"—")+'</div>'+
+    '</div></section>';
+
+  if(nota) html+='<section class="card"><h2>Nota</h2><div class="actions"><a class="btn" href="'+esc(nota.url)+'" target="_blank" rel="noopener">Notayı Aç</a></div></section>';
+  if(data.gufte) html+='<section class="card"><h2>Güfte</h2><div class="gufte">'+esc(data.gufte)+'</div></section>';
+  if(data.ornek_icra){
+    html+='<section class="card"><h2>Örnek İcra</h2>'+
+      (embed?'<iframe src="'+embed+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>':
+      '<a class="btn" href="'+esc(data.ornek_icra)+'" target="_blank" rel="noopener">Örnek İcrayı Aç</a>')+
+      '</section>';
+  }
+  $("icerik").outerHTML='<section class="card">'+html;
+})().catch(()=>{$("icerik").innerHTML='<div class="empty">Eser yüklenirken bir hata oluştu.</div>'});
+</script>
+</body>
+</html>
