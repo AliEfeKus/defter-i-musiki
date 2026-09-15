@@ -394,6 +394,49 @@ h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
   scrollbar-width:thin;
 }
 
+
+/* Güfte + İcra: yüksekliği videoya göre eşitle */
+.alt-grid{
+  align-items:start !important;
+}
+
+.icra-karti{
+  align-self:start;
+}
+
+.gufte-karti{
+  height:auto;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Masaüstünde JS video kartının gerçek yüksekliğini buraya yazar */
+@media(min-width:761px){
+  .gufte-karti{
+    height:var(--icra-yukseklik, auto);
+  }
+
+  .gufte-karti .gufte{
+    flex:1;
+    min-height:0;
+    max-height:none !important;
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+}
+
+/* Telefonda tekrar doğal yüksekliğe dönsün */
+@media(max-width:760px){
+  .gufte-karti{
+    height:auto;
+  }
+  .gufte-karti .gufte{
+    max-height:350px !important;
+    overflow-y:auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -471,6 +514,21 @@ function youtubeEmbed(url){
     '</section></div>';
 
   $("icerik").innerHTML=html;
+
+  function kartYukseklikleriniEsitle(){
+    const altGrid=document.querySelector(".alt-grid");
+    const icra=document.querySelector(".icra-karti");
+    if(!altGrid || !icra) return;
+
+    if(window.innerWidth>760){
+      altGrid.style.setProperty("--icra-yukseklik", icra.offsetHeight+"px");
+    }else{
+      altGrid.style.removeProperty("--icra-yukseklik");
+    }
+  }
+
+  kartYukseklikleriniEsitle();
+  window.addEventListener("resize",kartYukseklikleriniEsitle);
 })().catch(()=>{$("icerik").innerHTML='<div class="empty">Eser yüklenirken bir hata oluştu.</div>'});
 </script>
 </body>
