@@ -364,10 +364,14 @@ h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
 }
 
 
-/* Güfte: eski kâğıda daha uygun, ortada ve italik */
+/* Güfte: başlık ve metin tam ortalı */
+.gufte-karti h2{
+  text-align:center;
+}
 .gufte-karti .gufte{
-  width:82%;
+  width:100%;
   margin:0 auto;
+  text-align:center;
   font-family:Georgia,"Times New Roman",serif;
   font-size:16px;
   line-height:1.9;
@@ -376,7 +380,6 @@ h1{font-size:clamp(25px,3.2vw,34px);margin:0 0 16px}
 }
 @media(max-width:760px){
   .gufte-karti .gufte{
-    width:92%;
     font-size:15px;
   }
 }
