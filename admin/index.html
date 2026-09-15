@@ -7,81 +7,6 @@
   <title>Yönetim Paneli | Defter-i Mûsıkî</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    /* Ayrı toplu bestekâr aracı — mevcut eser düzenleme formuna dokunmaz. */
-    (() => {
-      const ac = document.getElementById("topluBestekarAc");
-      const panel = document.getElementById("topluBestekarPaneli");
-      const kapat = document.getElementById("topluBestekarKapat");
-      const uygula = document.getElementById("topluBestekarUygula");
-      const eski = document.getElementById("topluEskiBestekar");
-      const yeni = document.getElementById("topluYeniBestekar");
-      const mesaj = document.getElementById("topluBestekarMesaji");
-
-      ac.addEventListener("click", () => {
-        panel.style.display = panel.style.display === "none" ? "block" : "none";
-        mesaj.textContent = "";
-      });
-      kapat.addEventListener("click", () => {
-        panel.style.display = "none";
-        mesaj.textContent = "";
-      });
-
-      uygula.addEventListener("click", async () => {
-        const eskiAd = eski.value.trim();
-        const yeniAd = yeni.value.trim();
-        mesaj.textContent = "";
-
-        if (!eskiAd || !yeniAd) {
-          mesaj.textContent = "İki adı da yaz.";
-          return;
-        }
-        if (eskiAd === yeniAd) {
-          mesaj.textContent = "Eski ve yeni ad aynı.";
-          return;
-        }
-
-        const { count, error: sayimHatasi } = await db
-          .from("eserler")
-          .select("id", { count: "exact", head: true })
-          .eq("bestekar", eskiAd);
-
-        if (sayimHatasi) {
-          mesaj.textContent = "Kontrol hatası: " + sayimHatasi.message;
-          return;
-        }
-        if (!count) {
-          mesaj.textContent = '"' + eskiAd + '" adına birebir kayıtlı eser bulunamadı.';
-          return;
-        }
-
-        const onay = confirm(
-          count + ' eser bulundu.\n\n"' + eskiAd + '" → "' + yeniAd +
-          '" yapılacak.\n\nDevam edilsin mi?'
-        );
-        if (!onay) return;
-
-        uygula.disabled = true;
-        mesaj.textContent = "Değiştiriliyor...";
-
-        const { error } = await db
-          .from("eserler")
-          .update({ bestekar: yeniAd })
-          .eq("bestekar", eskiAd);
-
-        uygula.disabled = false;
-
-        if (error) {
-          mesaj.textContent = "Güncelleme hatası: " + error.message;
-          return;
-        }
-
-        mesaj.textContent = count + " eser başarıyla değiştirildi ✓";
-        eski.value = "";
-        yeni.value = "";
-        if (typeof eserleriGetir === "function") await eserleriGetir();
-      });
-    })();
-
 </script>
 
   <style>
@@ -1658,7 +1583,82 @@
 
     girisiKontrolEt();
 
-  </script>
+      /* Ayrı toplu bestekâr aracı — mevcut eser düzenleme formuna dokunmaz. */
+    (() => {
+      const ac = document.getElementById("topluBestekarAc");
+      const panel = document.getElementById("topluBestekarPaneli");
+      const kapat = document.getElementById("topluBestekarKapat");
+      const uygula = document.getElementById("topluBestekarUygula");
+      const eski = document.getElementById("topluEskiBestekar");
+      const yeni = document.getElementById("topluYeniBestekar");
+      const mesaj = document.getElementById("topluBestekarMesaji");
+
+      ac.addEventListener("click", () => {
+        panel.style.display = panel.style.display === "none" ? "block" : "none";
+        mesaj.textContent = "";
+      });
+      kapat.addEventListener("click", () => {
+        panel.style.display = "none";
+        mesaj.textContent = "";
+      });
+
+      uygula.addEventListener("click", async () => {
+        const eskiAd = eski.value.trim();
+        const yeniAd = yeni.value.trim();
+        mesaj.textContent = "";
+
+        if (!eskiAd || !yeniAd) {
+          mesaj.textContent = "İki adı da yaz.";
+          return;
+        }
+        if (eskiAd === yeniAd) {
+          mesaj.textContent = "Eski ve yeni ad aynı.";
+          return;
+        }
+
+        const { count, error: sayimHatasi } = await db
+          .from("eserler")
+          .select("id", { count: "exact", head: true })
+          .eq("bestekar", eskiAd);
+
+        if (sayimHatasi) {
+          mesaj.textContent = "Kontrol hatası: " + sayimHatasi.message;
+          return;
+        }
+        if (!count) {
+          mesaj.textContent = '"' + eskiAd + '" adına birebir kayıtlı eser bulunamadı.';
+          return;
+        }
+
+        const onay = confirm(
+          count + ' eser bulundu.\n\n"' + eskiAd + '" → "' + yeniAd +
+          '" yapılacak.\n\nDevam edilsin mi?'
+        );
+        if (!onay) return;
+
+        uygula.disabled = true;
+        mesaj.textContent = "Değiştiriliyor...";
+
+        const { error } = await db
+          .from("eserler")
+          .update({ bestekar: yeniAd })
+          .eq("bestekar", eskiAd);
+
+        uygula.disabled = false;
+
+        if (error) {
+          mesaj.textContent = "Güncelleme hatası: " + error.message;
+          return;
+        }
+
+        mesaj.textContent = count + " eser başarıyla değiştirildi ✓";
+        eski.value = "";
+        yeni.value = "";
+        if (typeof eserleriGetir === "function") await eserleriGetir();
+      });
+    })();
+
+</script>
 
 </body>
 </html>
