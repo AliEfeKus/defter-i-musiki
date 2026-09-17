@@ -568,13 +568,32 @@
                 placeholder="https://..."
               >
 
+              <label for="notaDosyasi">Nota PDF</label>
+              <input
+                type="file"
+                id="notaDosyasi"
+                accept="application/pdf,.pdf"
+              >
+
+              <button
+                type="button"
+                class="ikincil"
+                id="notaYukleButonu"
+                style="width:100%;margin-top:8px"
+              >
+                Nota Yükle
+              </button>
+
+              <div id="notaMesaji" style="margin-top:8px;font-family:Arial,sans-serif;font-size:13px"></div>
+
               <label for="pdfler">
-                PDF bağlantıları
+                Nota bağlantısı
               </label>
 
               <textarea
                 id="pdfler"
-                placeholder="Her satıra: dosya.pdf | https://...  (yalnız URL de olur)"
+                placeholder="Nota yüklendiğinde bağlantı otomatik gelir."
+                readonly
               ></textarea>
 
               <div class="form-butonlar">
@@ -768,6 +787,8 @@
       document.getElementById("gufteMetni").value = "";
       document.getElementById("ornekIcra").value = "";
       document.getElementById("eserBilgisi").value = "";
+      document.getElementById("notaDosyasi").value = "";
+      document.getElementById("notaMesaji").textContent = "";
 
       mevcutPdfler = [];
       pdfAlaniIlkDeger = "";
@@ -891,6 +912,123 @@
         })
         .filter(pdf => pdf.url);
     }
+
+
+
+    /*
+      =========================================================
+      NOTA PDF YÜKLEME
+      =========================================================
+    */
+
+    document.getElementById("notaYukleButonu").addEventListener(
+      "click",
+      async () => {
+
+        const id = document.getElementById("eserId").value;
+        const eserAdi = document.getElementById("eser").value.trim();
+        const dosya = document.getElementById("notaDosyasi").files[0];
+        const mesaj = document.getElementById("notaMesaji");
+        const buton = document.getElementById("notaYukleButonu");
+
+        if (!id) {
+          mesaj.textContent = "Önce eseri kaydedin veya mevcut bir eseri Düzenle ile açın.";
+          mesaj.className = "hata";
+          return;
+        }
+
+        if (!dosya) {
+          mesaj.textContent = "Önce bir PDF nota seçin.";
+          mesaj.className = "hata";
+          return;
+        }
+
+        if (
+          dosya.type !== "application/pdf" &&
+          !dosya.name.toLowerCase().endsWith(".pdf")
+        ) {
+          mesaj.textContent = "Yalnızca PDF dosyası yükleyebilirsiniz.";
+          mesaj.className = "hata";
+          return;
+        }
+
+        buton.disabled = true;
+        mesaj.textContent = "Nota yükleniyor...";
+        mesaj.className = "";
+
+        const dosyaYolu = `${id}/nota.pdf`;
+
+        const { error: yuklemeHatasi } =
+          await db.storage
+            .from("notalar")
+            .upload(
+              dosyaYolu,
+              dosya,
+              {
+                contentType: "application/pdf",
+                upsert: true
+              }
+            );
+
+        if (yuklemeHatasi) {
+          buton.disabled = false;
+          mesaj.textContent = "Yükleme hatası: " + yuklemeHatasi.message;
+          mesaj.className = "hata";
+          console.error(yuklemeHatasi);
+          return;
+        }
+
+        const { data: urlData } =
+          db.storage
+            .from("notalar")
+            .getPublicUrl(dosyaYolu);
+
+        const notaUrl = urlData?.publicUrl;
+
+        if (!notaUrl) {
+          buton.disabled = false;
+          mesaj.textContent = "Nota yüklendi fakat bağlantı oluşturulamadı.";
+          mesaj.className = "hata";
+          return;
+        }
+
+        const yeniPdfler = [
+          {
+            dosya_adi: `${slugOlustur(eserAdi) || id}.pdf`,
+            url: notaUrl
+          }
+        ];
+
+        const { error: kayitHatasi } =
+          await db
+            .from("eserler")
+            .update({ pdfler: yeniPdfler })
+            .eq("id", id);
+
+        if (kayitHatasi) {
+          buton.disabled = false;
+          mesaj.textContent =
+            "PDF yüklendi ama esere bağlanamadı: " +
+            kayitHatasi.message;
+          mesaj.className = "hata";
+          console.error(kayitHatasi);
+          return;
+        }
+
+        mevcutPdfler = yeniPdfler;
+        const pdfAlani = document.getElementById("pdfler");
+        pdfAlani.value = pdfMetnineCevir(yeniPdfler);
+        pdfAlaniIlkDeger = pdfAlani.value;
+
+        document.getElementById("notaDosyasi").value = "";
+
+        buton.disabled = false;
+        mesaj.textContent = "Nota yüklendi ve esere bağlandı ✓";
+        mesaj.className = "basarili";
+
+        await eserleriGetir();
+      }
+    );
 
 
     /*
