@@ -482,26 +482,12 @@ const db=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
-async function tekNota(pdfler){
+function tekNota(pdfler){
   if(!Array.isArray(pdfler) || !pdfler.length) return null;
   const p=pdfler[0];
-  let url="", ad="Notayı Aç";
-  if(typeof p==="string") url=p;
-  else if(p && p.url){ url=p.url; ad=p.dosya_adi || "Notayı Aç"; }
-  else return null;
-
-  const parca="/storage/v1/object/public/notalar/";
-  if(url.includes(parca)){
-    const storagePath=decodeURIComponent(url.split(parca)[1] || "");
-    if(!storagePath) return null;
-    const {data,error}=await db.storage.from("notalar").createSignedUrl(storagePath,3600);
-    if(error || !data?.signedUrl){
-      console.error("Nota bağlantısı oluşturulamadı:",error);
-      return null;
-    }
-    return {url:data.signedUrl,ad};
-  }
-  return {url,ad};
+  if(typeof p==="string") return {url:p, ad:"Notayı Aç"};
+  if(p && p.url) return {url:p.url, ad:p.dosya_adi || "Notayı Aç"};
+  return null;
 }
 function youtubeEmbed(url){
   if(!url) return null;
@@ -526,7 +512,7 @@ function youtubeEmbed(url){
   if(error || !data){ $("icerik").innerHTML='<div class="empty">Eser bulunamadı.</div>'; return; }
 
   document.title=data.eser+" | Defter-i Mûsıkî";
-  const nota=await tekNota(data.pdfler);
+  const nota=tekNota(data.pdfler);
   const embed=youtubeEmbed(data.ornek_icra);
 
   let html='';
@@ -541,7 +527,7 @@ function youtubeEmbed(url){
     '<b>Usûl:</b><span>'+esc(data.usul||"—")+'</span></div>'+
     '<div class="eser-bilgisi">'+(data.eser_bilgisi?esc(data.eser_bilgisi):'')+'</div></section>'+
     (nota
-      ? '<a class="nota-kapak" href="'+esc(nota.url)+'" target="_blank" rel="noopener"><img src="/eser/nota-kapak.jpg" alt="Nota"><span class="nota-serit">Nota</span></a>'
+      ? '<a class="nota-kapak" href="/nota/?slug='+encodeURIComponent(data.slug)+'" target="_blank" rel="noopener"><img src="/eser/nota-kapak.jpg" alt="Nota"><span class="nota-serit">Nota</span></a>'
       : '<div class="nota-kapak"><img src="/eser/nota-kapak.jpg" alt="Nota"><span class="nota-serit">Nota</span></div>')+
     '</div>';
 
