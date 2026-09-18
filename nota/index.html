@@ -1,0 +1,24 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nota | Defter-i Mûsıkî</title></head>
+<body><div id="d" style="font-family:Georgia,serif;text-align:center;margin:60px">Nota açılıyor…</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const db=supabase.createClient("https://mdudrzlathbtbqschnmu.supabase.co","sb_publishable_017pwWESopoIzZaXV9WwdA_lGB9m3hV");
+(async()=>{
+ const d=document.getElementById("d"), p=new URLSearchParams(location.search), slug=p.get("slug");
+ if(!slug){d.textContent="Nota bulunamadı.";return}
+ const {data:e,error}=await db.from("eserler").select("id,pdfler").eq("slug",slug).maybeSingle();
+ if(error||!e){d.textContent="Eser bulunamadı.";return}
+ const a=Array.isArray(e.pdfler)?e.pdfler:[], x=a[0];
+ let u=typeof x==="string"?x:(x?.url||"");
+ if(!u){d.textContent="Bu esere henüz nota eklenmemiş.";return}
+ const pub="/storage/v1/object/public/notalar/", sig="/storage/v1/object/sign/notalar/";
+ let path="";
+ if(u.includes(pub)) path=decodeURIComponent(u.split(pub)[1].split("?")[0]);
+ else if(u.includes(sig)) path=decodeURIComponent(u.split(sig)[1].split("?")[0]);
+ if(path){
+   const {data,error}=await db.storage.from("notalar").createSignedUrl(path,3600);
+   if(error||!data?.signedUrl){d.textContent="Nota bağlantısı oluşturulamadı.";return}
+   location.replace(data.signedUrl); return;
+ }
+ location.replace(u);
+})().catch(()=>document.getElementById("d").textContent="Nota açılırken bir hata oluştu.");
+</script></body></html>
